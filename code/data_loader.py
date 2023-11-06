@@ -24,7 +24,9 @@ class StreamDataLoader:
             batch = []
             t = tqdm(total=len(self.indexes))
             for i in range(0, len(self.indexes), self.batch_size): 
-                batch = np.loadtxt([extract(infile, start, stop) for [start, stop] in self.indexes[i:i+self.batch_size]])
+                
+                batch = self.load_batch(infile, i, self.batch_size)
+                
                 t.update(len(batch))
                 batch = self.process_batch(batch)
                 
@@ -33,7 +35,14 @@ class StreamDataLoader:
 
                 yield batch
         t.close()
-                
+    
+    
+    def load_batch(self, infile, idx, step):
+        batch = []
+        for [start, stop] in self.indexes[idx:idx+step]:
+            batch.append(self.extract(infile, start, stop))
+        return(np.loadtxt(batch))
+    
     
     def indexer(self, filename):
         # open file with byteread
@@ -90,15 +99,15 @@ class StreamDataLoader:
         return torch.tensor(np.array(batch), dtype=torch.float)
 
 
-def extract(buff, start, stop):
-    buff.seek(start)
-    return buff.read(stop-start)
+    def extract(self, buff, start, stop):
+        buff.seek(start)
+        return buff.read(stop-start)
 
 
 if __name__ == "__main__":
     filename = "data/archs4_gene_small.tsv"
     
-    dataloader = StreamDataLoader(filename, 10, shuffle_seed=42)    
+    dataloader = StreamDataLoader(filename, 64, shuffle_seed=42)    
     
     for batch in dataloader:
         continue
