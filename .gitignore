@@ -1,4 +1,3 @@
-data/
-
+data/*
 
 !data/archs_gene_very_small.tsv
