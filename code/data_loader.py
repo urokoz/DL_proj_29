@@ -20,7 +20,6 @@ def indexer(filename):
     first_flag = True
     chunk_size = 64**3
     while True:
-        print(pos, filesize)
         chunk = infile.read(chunk_size) # read chunk
         index = 0
 
@@ -39,8 +38,6 @@ def indexer(filename):
 
         pos += chunk_size      # keep track of position in file
     infile.close()
-    print(len(index_list))
-    print(index_list)
 
 
 class StreamDataLoader:
@@ -49,6 +46,7 @@ class StreamDataLoader:
         self.batch_size = batch_size
         self.use_cuda = use_cuda and torch.cuda.is_available()
         self.device = torch.device("cuda" if self.use_cuda else "cpu")
+        # self.indexes = self.indexer(self.filename)
         
     
     def __iter__(self):
@@ -78,6 +76,41 @@ class StreamDataLoader:
                     batch_tensor = batch_tensor.to(self.device)
                 
                 yield batch_tensor  
+                
+    
+    def indexer(self, filename):
+        # open file with byteread
+        filesize = os.stat(filename).st_size
+        try:
+            infile = open(filename, "rb")
+        except IOError as err:
+            sys.exit("Cant open file:" + str(err))
+
+        # initiate flags and position in file
+        index_list = []
+        pos = 0
+        dp_start = 0
+        first_flag = True
+        chunk_size = 64**3
+        while True:
+            chunk = infile.read(chunk_size) # read chunk
+            index = 0
+
+            while True:     # seek through end of chunk
+                index = chunk.find(b"\n", index+1)
+                if index == -1:     # header not found
+                    break
+                else:       # datapoint end found
+                    dp_end = pos + index - 1
+                    index_list.append([dp_start, dp_end])
+
+                    dp_start = pos + index
+
+            if len(chunk) < chunk_size:
+                break
+
+            pos += chunk_size      # keep track of position in file
+        infile.close()
             
     
     def load_data_point(self, line: str) -> List:
