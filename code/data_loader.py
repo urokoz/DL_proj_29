@@ -4,7 +4,7 @@ import sys
 import random
 import numpy as np
 from tqdm import tqdm
-from typing import List
+from typing import List, BinaryIO
 
 
 class StreamDataLoader:
@@ -13,17 +13,22 @@ class StreamDataLoader:
         self.batch_size = batch_size
         self.use_cuda = use_cuda and torch.cuda.is_available()
         self.device = torch.device("cuda" if self.use_cuda else "cpu")
-        self.indexes = self.indexer(self.filename)
+        self.positions = self.indexer(self.filename)
         if shuffle_seed:
             random.seed(shuffle_seed)
-            random.shuffle(self.indexes)
+            random.shuffle(self.positions)
         
     
-    def __iter__(self):
+    def __iter__(self) -> torch.Tensor:
+        """ Generator for getting batches out from the datasets.
+
+        Yields:
+            torch.Tensor: self.batch_size x n_featrues 
+        """
         with open(self.filename, "rb") as infile:
             batch = []
-            t = tqdm(total=len(self.indexes))
-            for i in range(0, len(self.indexes), self.batch_size): 
+            t = tqdm(total=len(self.positions))
+            for i in range(0, len(self.positions), self.batch_size): 
                 
                 batch = self.load_batch(infile, i, self.batch_size)
                 
@@ -37,14 +42,66 @@ class StreamDataLoader:
         t.close()
     
     
-    def load_batch(self, infile, idx, step):
+    def load_batch(self, infile: BinaryIO, idx: int, step: int) -> np.ndarray:
+        """Loads a batch of datapoints from given positions 
+        in a file based on the index (idx) in the positions list.
+
+        Args:
+            infile (BinaryIO): datafile read in byteread mode
+            idx (int): index for first data point position in the batch
+            step (int): number of data points to include in the batch
+
+        Returns:
+            np.ndarray: batch of datapoints
+        """
         batch = []
-        for [start, stop] in self.indexes[idx:idx+step]:
+        for [start, stop] in self.positions[idx:idx+step]:
             batch.append(self.extract(infile, start, stop))
-        return(np.loadtxt(batch))
+        return np.loadtxt(batch)
     
     
-    def indexer(self, filename):
+    def process_batch(self, batch: np.ndarray) -> torch.Tensor:
+        """ Method to do preprocessing on the batch.
+        For now it is just converting to a tensor.
+
+        Args:
+            batch (np.ndarray): The batch loaded in as a np.ndarray
+
+        Returns:
+            torch.Tensor: Preprocessed batch as a tensor ready to use
+        """
+        # place where we can normalize the batch? 
+        # Or should the batches be normalized in relation to the entire dataset?
+        return torch.tensor(batch, dtype=torch.float)
+
+
+    def extract(self, buff: BinaryIO, start: int, stop:int) -> bytes:
+        """ Extracts a section of a file based on start and stop indexes.
+
+        Args:
+            buff (BinaryIO): Filehandle reading in bytes modes  
+            start (int): index of the start of the file section
+            stop (int): index of the end of the file section
+
+        Returns:
+            bytes: bytes representation of the file section
+        """
+        buff.seek(start)
+        return buff.read(stop-start)
+    
+    
+    def indexer(self, filename: str) -> List:
+        """ Indexes the data portions of the data file, 
+        by finding the start and end of gene expression columns.
+        It excludes the first column with the IDs.
+        The indexing is specific to this file format.       
+
+        Args:
+            filename (str): Name of the tsv file containing the data.
+
+        Returns:
+            List: List of lists containing the indexes
+        """
         # open file with byteread
         filesize = os.stat(filename).st_size
         try:
@@ -93,21 +150,12 @@ class StreamDataLoader:
             pos += chunk_size      # keep track of position in file
         infile.close()
         return index_list
-    
-    
-    def process_batch(self, batch) -> torch.Tensor:
-        return torch.tensor(np.array(batch), dtype=torch.float)
-
-
-    def extract(self, buff, start, stop):
-        buff.seek(start)
-        return buff.read(stop-start)
 
 
 if __name__ == "__main__":
     filename = "data/archs4_gene_small.tsv"
     
-    dataloader = StreamDataLoader(filename, 64, shuffle_seed=42)    
+    dataloader = StreamDataLoader(filename, batch_size=128, use_cuda=True, shuffle_seed=42)    
     
     for batch in dataloader:
         continue
