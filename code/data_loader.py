@@ -1,5 +1,6 @@
 import torch
 import os
+import sys
 from typing import List
 
 
@@ -88,9 +89,10 @@ class StreamDataLoader:
 
 
 if __name__ == "__main__":
-    dataloader = StreamDataLoader("archs_gene_very_small.tsv", 10)
+    filename = "data/archs_gene_very_small.tsv"
+    
+    dataloader = StreamDataLoader(filename, 10)
     
     for batch in dataloader:
         print(batch)
     
-    indexer("archs_gene_very_small.tsv")
