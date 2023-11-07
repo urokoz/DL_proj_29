@@ -129,8 +129,8 @@ class StreamDataLoader:
         filesize = os.stat(filename).st_size
         if filename.endswith(".gz") and filesize > 2**32:
             filesize = self.get_uncompressed_size(filename)
-	elif filename == "data/archs4_gene_expression_norm_transposed.tsv.gz":
-	    filesize = 51732577723
+        elif filename == "data/archs4_gene_expression_norm_transposed.tsv.gz":
+            filesize = 51732577723
 
         try:
             infile = openfile(filename, "rb")
