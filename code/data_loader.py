@@ -28,7 +28,7 @@ class StreamDataLoader:
         self.use_cuda = use_cuda and torch.cuda.is_available()
         self.device = torch.device("cuda" if self.use_cuda else "cpu")
         self.positions = self.indexer(self.filename)
-        if shuffle_seed:
+        if shuffle_seed:    # insanely slow on gzipped files
             random.seed(shuffle_seed)
             random.shuffle(self.positions)
         
@@ -168,9 +168,9 @@ class StreamDataLoader:
 
 
 if __name__ == "__main__":
-    filename = "data/archs4_gene_small.tsv"
+    filename = "data/archs4_gene_small.tsv.gz"
     
-    dataloader = StreamDataLoader(filename, batch_size=128, use_cuda=True, shuffle_seed=42)    
+    dataloader = StreamDataLoader(filename, batch_size=10, use_cuda=True)    
     
     for batch in dataloader:
         continue
