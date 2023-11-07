@@ -2,9 +2,23 @@ import torch
 import os
 import sys
 import random
+import gzip
 import numpy as np
 from tqdm import tqdm
 from typing import List, BinaryIO
+
+
+def openfile(filename, mode):
+    """ Open gzip or normal files.
+    """
+    try:
+        if filename.endswith('.gz'):
+            fh = gzip.open(filename, mode=mode)
+        else:
+            fh = open(filename, mode)
+    except:
+        sys.exit("Can't open file:", filename)
+    return fh
 
 
 class StreamDataLoader:
@@ -25,7 +39,7 @@ class StreamDataLoader:
         Yields:
             torch.Tensor: self.batch_size x n_featrues 
         """
-        with open(self.filename, "rb") as infile:
+        with openfile(self.filename, "rb") as infile:
             batch = []
             t = tqdm(total=len(self.positions))
             for i in range(0, len(self.positions), self.batch_size): 
@@ -56,7 +70,8 @@ class StreamDataLoader:
         """
         batch = []
         for [start, stop] in self.positions[idx:idx+step]:
-            batch.append(self.extract(infile, start, stop))
+            dp = self.extract(infile, start, stop)
+            batch.append(dp)
         return np.loadtxt(batch)
     
     
@@ -105,7 +120,7 @@ class StreamDataLoader:
         # open file with byteread
         filesize = os.stat(filename).st_size
         try:
-            infile = open(filename, "rb")
+            infile = openfile(filename, "rb")
             header = infile.readline()
         except IOError as err:
             sys.exit("Cant open file:" + str(err))
@@ -159,4 +174,4 @@ if __name__ == "__main__":
     
     for batch in dataloader:
         continue
-    
+    print(batch)
