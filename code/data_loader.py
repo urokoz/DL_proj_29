@@ -31,7 +31,15 @@ class StreamDataLoader:
         if shuffle_seed:    # insanely slow on gzipped files
             random.seed(shuffle_seed)
             random.shuffle(self.positions)
-        
+    
+    
+    def get_uncompressed_size(self, file):
+        pipe_in = os.popen('gzip -l %s' % file)
+        list_1 = pipe_in.readlines()
+        list_2 = list_1[1].split()
+        c , u , r , n = list_2
+        return int(u)
+    
     
     def __iter__(self) -> torch.Tensor:
         """ Generator for getting batches out from the datasets.
@@ -118,7 +126,7 @@ class StreamDataLoader:
             List: List of lists containing the indexes
         """
         # open file with byteread
-        filesize = os.stat(filename).st_size
+        filesize = self.get_uncompressed_size(filename)
         try:
             infile = openfile(filename, "rb")
             header = infile.readline()
