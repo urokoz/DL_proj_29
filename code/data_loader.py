@@ -126,7 +126,11 @@ class StreamDataLoader:
             List: List of lists containing the indexes
         """
         # open file with byteread
-        filesize = self.get_uncompressed_size(filename)
+        if filename.endswith(".gz"):
+            filesize = self.get_uncompressed_size(filename)
+        else: 
+            filesize = os.stat(filename).st_size
+            
         try:
             infile = openfile(filename, "rb")
             header = infile.readline()
