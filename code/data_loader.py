@@ -126,11 +126,12 @@ class StreamDataLoader:
             List: List of lists containing the indexes
         """
         # open file with byteread
-        if filename.endswith(".gz"):
+        filesize = os.stat(filename).st_size
+        if filename.endswith(".gz") and filesize > 2**32:
             filesize = self.get_uncompressed_size(filename)
-        else: 
-            filesize = os.stat(filename).st_size
-            
+	elif filename == "data/archs4_gene_expression_norm_transposed.tsv.gz":
+	    filesize = 51732577723
+
         try:
             infile = openfile(filename, "rb")
             header = infile.readline()
@@ -180,7 +181,7 @@ class StreamDataLoader:
 
 
 if __name__ == "__main__":
-    filename = "data/archs4_gene_small.tsv.gz"
+    filename = "data/archs4_gene_expression_norm_transposed.tsv.gz"
     
     dataloader = StreamDataLoader(filename, batch_size=10, use_cuda=True)    
     
