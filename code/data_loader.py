@@ -5,6 +5,9 @@ import random
 import gzip
 import numpy as np
 import pickle
+import json
+from itertools import cycle
+from torch.utils.data import Dataset, DataLoader
 from tqdm import tqdm
 from typing import List, BinaryIO
 
@@ -22,33 +25,57 @@ def openfile(filename, mode):
     return fh
 
 
-class StreamDataLoader:
-    def __init__(self, filename, batch_size, train=True, labeled=False, use_cuda=False, shuffle_seed=None):
+class StreamDataLoader(Dataset):
+    def __init__(self, filename, batch_size=1, split=None, val_prop=0.2, target_file=None, use_cuda=False):
         self.filename = filename
+        self.target_file = target_file
         self.batch_size = batch_size
-        self.train = train
-        self.labeled = labeled
+        self.split = split
+        self.val_prop = val_prop
         self.use_cuda = use_cuda and torch.cuda.is_available()
         self.device = torch.device("cuda" if self.use_cuda else "cpu")
 
         self.positions = self.indexer(self.filename)
-        if shuffle_seed:    # insanely slow on gzipped files
-            random.seed(shuffle_seed)
-            random.shuffle(self.positions)
+        
+        val_split_index = int(np.floor(self.val_prop * len(self.positions)))
+        if self.split == "train":
+            self.positions = self.positions[val_split_index:]
+        elif self.split == "val":
+            self.positions = self.positions[:val_split_index]
+        
+        if self.target_file:
+            self.target_positions = self.indexer(self.target_file)
+            if self.split == "train":
+                self.target_positions = self.target_positions[val_split_index:]
+            elif self.split == "val":
+                self.target_positions = self.target_positions[:val_split_index]
+        else:
+            self.target_positions = None 
+        
         print("Dataset loaded")
 
     
     def __len__(self):
-        return len(self.indexes)
+        return len(self.positions)
     
     
     def __getitem__(self, idx):
-        if self.labeled:
-            pass
-            # TODO: Implement the labeled logic
+        (start, stop) = self.positions[idx]
+        
+        with openfile(self.filename, "rb") as infile:
+            sample = np.loadtxt([self.extract(infile, start, stop)])
+        sample = torch.tensor(sample, dtype=torch.float)
+        
+        if self.target_positions:
+            (start, stop) = self.target_positions[idx]
+            with open(self.target_file, "rb") as infile:
+                targets = np.loadtxt([self.extract(infile, start, stop)])
+            targets = torch.tensor(targets, dtype=torch.float)
         else:
-            pass
-    
+            targets = torch.empty((0, 1))
+        
+        return (sample, targets)
+        
     
     def get_uncompressed_size(self, file):
         pipe_in = os.popen('gzip -l %s' % file)
@@ -150,7 +177,7 @@ class StreamDataLoader:
                 index_list = pickle.load(f)
             return index_list
         
-        print("Indexing file")
+        print(f"Indexing {filename}")
         filesize = os.stat(filename).st_size
         if filename.endswith(".gz") and filesize > 2**32:
             filesize = self.get_uncompressed_size(filename)
@@ -209,35 +236,65 @@ class StreamDataLoader:
         return index_list
 
 
-def get_dataset(location, batch_size, n_targets):
-    """Takes a location for the datafiles and returns 3 dataloaders
+def get_dataset(data_dict: dict, batch_size: int, n_targets=None):
+    """Takes a location for the datafiles and returns 3 dataloaders.
+    The dataloaders return random indicies which means that it doesn't
+    work well with gzipped files. 
 
     Args:
-        location (_type_): _description_
-        batch_size (_type_): _description_
-        n_targets (_type_): _description_
+        data_dict (dict): Dict with paths to the datafiles.
+        batch_size (int): number of samples per batch
+        n_targets (int): Not implemented yet
     """
+    # TODO: implement n_targets to be able to predict a subset of the targets
+    unlabeled_data = StreamDataLoader(filename=data_dict["unlabeled"], use_cuda=True)
+    training_data = StreamDataLoader(filename=data_dict["labeled_samples"], split="train", 
+                                target_file=data_dict["labeled_targets"], use_cuda=True)
+    validation_data = StreamDataLoader(filename=data_dict["labeled_samples"], split="val", 
+                                  target_file=data_dict["labeled_targets"], use_cuda=True)
     
+    unlabeled = DataLoader(unlabeled_data, batch_size=batch_size, num_workers=4, prefetch_factor=3)
+    training = DataLoader(training_data, batch_size=batch_size, num_workers=4, prefetch_factor=3)
+    validation = DataLoader(validation_data, batch_size=batch_size, num_workers=4, prefetch_factor=3)
 
-
-
-def get_dataset(location, batch_size, n_targets):
-    """Takes a location for the datafiles and returns 3 dataloaders
-
-    Args:
-        location (_type_): _description_
-        batch_size (_type_): _description_
-        n_targets (_type_): _description_
-    """
-    
-
-
+    return unlabeled, training, validation
 
 if __name__ == "__main__":
-    filename = "data/archs4_gene_expression_norm_transposed.tsv.gz"
+    with open("data/data.json", "r") as f:
+        data_dict = json.load(f)
     
-    dataloader = StreamDataLoader(filename, batch_size=10, use_cuda=True)    
+    unlabeled_dataloader, training_dataloader, validation_dataloader = get_dataset(data_dict=data_dict, batch_size=128) 
     
-    for batch in dataloader:
+    testfile = open("test.txt", "w")
+    t = tqdm(total=len(unlabeled_dataloader))
+    for (x, y), (u, _) in zip(cycle(training_dataloader), unlabeled_dataloader):
+        t.update()
+        print(x.size(), y.size(), u.size(), file=testfile)
         continue
-    print(batch)
+    t.close()
+    
+    # filename = "data/archs4_gene_small.tsv"
+    # dataloader = StreamDataLoader(filename, split = "train", batch_size=64, use_cuda=True)    
+    
+    # dataloader_torch = DataLoader(dataloader, batch_size=64, num_workers=4, prefetch_factor=3)
+    # # TODO: Understand the sampler and how it chooses data.
+    
+    # t = tqdm(total=len(dataloader_torch))
+    # for batch in dataloader_torch:
+    #     t.update()
+    #     continue
+    # t.close()
+    
+    # labeled_samples = "data/gtex_gene_expr.tsv"
+    # labeled_targets = "data/gtex_iso_expr.tsv"
+    # labeled_dataloader = StreamDataLoader(labeled_samples, train=True, target_file=labeled_targets, batch_size=64, use_cuda=True)
+    
+    # torch_dataloader = DataLoader(labeled_dataloader, batch_size=64, num_workers=4, prefetch_factor=3)
+    
+    # t = tqdm(total=len(torch_dataloader))
+    # for batch in torch_dataloader:
+    #     t.update()
+    # t.close()
+
+    # print(batch[0].size())
+    # print(batch[1].size())

@@ -1,3 +1,4 @@
 data/*
-*test*
+test*
 !data/archs_gene_very_small.tsv
+!data/data.json
