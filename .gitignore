@@ -2,3 +2,4 @@ data/*
 test*
 !data/archs_gene_very_small.tsv
 !data/data.json
+!data/gtex_annot.tsv
