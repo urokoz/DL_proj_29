@@ -3,7 +3,7 @@ import numpy as np
 import sys
 from urllib import request
 from torch.utils.data import Dataset
-sys.path.append("../semi-supervised")
+#sys.path.append("../semi-supervised")
 n_labels = 10
 cuda = torch.cuda.is_available()
 
