@@ -52,10 +52,17 @@ class Encoder(nn.Module):
         self.hidden = nn.ModuleList(linear_layers)
         self.sample = sample_layer(h_dim[-1], z_dim)
 
+    def get_latent_vars(self, x):
+        for layer in self.hidden:
+            x = F.relu(layer(x))
+        z, mu, log_var = self.sample(x)
+        return z, mu, log_var
+
     def forward(self, x):
         for layer in self.hidden:
             x = F.relu(layer(x))
         return self.sample(x)
+    
 
 
 class Decoder(nn.Module):
@@ -81,12 +88,14 @@ class Decoder(nn.Module):
 
         self.reconstruction = nn.Linear(h_dim[-1], x_dim)
 
-        self.output_activation = nn.Sigmoid()
+        # Sigmoid function (suitable for data from 0 to 1)
+        # self.output_activation = nn.Sigmoid()
+        # replaced by relu (suitable for data from 0 to +inf)
+        self.output_activation = nn.ReLU()
 
     def forward(self, x):
         for layer in self.hidden:
-            x = F.relu(layer(x))
-        # Sigmoid function removed (suitable for data from 0 to 1)    
+            x = F.relu(layer(x))    
         #return self.output_activation(self.reconstruction(x))
         return self.reconstruction(x)
 
