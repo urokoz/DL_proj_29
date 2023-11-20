@@ -1,6 +1,7 @@
 data/*
 test*
 __pycache__/
+*.pkl
 !data/archs_gene_very_small.tsv
 !data/data.json
 !data/gtex_annot.tsv
