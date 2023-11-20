@@ -1,5 +1,5 @@
 {
-    "unlabeled": "data/archs4_gene_small.tsv",
+    "unlabeled": "data/archs4_gene_very_small.tsv",
     "labeled_samples": "data/gtex_gene_expr.tsv",
     "labeled_targets": "data/gtex_iso_expr.tsv"
 }
