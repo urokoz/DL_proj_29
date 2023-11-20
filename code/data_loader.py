@@ -236,7 +236,7 @@ class StreamDataLoader(Dataset):
         return index_list
 
 
-def get_dataset(data_dict: dict, batch_size: int, n_targets=None):
+def get_dataset(data_dict: dict, batch_size: int, n_targets=None, use_cuda=False):
     """Takes a location for the datafiles and returns 3 dataloaders.
     The dataloaders return random indicies which means that it doesn't
     work well with gzipped files. 
@@ -247,15 +247,15 @@ def get_dataset(data_dict: dict, batch_size: int, n_targets=None):
         n_targets (int): Not implemented yet
     """
     # TODO: implement n_targets to be able to predict a subset of the targets
-    unlabeled_data = StreamDataLoader(filename=data_dict["unlabeled"], use_cuda=True)
+    unlabeled_data = StreamDataLoader(filename=data_dict["unlabeled"], use_cuda=use_cuda)
     training_data = StreamDataLoader(filename=data_dict["labeled_samples"], split="train", 
-                                target_file=data_dict["labeled_targets"], use_cuda=True)
+                                target_file=data_dict["labeled_targets"], use_cuda=use_cuda, val_prop=0.1)
     validation_data = StreamDataLoader(filename=data_dict["labeled_samples"], split="val", 
-                                  target_file=data_dict["labeled_targets"], use_cuda=True)
+                                  target_file=data_dict["labeled_targets"], use_cuda=use_cuda, val_prop=0.1)
     
-    unlabeled = DataLoader(unlabeled_data, batch_size=1000, num_workers=4, prefetch_factor=3)
-    training = DataLoader(training_data, batch_size=batch_size, num_workers=4, prefetch_factor=3)
-    validation = DataLoader(validation_data, batch_size=batch_size, num_workers=4, prefetch_factor=3)
+    unlabeled = DataLoader(unlabeled_data, batch_size=1000, num_workers=2, prefetch_factor=1)
+    training = DataLoader(training_data, batch_size=batch_size, num_workers=2, prefetch_factor=1)
+    validation = DataLoader(validation_data, batch_size=batch_size, num_workers=2, prefetch_factor=1)
 
     return unlabeled, training, validation
 

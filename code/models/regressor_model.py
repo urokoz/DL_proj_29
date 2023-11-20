@@ -9,6 +9,12 @@ class Regressor(nn.Module):
         self.FFN = nn.Sequential(
             nn.Linear(dims[0], dims[1]),
             nn.ReLU(),
+            nn.Dropout(0.2),
+            nn.BatchNorm1d(dims[1]),
+            nn.Linear(dims[1], dims[1]),
+            nn.ReLU(),
+            nn.Dropout(0.2),
+            nn.BatchNorm1d(dims[1]),
             nn.Linear(dims[1], dims[2]),
             nn.ReLU()
         )

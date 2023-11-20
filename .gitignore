@@ -1,5 +1,10 @@
 data/*
 test*
+*.pkl
+__pycache__/
+*.py[cod]
+*.log
+
 !data/archs_gene_very_small.tsv
 !data/data.json
 !data/gtex_annot.tsv
