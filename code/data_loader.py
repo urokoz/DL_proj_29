@@ -253,7 +253,7 @@ def get_dataset(data_dict: dict, batch_size: int, n_targets=None):
     validation_data = StreamDataLoader(filename=data_dict["labeled_samples"], split="val", 
                                   target_file=data_dict["labeled_targets"], use_cuda=True)
     
-    unlabeled = DataLoader(unlabeled_data, batch_size=batch_size, num_workers=4, prefetch_factor=3)
+    unlabeled = DataLoader(unlabeled_data, batch_size=1000, num_workers=4, prefetch_factor=3)
     training = DataLoader(training_data, batch_size=batch_size, num_workers=4, prefetch_factor=3)
     validation = DataLoader(validation_data, batch_size=batch_size, num_workers=4, prefetch_factor=3)
 
