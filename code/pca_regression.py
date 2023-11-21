@@ -7,7 +7,6 @@ import numpy as np
 import matplotlib.pyplot as plt
 from os import path
 from tqdm import tqdm
-from IPython.display import clear_output
 from sklearn.decomposition import IncrementalPCA
 sys.path.append('../code')
 from data_loader import Archs4GeneExpressionDataset, GtexDataset
@@ -18,7 +17,7 @@ from torch.utils.data import WeightedRandomSampler, DataLoader
 # %%
 dat_dir = sys.argv[1]
 archsDset = Archs4GeneExpressionDataset(data_dir = dat_dir, load_in_mem=False)
-unlabeled_dataloader = DataLoader(archsDset, batch_size=64, num_workers=2, prefetch_factor=1)
+unlabeled_dataloader = DataLoader(archsDset, batch_size=400, num_workers=2, prefetch_factor=1)
 
 gtexDset_train = GtexDataset(data_dir=dat_dir, split="train", load_in_mem=False)
 sampler_train = WeightedRandomSampler(weights=gtexDset_train.sample_weights, num_samples=len(gtexDset_train), replacement=True)
@@ -39,8 +38,8 @@ if path.exists(pca_model_path):
         ipca = pickle.load(f)
 else:
     # create PCA incrementally
-    for U, _ in tqdm(unlabeled_dataloader):
-        ipca.partial_fit(U)
+    for sample in tqdm(unlabeled_dataloader, desc="Fitting PCA"):
+        ipca.partial_fit(sample)
     with open(pca_model_path, "wb") as f:
         pickle.dump(ipca, f)
 
@@ -65,23 +64,17 @@ def get_numpy(x):
         return x.cpu().data.numpy()
     return x.data.numpy()
 
-print(len(validation_dataloader))
-print(len(training_dataloader))
-
 # %%
-epochs = 50
+epochs = 4
 log_every = 5
 val_every = 5
-batches = 0
 tot_batches = 0
 
 val_losses, val_iter = [], []
 train_losses, train_iter = [], []
 
-logfile = open("log.txt", "w")
-
 for i in range(epochs):
-    tot_train_loss = 0
+    tot_train_loss, batches = 0, 0
     for X_train, y_train in training_dataloader:
         if batches % val_every == 0:
             model.eval()
@@ -129,16 +122,14 @@ for i in range(epochs):
             train_losses.append(tot_train_loss/tot_batches)
             tot_train_loss = 0
             tot_batches = 0
-            print(f"Epoch {i+1}/{epochs}")
-            print(f"Training loss: {train_losses[-1]}\tValidation loss: {val_losses[-1]}", file=logfile)
-            print()
+            print(f"# Epoch {i+1}/{epochs}\n# Batch {batches+1}/{len(training_dataloader)}")
+            print(f"Training loss:\t{train_losses[-1]}\tValidation loss:\t{val_losses[-1]}")
             # fig = plt.figure(figsize=(12,4))
             # plt.subplot(1, 2, 1)
             # plt.plot(train_iter, train_losses, label='train_loss')
             # plt.plot(val_iter, val_losses, label='valid_loss')
             # plt.legend()
             # plt.show()
-            clear_output(wait=True)
     
         batches += 1
 

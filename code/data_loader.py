@@ -13,7 +13,7 @@ from sklearn.model_selection import train_test_split
 
 class Archs4GeneExpressionDataset(torch.utils.data.Dataset):
     def __init__(self, data_dir: str, load_in_mem: bool=False):
-        print("Loading ARCHS4 data...")
+        print("# Loading ARCHS4 data...")
         f_archs4 = h5py.File(data_dir + '/archs4_gene_expression_norm_transposed.hdf5', mode='r')
         self.dset = f_archs4['expressions']
 
@@ -28,9 +28,8 @@ class Archs4GeneExpressionDataset(torch.utils.data.Dataset):
 
 
 class GtexDataset(torch.utils.data.Dataset):
-    # TODO: implement a way to create train set and validation set
     def __init__(self, data_dir: str, split: str="", val_prop: float=0.1, include: str="", exclude: str="", load_in_mem: bool=False):
-        print("Loading GTEx data...")
+        print("# Loading GTEx data...")
         f_gtex_gene = h5py.File(data_dir + '/gtex_gene_expression_norm_transposed.hdf5', mode='r')
         f_gtex_isoform = h5py.File(data_dir + '/gtex_isoform_expression_norm_transposed.hdf5', mode='r')
 
