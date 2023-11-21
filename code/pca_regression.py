@@ -19,7 +19,6 @@ datafile = sys.argv[1]
 with open(datafile, "r") as f:
         data_dict = json.load(f)
 
-unlabeled_dataloader, training_dataloader, validation_dataloader = get_dataset(data_dict=data_dict, batch_size=64)
 
 # %%
 n_components = 100

@@ -8,6 +8,7 @@ import torch.utils.data
 from torch.utils.data import WeightedRandomSampler, DataLoader
 from collections import Counter
 from tqdm import tqdm
+from sklearn.model_selection import train_test_split
 
 
 class Archs4GeneExpressionDataset(torch.utils.data.Dataset):
@@ -27,7 +28,8 @@ class Archs4GeneExpressionDataset(torch.utils.data.Dataset):
 
 
 class GtexDataset(torch.utils.data.Dataset):
-    def __init__(self, data_dir: str, include: str="", exclude: str="", load_in_mem: bool=False):
+    # TODO: implement a way to create train set and validation set
+    def __init__(self, data_dir: str, split: str="", val_prop: float=0.1, include: str="", exclude: str="", load_in_mem: bool=False):
         print("Loading GTEx data...")
         f_gtex_gene = h5py.File(data_dir + '/gtex_gene_expression_norm_transposed.hdf5', mode='r')
         f_gtex_isoform = h5py.File(data_dir + '/gtex_isoform_expression_norm_transposed.hdf5', mode='r')
@@ -53,6 +55,17 @@ class GtexDataset(torch.utils.data.Dataset):
         elif exclude:
             matches = [not(bool(re.search(exclude, s.decode(), re.IGNORECASE))) for s in f_gtex_gene['tissue']]
             self.idxs = np.where(matches)[0]
+            
+        if split == "train":
+            if not self.idx:
+                self.idxs = np.arange(len(self.dset_gene))
+            
+            self.idxs, _ = train_test_split(self.idxs, test_size=val_prop, random_state=42, stratify=f_gtex_gene['tissue'][self.idxs])
+        elif split == "val":
+            if not self.idx:
+                self.idxs = np.arange(len(self.dset_gene))
+            
+            _, self.idxs = train_test_split(self.idxs, test_size=val_prop, random_state=42, stratify=f_gtex_gene['tissue'][self.idxs])
         
         self.sampleweights(f_gtex_gene['tissue'])
 
@@ -84,10 +97,10 @@ class GtexDataset(torch.utils.data.Dataset):
 
 if __name__ == '__main__':
     dat_dir = sys.argv[1]
-    archsDset = Archs4GeneExpressionDataset(data_dir = dat_dir,load_in_mem=False)
+    archsDset = Archs4GeneExpressionDataset(data_dir = dat_dir, load_in_mem=True)
     archsDloader = DataLoader(archsDset, batch_size=64, num_workers=2, prefetch_factor=1) # sampler=sampler,
 
-    gtexDset = GtexDataset(data_dir = dat_dir, load_in_mem=False)
+    gtexDset = GtexDataset(data_dir = dat_dir, load_in_mem=True)
 
     sampler= WeightedRandomSampler(weights=gtexDset.sample_weights, num_samples=len(gtexDset), replacement=True)
     GtexDloader = DataLoader(gtexDset, sampler=sampler, batch_size=64, num_workers=2, prefetch_factor=1)
