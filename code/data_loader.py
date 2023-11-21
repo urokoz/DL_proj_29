@@ -100,13 +100,26 @@ if __name__ == '__main__':
     archsDset = Archs4GeneExpressionDataset(data_dir = dat_dir, load_in_mem=True)
     archsDloader = DataLoader(archsDset, batch_size=64, num_workers=2, prefetch_factor=1) # sampler=sampler,
 
-    gtexDset = GtexDataset(data_dir = dat_dir, load_in_mem=True)
+    # gtexDset = GtexDataset(data_dir = dat_dir, load_in_mem=True)
 
-    sampler= WeightedRandomSampler(weights=gtexDset.sample_weights, num_samples=len(gtexDset), replacement=True)
-    GtexDloader = DataLoader(gtexDset, sampler=sampler, batch_size=64, num_workers=2, prefetch_factor=1)
+    # sampler = WeightedRandomSampler(weights=gtexDset.sample_weights, num_samples=len(gtexDset), replacement=True)
+    # GtexDloader = DataLoader(gtexDset, sampler=sampler, batch_size=64, num_workers=2, prefetch_factor=1)
+    
+    gtexDset_train = GtexDataset(data_dir = dat_dir, split="train", load_in_mem=True)
+
+    sampler_train = WeightedRandomSampler(weights=gtexDset_train.sample_weights, num_samples=len(gtexDset_train), replacement=True)
+    GtexDloader_train = DataLoader(gtexDset_train, sampler=sampler_train, batch_size=64, num_workers=2, prefetch_factor=1)
+    
+    gtexDset_val = GtexDataset(data_dir = dat_dir, split="val", load_in_mem=True)
+
+    sampler_val = WeightedRandomSampler(weights=gtexDset_val.sample_weights, num_samples=len(gtexDset_val), replacement=True)
+    GtexDloader_val = DataLoader(gtexDset_val, sampler=sampler_val, batch_size=64, num_workers=2, prefetch_factor=1)
 
     for _ in tqdm(archsDloader):
         pass
     
-    for _ in tqdm(GtexDloader):
+    for _ in tqdm(GtexDloader_train):
+        pass
+
+    for _ in tqdm(GtexDloader_train):
         pass
