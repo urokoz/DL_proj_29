@@ -10,14 +10,23 @@ from tqdm import tqdm
 from IPython.display import clear_output
 from sklearn.decomposition import IncrementalPCA
 sys.path.append('../code')
-from data_loader import get_dataset
+from data_loader import Archs4GeneExpressionDataset, GtexDataset
 from models.regressor_model import Regressor
+from torch.utils.data import WeightedRandomSampler, DataLoader
 
 
 # %%
-datafile = sys.argv[1]
-with open(datafile, "r") as f:
-        data_dict = json.load(f)
+dat_dir = sys.argv[1]
+archsDset = Archs4GeneExpressionDataset(data_dir = dat_dir, load_in_mem=False)
+unlabeled_dataloader = DataLoader(archsDset, batch_size=64, num_workers=2, prefetch_factor=1)
+
+gtexDset_train = GtexDataset(data_dir=dat_dir, split="train", load_in_mem=False)
+sampler_train = WeightedRandomSampler(weights=gtexDset_train.sample_weights, num_samples=len(gtexDset_train), replacement=True)
+training_dataloader = DataLoader(gtexDset_train, sampler=sampler_train, batch_size=64, num_workers=2, prefetch_factor=1)
+
+gtexDset_val = GtexDataset(data_dir=dat_dir, split="val", load_in_mem=False)
+sampler_val = WeightedRandomSampler(weights=gtexDset_val.sample_weights, num_samples=len(gtexDset_val), replacement=True)
+validation_dataloader = DataLoader(gtexDset_val, batch_size=64, num_workers=2, prefetch_factor=1)
 
 
 # %%

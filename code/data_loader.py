@@ -57,15 +57,18 @@ class GtexDataset(torch.utils.data.Dataset):
             self.idxs = np.where(matches)[0]
             
         if split == "train":
-            if not self.idx:
+            if not self.idxs:
                 self.idxs = np.arange(len(self.dset_gene))
             
             self.idxs, _ = train_test_split(self.idxs, test_size=val_prop, random_state=42, stratify=f_gtex_gene['tissue'][self.idxs])
+            self.idxs = np.sort(self.idxs)
+            
         elif split == "val":
-            if not self.idx:
+            if not self.idxs:
                 self.idxs = np.arange(len(self.dset_gene))
             
             _, self.idxs = train_test_split(self.idxs, test_size=val_prop, random_state=42, stratify=f_gtex_gene['tissue'][self.idxs])
+            self.idxs = np.sort(self.idxs)
         
         self.sampleweights(f_gtex_gene['tissue'])
 
@@ -97,23 +100,25 @@ class GtexDataset(torch.utils.data.Dataset):
 
 if __name__ == '__main__':
     dat_dir = sys.argv[1]
-    archsDset = Archs4GeneExpressionDataset(data_dir = dat_dir, load_in_mem=True)
+    archsDset = Archs4GeneExpressionDataset(data_dir = dat_dir, load_in_mem=False)
     archsDloader = DataLoader(archsDset, batch_size=64, num_workers=2, prefetch_factor=1) # sampler=sampler,
 
-    # gtexDset = GtexDataset(data_dir = dat_dir, load_in_mem=True)
-
-    # sampler = WeightedRandomSampler(weights=gtexDset.sample_weights, num_samples=len(gtexDset), replacement=True)
-    # GtexDloader = DataLoader(gtexDset, sampler=sampler, batch_size=64, num_workers=2, prefetch_factor=1)
+    gtexDset = GtexDataset(data_dir = dat_dir, load_in_mem=True)
+    sampler = WeightedRandomSampler(weights=gtexDset.sample_weights, num_samples=len(gtexDset), replacement=True)
+    GtexDloader = DataLoader(gtexDset, sampler=sampler, batch_size=64, num_workers=2, prefetch_factor=1)
     
-    gtexDset_train = GtexDataset(data_dir = dat_dir, split="train", load_in_mem=True)
-
+    gtexDset_train = GtexDataset(data_dir=dat_dir, split="train", load_in_mem=False)
     sampler_train = WeightedRandomSampler(weights=gtexDset_train.sample_weights, num_samples=len(gtexDset_train), replacement=True)
     GtexDloader_train = DataLoader(gtexDset_train, sampler=sampler_train, batch_size=64, num_workers=2, prefetch_factor=1)
     
-    gtexDset_val = GtexDataset(data_dir = dat_dir, split="val", load_in_mem=True)
-
+    gtexDset_val = GtexDataset(data_dir=dat_dir, split="val", load_in_mem=False)
     sampler_val = WeightedRandomSampler(weights=gtexDset_val.sample_weights, num_samples=len(gtexDset_val), replacement=True)
-    GtexDloader_val = DataLoader(gtexDset_val, sampler=sampler_val, batch_size=64, num_workers=2, prefetch_factor=1)
+    GtexDloader_val = DataLoader(gtexDset_val, batch_size=64, num_workers=2, prefetch_factor=1)
+    
+    # check that the train and validation sets are disjoint
+    intersection = set(gtexDset_train.idxs).intersection(set(gtexDset_val.idxs))
+    assert(len(intersection) == 0)
+    assert(len(gtexDset_train.idxs) + len(gtexDset_val.idxs) == len(gtexDset))
 
     for _ in tqdm(archsDloader):
         pass
@@ -121,5 +126,5 @@ if __name__ == '__main__':
     for _ in tqdm(GtexDloader_train):
         pass
 
-    for _ in tqdm(GtexDloader_train):
+    for _ in tqdm(GtexDloader_val):
         pass
