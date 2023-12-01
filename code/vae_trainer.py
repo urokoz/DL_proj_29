@@ -39,19 +39,6 @@ train_dataloader = DataLoader(archsDset_train, batch_size=BATCH_SIZE, num_worker
 archsDset_val = Archs4GeneExpressionDataset(data_dir = dat_dir, split="val", load_in_mem=False)
 val_dataloader = DataLoader(archsDset_val, batch_size=BATCH_SIZE, num_workers=2, prefetch_factor=1)
 
-# verify size of a sample batch
-t_sample_batch = next(iter(train_dataloader))
-for i, tensor in enumerate(t_sample_batch):
-    print(f'Train: Tensor {i}: {tensor.size()}')
-print(f'Total number of samples: {BATCH_SIZE*len(train_dataloader)}')
-
-v_sample_batch = next(iter(val_dataloader))
-for i, tensor in enumerate(v_sample_batch):
-    print(f'Validation: Tensor {i}: {tensor.size()}')    
-print(f'Total number of samples: {BATCH_SIZE*len(val_dataloader)}')    
-
-
-
 #### Model setup ####
 from models import VariationalAutoencoder
 from layers import GaussianSample
@@ -225,3 +212,6 @@ for epoch in range(TRAIN_EPOCHS):
 latent_representations = np.concatenate(latent_representations, axis=0)
 print(f'Max value after normalization: {max_feature:2.2f}')
 if max_feature > 0: print(f'WARNING: Max value after normalization exceeds 1')
+
+# Save model
+torch.save(model.state_dict(), 'trained_models/vae_model.pt')
