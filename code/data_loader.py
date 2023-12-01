@@ -12,13 +12,27 @@ from sklearn.model_selection import train_test_split
 
 
 class Archs4GeneExpressionDataset(torch.utils.data.Dataset):
-    def __init__(self, data_dir: str, load_in_mem: bool=False):
+    def __init__(self, data_dir: str, split: str="", val_prop: float=0.1, load_in_mem: bool=False):
         print("# Loading ARCHS4 data...")
         f_archs4 = h5py.File(data_dir + '/archs4_gene_expression_norm_transposed.hdf5', mode='r')
         self.dset = f_archs4['expressions']
 
         if load_in_mem:
             self.dset = np.array(self.dset)
+        
+        if split == "train":
+            if not self.idxs:
+                self.idxs = np.arange(len(self.dset_gene))
+            
+            self.idxs, _ = train_test_split(self.idxs, test_size=val_prop, random_state=42)
+            self.idxs = np.sort(self.idxs)
+            
+        elif split == "val":
+            if not self.idxs:
+                self.idxs = np.arange(len(self.dset_gene))
+            
+            _, self.idxs = train_test_split(self.idxs, test_size=val_prop, random_state=42)
+            self.idxs = np.sort(self.idxs)
 
     def __len__(self):
         return self.dset.shape[0]
@@ -100,7 +114,13 @@ class GtexDataset(torch.utils.data.Dataset):
 if __name__ == '__main__':
     dat_dir = sys.argv[1]
     archsDset = Archs4GeneExpressionDataset(data_dir = dat_dir, load_in_mem=False)
-    archsDloader = DataLoader(archsDset, batch_size=64, num_workers=2, prefetch_factor=1) # sampler=sampler,
+    archsDloader = DataLoader(archsDset, batch_size=64, num_workers=2, prefetch_factor=1) 
+    
+    archsDset_train = Archs4GeneExpressionDataset(data_dir = dat_dir, split="train", load_in_mem=False)
+    archsDloader_train = DataLoader(archsDset, batch_size=64, num_workers=2, prefetch_factor=1) 
+    
+    archsDset_val = Archs4GeneExpressionDataset(data_dir = dat_dir, split="val", load_in_mem=False)
+    archsDloader_val = DataLoader(archsDset, batch_size=64, num_workers=2, prefetch_factor=1) 
 
     gtexDset = GtexDataset(data_dir = dat_dir, load_in_mem=True)
     sampler = WeightedRandomSampler(weights=gtexDset.sample_weights, num_samples=len(gtexDset), replacement=True)
