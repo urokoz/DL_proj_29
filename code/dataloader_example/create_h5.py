@@ -43,19 +43,19 @@ def add_tissue_hdf5(tissue_dict:dict, hdf5_file:h5py.File, n_rows:int, dataset_n
         dset[i] = tissue_dict[row_name]
 
 if __name__ == "__main__":
-    input_path = "/dtu-compute/datasets/iso_02456/"
-    output_path = "/dtu-compute/datasets/iso_02456/hdf5/"
+    # input_path = "/dtu-compute/datasets/iso_02456/"
+    # output_path = "/zhome/1f/4/136908/DL_proj_29/data/hdf5/"
 
-    #input_path = "../data/"
-    #output_path = "../data/hdf5/"
+    input_path = "data/"
+    output_path = "data/hdf5/"
 
     # Convert archs4_gene_expression to hdf5 format
-    csv_filename = input_path + 'archs4_gene_expression_norm_transposed.tsv.gz'
+    csv_filename = input_path + 'archs4_gene_small.tsv.gz'
     hdf5_filename = output_path + 'archs4_gene_expression_norm_transposed.hdf5'
 
     print("Counting rows and columns in:", csv_filename)
-    #n_rows, n_cols = csv_count_rows_cols(csv_filename)
-    n_rows, n_cols = 167885, 18966
+    n_rows, n_cols = csv_count_rows_cols(csv_filename)
+    # n_rows, n_cols = 167885, 18966
     print(f"\t(n_rows, n_cols) = ({n_rows}, {n_cols})")
 
     f_archs4 = h5py.File(hdf5_filename, mode='w')
@@ -69,12 +69,12 @@ if __name__ == "__main__":
         tissue_dict = dict(csv.reader(file, delimiter='\t'))
 
     # Convert gtex_gene_expression to hdf5 format
-    csv_filename = input_path + 'gtex_gene_expression_norm_transposed.tsv.gz'
+    csv_filename = input_path + 'gtex_gene_expr.tsv.gz'
     hdf5_filename = output_path + 'gtex_gene_expression_norm_transposed.hdf5'
     
     print("Counting rows and columns in:", csv_filename)
-    #n_rows, n_cols = csv_count_rows_cols(csv_filename)
-    n_rows, n_cols = (17357, 18966)
+    n_rows, n_cols = csv_count_rows_cols(csv_filename)
+    # n_rows, n_cols = (17357, 18966)
     print(f"\t(n_rows, n_cols) = ({n_rows}, {n_cols})")
 
     print("Converting", csv_filename, "->", hdf5_filename)
@@ -86,12 +86,12 @@ if __name__ == "__main__":
 
 
     # Convert gtex_isoform_expression to hdf5 format
-    csv_filename = input_path + 'gtex_isoform_expression_norm_transposed.tsv.gz'
+    csv_filename = input_path + 'gtex_iso_expr.tsv.gz'
     hdf5_filename = output_path + 'gtex_isoform_expression_norm_transposed.hdf5'
     
     print("Counting rows and columns in:", csv_filename)
-    #n_rows, n_cols = csv_count_rows_cols(csv_filename)
-    n_rows, n_cols = (17357, 156959)
+    n_rows, n_cols = csv_count_rows_cols(csv_filename)
+    # n_rows, n_cols = (17357, 156959)
     print(f"\t(n_rows, n_cols) = ({n_rows}, {n_cols})")
     
     print("Converting", csv_filename, "->", hdf5_filename)

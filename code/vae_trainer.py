@@ -5,7 +5,7 @@ import matplotlib.pyplot as plt
 from os import path
 from tqdm import tqdm
 from sklearn.decomposition import IncrementalPCA
-sys.path.append('../code')
+sys.path.append('code')
 sys.path.append("wohlert")
 from data_loader import Archs4GeneExpressionDataset, GtexDataset
 from models.regressor_model import Regressor

@@ -19,26 +19,34 @@ class Archs4GeneExpressionDataset(torch.utils.data.Dataset):
 
         if load_in_mem:
             self.dset = np.array(self.dset)
+
+        self.idxs = None
         
         if split == "train":
             if not self.idxs:
-                self.idxs = np.arange(len(self.dset_gene))
+                self.idxs = np.arange(len(self.dset))
             
             self.idxs, _ = train_test_split(self.idxs, test_size=val_prop, random_state=42)
             self.idxs = np.sort(self.idxs)
             
         elif split == "val":
             if not self.idxs:
-                self.idxs = np.arange(len(self.dset_gene))
+                self.idxs = np.arange(len(self.dset))
             
             _, self.idxs = train_test_split(self.idxs, test_size=val_prop, random_state=42)
             self.idxs = np.sort(self.idxs)
 
     def __len__(self):
-        return self.dset.shape[0]
+        if self.idxs is None:
+            return self.dset.shape[0]
+        else:
+            return self.idxs.shape[0]
 
     def __getitem__(self, idx):
-        return self.dset[idx]
+        if self.idxs is None:
+            return self.dset[idx]
+        else:
+            return self.dset[self.idxs[idx]]
 
 
 class GtexDataset(torch.utils.data.Dataset):
@@ -85,7 +93,6 @@ class GtexDataset(torch.utils.data.Dataset):
         
         self.sampleweights(f_gtex_gene['tissue'])
 
-
     def sampleweights(self, labels_gene):
         #adding stuff here 
         #making up for imbalance in dataset by adding sampling weights. 
@@ -96,13 +103,11 @@ class GtexDataset(torch.utils.data.Dataset):
             tissue_counts = Counter(labels_gene[self.idxs])
             self.sample_weights = [1/tissue_counts[i] for i in labels_gene[self.idxs]]
 
-
     def __len__(self):
         if self.idxs is None:
             return self.dset_gene.shape[0]
         else:
             return self.idxs.shape[0]
-
 
     def __getitem__(self, idx):
         if self.idxs is None:
@@ -112,15 +117,15 @@ class GtexDataset(torch.utils.data.Dataset):
 
 
 if __name__ == '__main__':
-    dat_dir = sys.argv[1]
+    dat_dir = "data/hdf5"
     archsDset = Archs4GeneExpressionDataset(data_dir = dat_dir, load_in_mem=False)
     archsDloader = DataLoader(archsDset, batch_size=64, num_workers=2, prefetch_factor=1) 
     
     archsDset_train = Archs4GeneExpressionDataset(data_dir = dat_dir, split="train", load_in_mem=False)
-    archsDloader_train = DataLoader(archsDset, batch_size=64, num_workers=2, prefetch_factor=1) 
+    archsDloader_train = DataLoader(archsDset_train, batch_size=64, num_workers=2, prefetch_factor=1) 
     
     archsDset_val = Archs4GeneExpressionDataset(data_dir = dat_dir, split="val", load_in_mem=False)
-    archsDloader_val = DataLoader(archsDset, batch_size=64, num_workers=2, prefetch_factor=1) 
+    archsDloader_val = DataLoader(archsDset_val, batch_size=64, num_workers=2, prefetch_factor=1) 
 
     gtexDset = GtexDataset(data_dir = dat_dir, load_in_mem=True)
     sampler = WeightedRandomSampler(weights=gtexDset.sample_weights, num_samples=len(gtexDset), replacement=True)
@@ -135,11 +140,19 @@ if __name__ == '__main__':
     GtexDloader_val = DataLoader(gtexDset_val, batch_size=64, num_workers=2, prefetch_factor=1)
     
     # check that the train and validation sets are disjoint
+    intersection = set(archsDset_train.idxs).intersection(set(archsDset_val.idxs))
+    assert(len(intersection) == 0)
     intersection = set(gtexDset_train.idxs).intersection(set(gtexDset_val.idxs))
     assert(len(intersection) == 0)
     assert(len(gtexDset_train.idxs) + len(gtexDset_val.idxs) == len(gtexDset))
 
     for _ in tqdm(archsDloader):
+        pass
+
+    for _ in tqdm(archsDloader_train):
+        pass
+
+    for _ in tqdm(archsDloader_val):
         pass
     
     for _ in tqdm(GtexDloader_train):
