@@ -20,7 +20,9 @@ REMOTE:
 5) Check GPU load (and select if necessary another node): 
 	nvidia-smi
 
-6) Execute python caller:
+6) Enable virtual environment
+
+7) Execute python caller:
 	python code/vae_trainer_fcn_caller.py
 
 LOCAL:
