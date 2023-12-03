@@ -10,34 +10,35 @@ from datetime import datetime
 
 #Hyperparameter options
 # RANDOM SEARCH
-if True:
+if False:
   exp_file = 'results/exp_random_'  
-  batch_size_V            = [32]
+  batch_size_V            = [32]                # FIXED
   train_epoch_V           = [3, 5, 10]          # VARIABLE
   hidden_num_layers_V     = [1, 2, 3]           # VARIABLE
   latent_dim_V            = [4, 8, 16, 32, 64]  # VARIABLE
   LR_range                = [1e-4, 1e-3]        # VARIABLE
-  LR_profile              = False
-  beta_range              = [0.2, 10]           # VARIABLE
-  max_latent_dim_exponent = 11  # 2^11 = 1024
+  LR_profile              = False               # Do not profile learning rate
+  beta_range              = [0.2, 10]           # VARIABLE  
   HIDDEN_LAYERS           = []                  # VARIABLE
+  max_latent_dim_exponent = 11  # 2^11 = 1024
 
 # LR profiling, all other fixed
-if False:
+if True:
   exp_file = 'results/exp_lr_prof_'
-  batch_size_V            = [32]
-  train_epoch_V           = [10]
-  hidden_num_layers_V     = [2]
-  latent_dim_V            = [32]
-  LR_range                = [1e-5, 1e-3] # 1e-3 z-space expansion
-  LR_profile              = True
-  beta_range              = [1, 1]
-  HIDDEN_LAYERS           = [128, 1024] # FIXED
+  batch_size_V            = [32]                # FIXED              
+  train_epoch_V           = [10]                # FIXED
+  hidden_num_layers_V     = [2]                 # FIXED
+  latent_dim_V            = [32]                # FIXED
+  LR_range                = [1e-5, 1e-3]        # VARIABLE 
+  LR_profile              = True                # DO profile learning rate
+  beta_range              = [1, 1]              # FIXED
+  HIDDEN_LAYERS           = [128, 1024]         # FIXED
+  max_latent_dim_exponent = 0                   # not used
 
-EXPERIMENTS = 200
+EXPERIMENTS = 20
 LR_prof_V   = np.linspace(LR_range[0], LR_range[1], EXPERIMENTS)
 
-for experiment_number in range(1, EXPERIMENTS+1):
+for experiment_number in range(0, EXPERIMENTS):
   # Randomly select hyperparameters
   BATCH_SIZE        = random.choice(batch_size_V)
   TRAIN_EPOCHS      = random.choice(train_epoch_V) 
@@ -62,7 +63,7 @@ for experiment_number in range(1, EXPERIMENTS+1):
 
   # Call the training function
   current_time = datetime.now().strftime("%H:%M")
-  print(f'\nEXPERIMENT: #{experiment_number}/{EXPERIMENTS} (Time: {current_time})')
+  print(f'\nEXPERIMENT: #{experiment_number}/{EXPERIMENTS-1} (Time: {current_time})')
   print('==============================')
   print(f'latent_dim      = {LATENT_DIM}')
   print(f'hidden layers   = {HIDDEN_LAYERS}')
