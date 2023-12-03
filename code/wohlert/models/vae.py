@@ -96,8 +96,8 @@ class Decoder(nn.Module):
     def forward(self, x):
         for layer in self.hidden:
             x = F.relu(layer(x))    
-        #return self.output_activation(self.reconstruction(x))
-        return self.reconstruction(x)
+        return self.output_activation(self.reconstruction(x))
+        # return self.reconstruction(x)
 
 
 class VariationalAutoencoder(nn.Module):
