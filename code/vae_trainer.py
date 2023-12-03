@@ -25,7 +25,7 @@ PREFETCH_FACTOR   = 2
 MAX_FEATURE_VALUE = 1 # Max value of features for normalization
 
 # Training pars
-TRAIN_EPOCHS      = 100
+TRAIN_EPOCHS      = 40
 LEARNING_RATE     = 1e-4
 BETA              = 0.1
 ELBO_GAIN         = 1 
@@ -46,6 +46,7 @@ from inference import log_gaussian, log_standard_gaussian
 
 use_cuda = True and torch.cuda.is_available()
 
+print(f"{use_cuda=}")
 model = VariationalAutoencoder([input_dim, latent_dim, hidden_layers])
 print(model)
 
