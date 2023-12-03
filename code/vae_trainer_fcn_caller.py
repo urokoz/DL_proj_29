@@ -12,28 +12,28 @@ from datetime import datetime
 # RANDOM SEARCH
 if False:
   exp_file = 'results/exp_random_'  
-  batch_size_V            = [32]                # FIXED
-  train_epoch_V           = [3, 5, 10]          # VARIABLE
-  hidden_num_layers_V     = [1, 2, 3]           # VARIABLE
-  latent_dim_V            = [4, 8, 16, 32, 64]  # VARIABLE
-  LR_range                = [1e-4, 1e-3]        # VARIABLE
+  batch_size_V            = [32]                # fixed
+  train_epoch_V           = [3, 5, 10]          # variable
+  hidden_num_layers_V     = [1, 2, 3]           # variable
+  latent_dim_V            = [4, 8, 16, 32, 64]  # variable
+  LR_range                = [1e-4, 1e-3]        # variable
   LR_profile              = False               # Do not profile learning rate
-  beta_range              = [0.2, 10]           # VARIABLE  
-  HIDDEN_LAYERS           = []                  # VARIABLE
+  beta_range              = [0.2, 10]           # variable  
+  HIDDEN_LAYERS           = []                  # variable
   max_latent_dim_exponent = 11  # 2^11 = 1024
 
 # LR profiling, all other fixed
 if True:
   exp_file = 'results/exp_lr_prof_'
-  batch_size_V            = [32]                # FIXED              
-  train_epoch_V           = [10]                # FIXED
-  hidden_num_layers_V     = [2]                 # FIXED
-  latent_dim_V            = [32]                # FIXED
+  batch_size_V            = [32]                # fixed              
+  train_epoch_V           = [10]                # fixed
+  hidden_num_layers_V     = [2]                 # fixed
+  latent_dim_V            = [32]                # fixed
   LR_range                = [1e-5, 1e-3]        # VARIABLE 
   LR_profile              = True                # DO profile learning rate
-  beta_range              = [1, 1]              # FIXED
-  HIDDEN_LAYERS           = [128, 1024]         # FIXED
-  max_latent_dim_exponent = 0                   # not used
+  beta_range              = [1, 1]              # fixed
+  HIDDEN_LAYERS           = [128, 1024]         # fixed
+  max_latent_dim_exponent = 0                   # not used (HIDDEN_LAYERS is fixed)
 
 EXPERIMENTS = 20
 LR_prof_V   = np.linspace(LR_range[0], LR_range[1], EXPERIMENTS)
@@ -72,5 +72,4 @@ for experiment_number in range(0, EXPERIMENTS):
   print(f'LEARNING RATE   = {LR:2.6f} {LR_status}')
   print(f'BETA            = {BETA:2.3f}')
   
-  vae_trainer_fcn(BATCH_SIZE, TRAIN_EPOCHS, LR, BETA, HIDDEN_NUM_LAYERS, LATENT_DIM, HIDDEN_LAYERS, experiment_number, exp_file)
-    
+  vae_trainer_fcn(BATCH_SIZE, TRAIN_EPOCHS, LR, BETA, HIDDEN_NUM_LAYERS, LATENT_DIM, HIDDEN_LAYERS, experiment_number, exp_file)  

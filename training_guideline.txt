@@ -1,11 +1,17 @@
+NOTE:
+===========
+
+As a rule of thumb one iteration takes 4-5min (200 iterations = one night) so do check the parameters a couple of times in "vae_trainer_fcn_caller.py" before sending the job to the HPC ;-)
+
 REMOTE:
+===========
 1) Log into HPC
 
 2) Go to project dir, e.g: /DL_proj_29/
 
-3a) Pull project for update
+3a) Pull project for update (may want to switch to "M1_VAE" branch first)
 
-3b) Manual upload of specific files (must be done from local machine):
+3b) Hacky tests: Manual upload of specific files (must be done from local machine):
 	scp specific_file.py sxxxxxx@login1.hpc.dtu.dk:~/DL_proj_29/code'
 
 4) Select HPC node, e.g: voltash, sxm2sh, a100sh
@@ -14,10 +20,11 @@ REMOTE:
 5) Check GPU load (and select if necessary another node): 
 	nvidia-smi
 
-6) Execute python caller (as a rule of thumb it takes 4-5min per iteration):
+6) Execute python caller:
 	python code/vae_trainer_fcn_caller.py
 
 LOCAL:
+===========
 7) Download results to current location (must be project root, ie. just above /code):
 	scp -r sxxxxxx@login1.hpc.dtu.dk:~/DL_proj_29/results .
 
@@ -38,7 +45,4 @@ LOCAL:
 
 	To achieve the above, call this script as follows:
 	./code/arrange_results.sh IPCA IPCA_orig_vs_generated_data.png
-
-
-
 
