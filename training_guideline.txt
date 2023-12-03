@@ -1,0 +1,44 @@
+REMOTE:
+1) Log into HPC
+
+2) Go to project dir, e.g: /DL_proj_29/
+
+3a) Pull project for update
+
+3b) Manual upload of specific files (must be done from local machine):
+	scp specific_file.py sxxxxxx@login1.hpc.dtu.dk:~/DL_proj_29/code'
+
+4) Select HPC node, e.g: voltash, sxm2sh, a100sh
+	voltash
+
+5) Check GPU load (and select if necessary another node): 
+	nvidia-smi
+
+6) Execute python caller (as a rule of thumb it takes 4-5min per iteration):
+	python code/vae_trainer_fcn_caller.py
+
+LOCAL:
+7) Download results to current location (must be project root, ie. just above /code):
+	scp -r sxxxxxx@login1.hpc.dtu.dk:~/DL_proj_29/results .
+
+8) To quickly view a specific figure (or other file), copy all them from each subfolder into a single folder:
+	e.g. from:
+	/results/test_0/IPCA_orig_vs_generated_data.png
+	/results/test_1/IPCA_orig_vs_generated_data.png
+	/results/test_2/IPCA_orig_vs_generated_data.png
+	....
+	/results/test_200/IPCA_orig_vs_generated_data.png
+
+	to:
+	/results/IPCA/IPCA_orig_vs_generated_data_0.png
+	/results/IPCA/IPCA_orig_vs_generated_data_1.png
+	/results/IPCA/IPCA_orig_vs_generated_data_2.png
+	...
+	/results/IPCA/IPCA_orig_vs_generated_data_200.png
+
+	To achieve the above, call this script as follows:
+	./code/arrange_results.sh IPCA IPCA_orig_vs_generated_data.png
+
+
+
+

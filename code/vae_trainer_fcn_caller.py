@@ -11,8 +11,7 @@ from datetime import datetime
 #Hyperparameter options
 # RANDOM SEARCH
 if True:
-  exp_file = 'results/exp_random_'
-  exp_file = 'results/test_'
+  exp_file = 'results/exp_random_'  
   batch_size_V            = [32]
   train_epoch_V           = [3, 5, 10]          # VARIABLE
   hidden_num_layers_V     = [1, 2, 3]           # VARIABLE
