@@ -111,4 +111,4 @@ for experiment_number in range(EXPERIMENTS):
   print(f'LEARNING RATE   = {LR:2.6f}   profiling[{LR_profile}]')
   print(f'BETA            = {BETA:2.3f} profiling[{beta_profile}]')
 
-  vae_trainer_fcn(BATCH_SIZE, NUM_WORKERS, PREFETCH_FACTOR, TRAIN_EPOCHS, LR, BETA, HIDDEN_NUM_LAYERS, LATENT_DIM, HIDDEN_LAYERS, experiment_number, exp_file)
+  vae_trainer_fcn(BATCH_SIZE, NUM_WORKERS, PREFETCH_FACTOR, TRAIN_EPOCHS, LR, BETA, HIDDEN_NUM_LAYERS, LATENT_DIM, HIDDEN_LAYERS, experiment_number, exp_file, train_dl, val_dl)
