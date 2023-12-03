@@ -12,7 +12,6 @@ sys.path.append("code/wohlert")
 from models import VariationalAutoencoder
 from layers import GaussianSample
 from inference import log_gaussian, log_standard_gaussian
-#from data_loader_old import StreamDataLoader # import our StreamDataLoader
 from data_loader import Archs4GeneExpressionDataset
 from torch.utils.data import DataLoader
 from sklearn.decomposition import IncrementalPCA
@@ -20,8 +19,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 RANDOM_SEED=42
-
-def vae_trainer_fcn(BATCH_SIZE, TRAIN_EPOCHS, LEARNING_RATE, BETA, HIDDEN_NUM_LAYERS, LATENT_DIM, HIDDEN_LAYERS, experiment_number, exp_file):
+def vae_trainer_fcn(BATCH_SIZE, NUM_WORKERS, PREFETCH_FACTOR, TRAIN_EPOCHS, LEARNING_RATE, BETA, HIDDEN_NUM_LAYERS, LATENT_DIM, HIDDEN_LAYERS, experiment_number, exp_file, train_dl, val_dl):
  
   torch.manual_seed(RANDOM_SEED)
   np.random.seed(RANDOM_SEED)
@@ -37,9 +35,6 @@ def vae_trainer_fcn(BATCH_SIZE, TRAIN_EPOCHS, LEARNING_RATE, BETA, HIDDEN_NUM_LA
   input_dim         = 18965 # gtex-gene features (can be reduced/capped for quicker tests if needed)
   input_dim         = 100 # gtex-gene features (can be reduced/capped for quicker tests if needed)
   
-  # Data loader
-  NUM_WORKERS       = 4
-  PREFETCH_FACTOR   = 2
   MAX_FEATURE_VALUE = 1 # Max value of features for normalization
 
   # Training pars
@@ -60,14 +55,6 @@ def vae_trainer_fcn(BATCH_SIZE, TRAIN_EPOCHS, LEARNING_RATE, BETA, HIDDEN_NUM_LA
   ]
 
   model = VariationalAutoencoder([input_dim, LATENT_DIM, HIDDEN_LAYERS]) 
-
-  #### Data loader setup ####
-  dat_dir = "data/hdf5"
-  archsDset_train = Archs4GeneExpressionDataset(data_dir = dat_dir, split="train", load_in_mem=False)
-  train_dl = DataLoader(archsDset_train, batch_size=BATCH_SIZE, num_workers=NUM_WORKERS, prefetch_factor=PREFETCH_FACTOR)
- 
-  archsDset_val = Archs4GeneExpressionDataset(data_dir = dat_dir, split="val", load_in_mem=False)
-  val_dl = DataLoader(archsDset_val, batch_size=BATCH_SIZE, num_workers=NUM_WORKERS, prefetch_factor=PREFETCH_FACTOR)
 
   ## OPTIMIZER + CRITERION
   optimizer = torch.optim.Adam(model.parameters(), lr=LEARNING_RATE, betas=(0.9, 0.999))

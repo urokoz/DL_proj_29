@@ -2,6 +2,8 @@ import random
 import math
 import numpy as np
 import sys
+from data_loader import Archs4GeneExpressionDataset
+from torch.utils.data import DataLoader
 sys.path.append('../code')
 from vae_trainer_fcn import vae_trainer_fcn
 RANDOM_SEED=42
@@ -20,14 +22,14 @@ def generate_LR_and_beta(profile_LR, profile_beta, lr_values, beta_values, exper
     else:
         return random.uniform(*LR_range), random.uniform(*beta_range)
 
-
 EXPERIMENTS     = 200 # number of experiments if no variable is profiled
 profile_entries = 15  # number of experiments for each variable to be profiled
-
+BATCH_SIZE      = 32 
+NUM_WORKERS     = 2
+PREFETCH_FACTOR = 1
 
 if False:
-  exp_file = 'results/exp_random_'  
-  batch_size_V            = [32]                # fixed
+  exp_file = 'results/exp_random_'    
   train_epoch_V           = [3, 5, 10]          # variable
   hidden_num_layers_V     = [1, 2, 3]           # variable
   latent_dim_V            = [4, 8, 16, 32, 64]  # variable
@@ -40,8 +42,7 @@ if False:
 
 # LR profiling, all other fixed
 elif False:
-  exp_file = 'results/exp_lr_prof_'
-  batch_size_V            = [32]                # fixed              
+  exp_file = 'results/exp_lr_prof_'  
   train_epoch_V           = [10]                # fixed
   hidden_num_layers_V     = [2]                 # fixed
   latent_dim_V            = [32]                # fixed
@@ -56,7 +57,6 @@ elif False:
 # {LR, beta} profiling, all other fixed
 elif True:
   exp_file = 'results/lr_beta_prof_'
-  batch_size_V            = [32]                # fixed              
   train_epoch_V           = [10]                # fixed
   hidden_num_layers_V     = [2]                 # fixed
   latent_dim_V            = [32]                # fixed
@@ -75,13 +75,20 @@ beta_prof_V = np.linspace(np.log10(beta_range[0]), np.log10(beta_range[1]), prof
 LR_prof_V   = 10 ** LR_prof_V
 beta_prof_V = 10 ** beta_prof_V
 
+#### Data loader setup ####  
+dat_dir = "data/hdf5"
+archsDset_train = Archs4GeneExpressionDataset(data_dir = dat_dir, split="train", load_in_mem=False)
+train_dl = DataLoader(archsDset_train, batch_size=BATCH_SIZE, num_workers=NUM_WORKERS, prefetch_factor=PREFETCH_FACTOR)
+ 
+archsDset_val = Archs4GeneExpressionDataset(data_dir = dat_dir, split="val", load_in_mem=False)
+val_dl = DataLoader(archsDset_val, batch_size=BATCH_SIZE, num_workers=NUM_WORKERS, prefetch_factor=PREFETCH_FACTOR)
+
 # Number of experiments based on profiling
 if LR_profile or beta_profile:
     EXPERIMENTS = profile_entries ** (int(LR_profile) + int(beta_profile))
 
 for experiment_number in range(EXPERIMENTS):
-  # Randomly select hyperparameters
-  BATCH_SIZE        = random.choice(batch_size_V)
+  # Randomly select hyperparameters  
   TRAIN_EPOCHS      = random.choice(train_epoch_V)  
   HIDDEN_NUM_LAYERS = random.choice(hidden_num_layers_V)
   LATENT_DIM        = random.choice(latent_dim_V)
@@ -92,18 +99,16 @@ for experiment_number in range(EXPERIMENTS):
     HIDDEN_LAYERS       = sorted(random.sample(hidden_layers_V, HIDDEN_NUM_LAYERS))
     
   # Generate LR and BETA based on the current setup
-  LR, BETA = generate_LR_and_beta(LR_profile, beta_profile, LR_prof_V, beta_prof_V, experiment_number)
-
-  # Call the training function
-  vae_trainer_fcn(BATCH_SIZE, TRAIN_EPOCHS, LR, BETA, HIDDEN_NUM_LAYERS, LATENT_DIM, HIDDEN_LAYERS, experiment_number, exp_file)
+  LR, BETA = generate_LR_and_beta(LR_profile, beta_profile, LR_prof_V, beta_prof_V, experiment_number)  
 
   # Call the training function
   current_time = datetime.now().strftime("%H:%M")
   print(f'\nEXPERIMENT: #{experiment_number}/{EXPERIMENTS-1} (Time: {current_time})')
   print('==============================')
   print(f'latent_dim      = {LATENT_DIM}')
-  print(f'hidden layers   = {HIDDEN_LAYERS}')
-  print(f'BATCH_SIZE      = {BATCH_SIZE}')
+  print(f'hidden layers   = {HIDDEN_LAYERS}')  
   print(f'TRAIN_EPOCHS    = {TRAIN_EPOCHS}')
   print(f'LEARNING RATE   = {LR:2.6f}   profiling[{LR_profile}]')
   print(f'BETA            = {BETA:2.3f} profiling[{beta_profile}]')
+
+  vae_trainer_fcn(BATCH_SIZE, NUM_WORKERS, PREFETCH_FACTOR, TRAIN_EPOCHS, LR, BETA, HIDDEN_NUM_LAYERS, LATENT_DIM, HIDDEN_LAYERS, experiment_number, exp_file)
