@@ -25,10 +25,10 @@ REMOTE:
 
 LOCAL:
 ===========
-7) Download results to current location (must be project root, ie. just above /code):
+7) Download results to CURRENT location (MUST be project root, ie. just above /code):
 	scp -r sxxxxxx@login1.hpc.dtu.dk:~/DL_proj_29/results .
 
-8) To quickly view a specific figure (or other file), copy all them from each subfolder into a single folder:
+8) To quickly view a specific figure (or other file), copy the file from each subfolder into a single folder:
 	e.g. from:
 	/results/test_0/IPCA_orig_vs_generated_data.png
 	/results/test_1/IPCA_orig_vs_generated_data.png
@@ -45,4 +45,6 @@ LOCAL:
 
 	To achieve the above, call this script as follows:
 	./code/arrange_results.sh IPCA IPCA_orig_vs_generated_data.png
+    
+    note the new subfolder created "/results/IPCA/"
 
