@@ -215,4 +215,4 @@ print(f'Max value after normalization: {max_feature:2.2f}')
 if max_feature > 0: print(f'WARNING: Max value after normalization exceeds 1')
 
 # Save model
-torch.save(model.state_dict(), 'trained_models/vae_model.pt')
+torch.save(model, 'trained_models/vae_model.pt')
