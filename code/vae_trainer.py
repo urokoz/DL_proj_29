@@ -205,8 +205,8 @@ for epoch in range(TRAIN_EPOCHS):
         if np.min([val_ELBO_epoch_now, val_ELBO_epoch_old1, val_ELBO_epoch_old2]) == val_ELBO_epoch_old1:
             overfit_warning_str = ' <--- Possible overfit'
 
-    print(f'Epoch: {epoch}\ttrain ELBO: {train_ELBO_epoch_now:2.5f}\tMSE: {train_MSE_epoch_now:2.5f}\tKLdiv: {train_KLdiv_epoch_now:2.5f}')
-    print(f'                val   ELBO: {val_ELBO_epoch_now:2.5f}\tMSE: {val_MSE_epoch_now:2.5f}\tKLdiv: {val_KLdiv_epoch_now:2.5f}\n')
+    print(f'Epoch: {epoch}\ttrain ELBO: {train_ELBO_epoch_now:2.2f}\tMSE: {train_MSE_epoch_now:2.2f}\tKLdiv: {train_KLdiv_epoch_now:2.2f}')
+    print(f'                val   ELBO: {val_ELBO_epoch_now:2.2f}\tMSE: {val_MSE_epoch_now:2.2f}\tKLdiv: {val_KLdiv_epoch_now:2.2f}\n')
 
 
 # List of arrays -> single numpy array

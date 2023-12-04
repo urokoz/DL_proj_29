@@ -4,7 +4,7 @@ NN structure:
 ==============
 input_dim       = 18965
 latent_dim      = 32
-hidden layers   = [2048, 512]
+hidden layers   = [512]
 Data loader:
 ==============
 BATCH_SIZE      = 80
@@ -13,7 +13,7 @@ PREFETCH_FACTOR = 2
 
 Training pars:
 ==============
-TRAIN_EPOCHS    = 10
+TRAIN_EPOCHS    = 50
 LEARNING_RATE   = 0.0001
-BETA            = 1
+BETA            = 0.0001
 ELBO_GAIN       = 1
