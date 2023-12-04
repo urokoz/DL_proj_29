@@ -131,7 +131,6 @@ for epoch in range(TRAIN_EPOCHS):
         reconstruction = model(u)
         
         MSE_batch = ELBO_GAIN * criterion(reconstruction, u)
-        print(f'{MSE_batch=}')
         KLdiv_batch = ELBO_GAIN * BETA * torch.mean(model.kl_divergence)
 
         # MANUAL calculation of KL_div:        
