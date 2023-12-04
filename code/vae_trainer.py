@@ -51,7 +51,7 @@ model = VariationalAutoencoder([input_dim, latent_dim, hidden_layers])
 print(model)
 
 optimizer = torch.optim.Adam(model.parameters(), lr=LEARNING_RATE)
-criterion = torch.nn.MSELoss()
+criterion = torch.nn.MSELoss(reduction="sum")
 
 if use_cuda:
     criterion = criterion.cuda()
