@@ -29,12 +29,8 @@ def vae_trainer_fcn(BATCH_SIZE, NUM_WORKERS, PREFETCH_FACTOR, TRAIN_EPOCHS, LEAR
   fig_objects = [] # list of figures to be saved to a file
   fig_names   = []
 
-  gtex_filename = "data/gtex_gene_medium.tsv"
- 
   # NN structure
-  input_dim         = 18965 # gtex-gene features (can be reduced/capped for quicker tests if needed)
-  input_dim         = 100 # gtex-gene features (can be reduced/capped for quicker tests if needed)
-  
+  input_dim         = 18965 # gtex-gene features (can be reduced/capped for quicker tests if needed)  
   MAX_FEATURE_VALUE = 1 # Max value of features for normalization
 
   # Training pars

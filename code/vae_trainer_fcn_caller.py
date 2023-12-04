@@ -40,6 +40,20 @@ if False:
   HIDDEN_LAYERS           = []                  # variable
   max_latent_dim_exponent = 11  # 2^11 = 1024
 
+# Beta profiling, all other fixed
+elif True:
+  exp_file = 'results/exp_beta_prof_'  
+  train_epoch_V           = [10]                # fixed
+  hidden_num_layers_V     = [2]                 # fixed
+  latent_dim_V            = [32]                # fixed
+  LR_range                = [0.5e-3, 0.5e-3]    # fixed
+  LR_profile              = False               # Do not profile learning rate  
+  beta_range              = [0.01, 2]           # fixed
+  beta_profile            = True                # DO profile beta  
+  HIDDEN_LAYERS           = [128, 1024]         # fixed
+  max_latent_dim_exponent = 0                   # not used (HIDDEN_LAYERS is fixed)
+
+
 # LR profiling, all other fixed
 elif False:
   exp_file = 'results/exp_lr_prof_'  
@@ -55,7 +69,7 @@ elif False:
 
 
 # {LR, beta} profiling, all other fixed
-elif True:
+elif False:
   exp_file = 'results/lr_beta_prof_'
   train_epoch_V           = [10]                # fixed
   hidden_num_layers_V     = [2]                 # fixed
