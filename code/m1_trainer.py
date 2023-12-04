@@ -11,9 +11,9 @@ from torch.utils.data import WeightedRandomSampler, DataLoader
 
 TRAIN_EPOCHS = 5
 
-input_dim = 4096
+MAX_FEATURE_VALUE = 24
+
 latent_dim = 32
-vae_hidden_layers = [512, 256]
 reg_hidden_layers = [2048, 2048]
 out_features = 156958
 
@@ -69,7 +69,7 @@ for epoch in range(TRAIN_EPOCHS):
             tot_val_loss = 0
             for X, y in validation_dataloader:
                 if use_cuda: X, y = X.cuda(), y.cuda()
-                
+                X = X / MAX_FEATURE_VALUE
                 y_pred = model.forward(X)
                 
                 val_loss = criterion(y_pred, y[:, :out_features])
@@ -82,7 +82,7 @@ for epoch in range(TRAIN_EPOCHS):
         y_train = y_train[:, :out_features]
         if use_cuda:
             X_train, y_train = X_train.cuda(), y_train.cuda()
-        
+        X_train = X_train / MAX_FEATURE_VALUE
         
         y_pred = model.forward(X_train)
         

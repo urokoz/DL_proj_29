@@ -22,11 +22,11 @@ hidden_layers     = [512]
 BATCH_SIZE        = 80
 NUM_WORKERS       = 4
 PREFETCH_FACTOR   = 2
-MAX_FEATURE_VALUE = 1 # Max value of features for normalization
+MAX_FEATURE_VALUE = 24 # Max value of features for normalization
 
 # Training pars
 TRAIN_EPOCHS      = 100
-LEARNING_RATE     = 1e-4
+LEARNING_RATE     = 1e-3
 BETA              = 10
 ELBO_GAIN         = 1 
 
