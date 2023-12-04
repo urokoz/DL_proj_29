@@ -22,13 +22,28 @@ def generate_LR_and_beta(profile_LR, profile_beta, lr_values, beta_values, exper
     else:
         return random.uniform(*LR_range), random.uniform(*beta_range)
 
-EXPERIMENTS     = 200 # number of experiments if no variable is profiled
-profile_entries = 15  # number of experiments for each variable to be profiled
+EXPERIMENTS     = 20  # number of experiments if no variable is profiled
+profile_entries = 11  # number of experiments for each variable to be profiled
 BATCH_SIZE      = 32 
 NUM_WORKERS     = 2
 PREFETCH_FACTOR = 1
 
+# One-shot
 if False:
+  EXPERIMENTS             = 1                   # one-shot
+  exp_file = 'results/exp_oneshot_'    
+  train_epoch_V           = [5]                 # 
+  hidden_num_layers_V     = [2]                 # 
+  latent_dim_V            = [32]                # 
+  LR_range                = [0.5e-3, 0.5e-3]    # 
+  LR_profile              = False               # 
+  beta_range              = [0.1]               # 
+  beta_profile            = False               # 
+  HIDDEN_LAYERS           = [128, 1024]         # 
+  max_latent_dim_exponent = 11                  # 2^11 = 1024
+
+# Random (WIDE)
+elif False:
   exp_file = 'results/exp_random_'    
   train_epoch_V           = [3, 5, 10]          # variable
   hidden_num_layers_V     = [1, 2, 3]           # variable
@@ -38,47 +53,58 @@ if False:
   beta_range              = [0.2, 10]           # variable  
   beta_profile            = False               # Do not profile beta
   HIDDEN_LAYERS           = []                  # variable
-  max_latent_dim_exponent = 11  # 2^11 = 1024
+  max_latent_dim_exponent = 11                  # 2^11 = 1024
+
+# Random (RESTRICTED)
+elif True:      
+  exp_file                = 'results/layers_dim_'  
+  train_epoch_V           = [10]                # 
+  hidden_num_layers_V     = [2]                 # 
+  latent_dim_V            = [4, 8, 16, 32]      # VARIABLE
+  LR_range                = [0.5e-3, 0.5e-3]    # 
+  LR_profile              = False               # 
+  beta_range              = [0.01, 0.01]        # 
+  beta_profile            = False               # 
+  HIDDEN_LAYERS           = []                  # VARIABLE
+  max_latent_dim_exponent = 11                  # 2^11 = 1024
 
 # Beta profiling, all other fixed
-elif True:
+elif False:
   exp_file = 'results/exp_beta_prof_'  
-  train_epoch_V           = [10]                # fixed
-  hidden_num_layers_V     = [2]                 # fixed
-  latent_dim_V            = [32]                # fixed
-  LR_range                = [0.5e-3, 0.5e-3]    # fixed
-  LR_profile              = False               # Do not profile learning rate  
-  beta_range              = [0.01, 2]           # fixed
-  beta_profile            = True                # DO profile beta  
-  HIDDEN_LAYERS           = [128, 1024]         # fixed
+  train_epoch_V           = [10]                # 
+  hidden_num_layers_V     = [2]                 # 
+  latent_dim_V            = [32]                # 
+  LR_range                = [0.5e-3, 0.5e-3]    # 
+  LR_profile              = False               # 
+  beta_range              = [1e-10, 1]          # VARIABLE
+  beta_profile            = True                # do profile beta  
+  HIDDEN_LAYERS           = [128, 1024]         # 
   max_latent_dim_exponent = 0                   # not used (HIDDEN_LAYERS is fixed)
-
 
 # LR profiling, all other fixed
 elif False:
   exp_file = 'results/exp_lr_prof_'  
-  train_epoch_V           = [10]                # fixed
-  hidden_num_layers_V     = [2]                 # fixed
-  latent_dim_V            = [32]                # fixed
+  train_epoch_V           = [10]                # 
+  hidden_num_layers_V     = [2]                 # 
+  latent_dim_V            = [32]                # 
   LR_range                = [1e-5, 1e-3]        # VARIABLE 
-  LR_profile              = True                # DO profile learning rate  
-  beta_range              = [1, 1]              # fixed
-  beta_profile            = False               # Do not profile beta  
-  HIDDEN_LAYERS           = [128, 1024]         # fixed
+  LR_profile              = True                # do profile learning rate  
+  beta_range              = [1, 1]              # 
+  beta_profile            = False               # 
+  HIDDEN_LAYERS           = [128, 1024]         # 
   max_latent_dim_exponent = 0                   # not used (HIDDEN_LAYERS is fixed)
-
 
 # {LR, beta} profiling, all other fixed
 elif False:
   exp_file = 'results/lr_beta_prof_'
-  train_epoch_V           = [10]                # fixed
-  hidden_num_layers_V     = [2]                 # fixed
-  latent_dim_V            = [32]                # fixed
+  train_epoch_V           = [10]                # 
+  hidden_num_layers_V     = [2]                 # 
+  latent_dim_V            = [32]                # 
   LR_range                = [1e-5, 1e-3]        # VARIABLE 
   LR_profile              = True                # DO profile learning rate
   beta_range              = [0.1, 10]           # VARIABLE
   beta_profile            = True                # DO profile beta  
-  HIDDEN_LAYERS           = [128, 1024]         # fixed
+  HIDDEN_LAYERS           = [128, 1024]         # 
   max_latent_dim_exponent = 0                   # not used (HIDDEN_LAYERS is fixed)
 
 
