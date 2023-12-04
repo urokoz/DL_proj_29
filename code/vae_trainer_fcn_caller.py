@@ -39,7 +39,7 @@ if False:
   LR_profile              = False               # 
   beta_range              = [0.1]               # 
   beta_profile            = False               # 
-  HIDDEN_LAYERS           = [128, 1024]         # 
+  hidden_layers_target    = [128, 1024]         # 
   max_latent_dim_exponent = 11                  # 2^11 = 1024
 
 # Random (WIDE)
@@ -52,7 +52,7 @@ elif False:
   LR_profile              = False               # Do not profile learning rate  
   beta_range              = [0.2, 10]           # variable  
   beta_profile            = False               # Do not profile beta
-  HIDDEN_LAYERS           = []                  # variable
+  hidden_layers_target    = []                  # variable
   max_latent_dim_exponent = 11                  # 2^11 = 1024
 
 # Random (RESTRICTED)
@@ -65,7 +65,7 @@ elif True:
   LR_profile              = False               # 
   beta_range              = [0.01, 0.01]        # 
   beta_profile            = False               # 
-  HIDDEN_LAYERS           = []                  # VARIABLE
+  hidden_layers_target    = []                  # VARIABLE
   max_latent_dim_exponent = 11                  # 2^11 = 1024
 
 # Beta profiling, all other fixed
@@ -78,8 +78,8 @@ elif False:
   LR_profile              = False               # 
   beta_range              = [1e-10, 1]          # VARIABLE
   beta_profile            = True                # do profile beta  
-  HIDDEN_LAYERS           = [128, 1024]         # 
-  max_latent_dim_exponent = 0                   # not used (HIDDEN_LAYERS is fixed)
+  hidden_layers_target    = [128, 1024]         # 
+  max_latent_dim_exponent = 0                   # not used (hidden_layers_target is fixed)
 
 # LR profiling, all other fixed
 elif False:
@@ -91,8 +91,8 @@ elif False:
   LR_profile              = True                # do profile learning rate  
   beta_range              = [1, 1]              # 
   beta_profile            = False               # 
-  HIDDEN_LAYERS           = [128, 1024]         # 
-  max_latent_dim_exponent = 0                   # not used (HIDDEN_LAYERS is fixed)
+  hidden_layers_target    = [128, 1024]         # 
+  max_latent_dim_exponent = 0                   # not used (hidden_layers_target is fixed)
 
 # {LR, beta} profiling, all other fixed
 elif False:
@@ -104,8 +104,8 @@ elif False:
   LR_profile              = True                # DO profile learning rate
   beta_range              = [0.1, 10]           # VARIABLE
   beta_profile            = True                # DO profile beta  
-  HIDDEN_LAYERS           = [128, 1024]         # 
-  max_latent_dim_exponent = 0                   # not used (HIDDEN_LAYERS is fixed)
+  hidden_layers_target    = [128, 1024]         # 
+  max_latent_dim_exponent = 0                   # not used (hidden_layers_target is fixed)
 
 
 # Only relevant for variable profiling:
@@ -133,10 +133,12 @@ for experiment_number in range(EXPERIMENTS):
   HIDDEN_NUM_LAYERS = random.choice(hidden_num_layers_V)
   LATENT_DIM        = random.choice(latent_dim_V)
 
-  if len(HIDDEN_LAYERS) == 0:
+  if len(hidden_layers_target) == 0:
     latent_dim_exponent = math.floor(math.log(LATENT_DIM, 2))
     hidden_layers_V     = (2 ** np.arange(latent_dim_exponent + 1, max_latent_dim_exponent)).tolist()
     HIDDEN_LAYERS       = sorted(random.sample(hidden_layers_V, HIDDEN_NUM_LAYERS))
+  else:
+    HIDDEN_LAYERS = hidden_layers_target
     
   # Generate LR and BETA based on the current setup
   LR, BETA = generate_LR_and_beta(LR_profile, beta_profile, LR_prof_V, beta_prof_V, experiment_number)  
