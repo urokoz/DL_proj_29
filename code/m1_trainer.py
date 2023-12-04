@@ -5,7 +5,7 @@ sys.path.append('code')
 from data_loader import GtexDataset
 from our_models import Regressor, M1_model
 sys.path.append("code/wohlert")
-from models import VariationalAutoencoder
+from wohlert.models import VariationalAutoencoder
 from torch.utils.data import WeightedRandomSampler, DataLoader
 
 
