@@ -40,7 +40,7 @@ model = M1_model(vae_model, regressor_model)
 print(model)
 
 optimizer = torch.optim.Adam(model.parameters(), lr=LEARNING_RATE)
-criterion = torch.nn.MSELoss()
+criterion = torch.nn.MSELoss(reduction="sum")
 
 if use_cuda:
     model = model.cuda()
@@ -54,15 +54,15 @@ def get_numpy(x):
     return x.data.numpy()
 
 
-log_every = 5
-val_every = 5
+log_every = 25
+val_every = 25
 tot_batches = 0
 
 val_losses, val_iter = [], []
 train_losses, train_iter = [], []
     
 for epoch in range(TRAIN_EPOCHS):
-    tot_train_loss, batches = 0, 0
+    tot_train_loss, batches = 0, 1
     for X_train, y_train in training_dataloader:
         if batches % val_every == 0:
             model.eval()
