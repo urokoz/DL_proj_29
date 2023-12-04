@@ -40,9 +40,9 @@ archsDset_val = Archs4GeneExpressionDataset(data_dir = dat_dir, split="val", loa
 val_dataloader = DataLoader(archsDset_val, batch_size=BATCH_SIZE, num_workers=2, prefetch_factor=1)
 
 #### Model setup ####
-from models import VariationalAutoencoder
-from layers import GaussianSample
-from inference import log_gaussian, log_standard_gaussian
+from wohlert.models import VariationalAutoencoder
+from wohlert.layers import GaussianSample
+from wohlert.inference import log_gaussian, log_standard_gaussian
 
 use_cuda = True and torch.cuda.is_available()
 
