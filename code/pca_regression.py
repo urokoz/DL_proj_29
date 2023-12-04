@@ -53,7 +53,7 @@ if use_cuda:
     model = model.cuda()
 
 optimizer = torch.optim.Adam(model.parameters(), lr=1e-4, weight_decay=1e-5)
-criterion = torch.nn.MSELoss()
+criterion = torch.nn.MSELoss(reduction="sum")
 
 if use_cuda:
     criterion = criterion.cuda()
@@ -65,7 +65,7 @@ def get_numpy(x):
     return x.data.numpy()
 
 # %%
-epochs = 4
+epochs = 5
 log_every = 5
 val_every = 5
 tot_batches = 0

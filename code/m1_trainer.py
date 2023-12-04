@@ -101,7 +101,7 @@ for epoch in range(TRAIN_EPOCHS):
             tot_train_loss = 0
             tot_batches = 0
             print(f"# Epoch {epoch+1}/{TRAIN_EPOCHS}\n# Batch {batches+1}/{len(training_dataloader)}")
-            print(f"Training loss:\t{train_losses[-1]}\tValidation loss:\t{val_losses[-1]}")
+            print(f"Training loss:\t{round(train_losses[-1], 2)}\tValidation loss:\t{round(val_losses[-1], 2)}")
             # fig = plt.figure(figsize=(12,4))
             # plt.subplot(1, 2, 1)
             # plt.plot(train_iter, train_losses, label='train_loss')

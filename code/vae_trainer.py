@@ -16,16 +16,16 @@ from torch.utils.data import DataLoader
 # NN structure
 input_dim         = 18965 # gtex-gene features (can be reduced/capped for quicker tests if needed)
 latent_dim        = 32
-hidden_layers     = [512]
+hidden_layers     = [2048, 2048]
 
 # Data loader
-BATCH_SIZE        = 32
+BATCH_SIZE        = 80
 NUM_WORKERS       = 4
 PREFETCH_FACTOR   = 2
 MAX_FEATURE_VALUE = 1 # Max value of features for normalization
 
 # Training pars
-TRAIN_EPOCHS      = 40
+TRAIN_EPOCHS      = 100
 LEARNING_RATE     = 1e-4
 BETA              = 0.1
 ELBO_GAIN         = 1 
