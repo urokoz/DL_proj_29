@@ -16,7 +16,7 @@ from torch.utils.data import DataLoader
 # NN structure
 input_dim         = 18965 # gtex-gene features (can be reduced/capped for quicker tests if needed)
 latent_dim        = 32
-hidden_layers     = [2048, 2048]
+hidden_layers     = [2048, 512]
 
 # Data loader
 BATCH_SIZE        = 80
@@ -27,7 +27,7 @@ MAX_FEATURE_VALUE = 1 # Max value of features for normalization
 # Training pars
 TRAIN_EPOCHS      = 100
 LEARNING_RATE     = 1e-4
-BETA              = 0.1
+BETA              = 1
 ELBO_GAIN         = 1 
 
 
@@ -131,6 +131,7 @@ for epoch in range(TRAIN_EPOCHS):
         reconstruction = model(u)
         
         MSE_batch = ELBO_GAIN * criterion(reconstruction, u)
+        print(f'{MSE_batch=}')
         KLdiv_batch = ELBO_GAIN * BETA * torch.mean(model.kl_divergence)
 
         # MANUAL calculation of KL_div:        
