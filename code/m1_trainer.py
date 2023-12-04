@@ -14,6 +14,7 @@ TRAIN_EPOCHS = 5
 input_dim = 4096
 latent_dim = 32
 vae_hidden_layers = [512, 256]
+reg_hidden_layers = [2048, 2048]
 out_features = 156958
 
 LEARNING_RATE = 1e-4
@@ -33,9 +34,10 @@ print(f"{use_cuda=}")
 vae_path = "trained_models/vae_model.pt"
 vae_model = torch.load(vae_path)
 
-regressor_model = Regressor([latent_dim, 4096, out_features])
+regressor_model = Regressor([latent_dim, reg_hidden_layers, out_features])
 
 model = M1_model(vae_model, regressor_model)
+print(model)
 
 optimizer = torch.optim.Adam(model.parameters(), lr=LEARNING_RATE)
 criterion = torch.nn.MSELoss()
@@ -59,7 +61,7 @@ tot_batches = 0
 val_losses, val_iter = [], []
 train_losses, train_iter = [], []
     
-for i in range(TRAIN_EPOCHS):
+for epoch in range(TRAIN_EPOCHS):
     tot_train_loss, batches = 0, 0
     for X_train, y_train in training_dataloader:
         if batches % val_every == 0:
@@ -98,7 +100,7 @@ for i in range(TRAIN_EPOCHS):
             train_losses.append(tot_train_loss/tot_batches)
             tot_train_loss = 0
             tot_batches = 0
-            print(f"# Epoch {i+1}/{epochs}\n# Batch {batches+1}/{len(training_dataloader)}")
+            print(f"# Epoch {epoch+1}/{TRAIN_EPOCHS}\n# Batch {batches+1}/{len(training_dataloader)}")
             print(f"Training loss:\t{train_losses[-1]}\tValidation loss:\t{val_losses[-1]}")
             # fig = plt.figure(figsize=(12,4))
             # plt.subplot(1, 2, 1)
