@@ -15,7 +15,7 @@ LEARNING_RATE = 1e-4
 MAX_FEATURE_VALUE = 24
 
 latent_dim = 32
-reg_hidden_layers = [512]
+reg_hidden_layers = [512, 512]
 out_features = 156958
 
 dat_dir = "data/hdf5"
