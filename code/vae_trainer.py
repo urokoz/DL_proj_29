@@ -25,9 +25,9 @@ PREFETCH_FACTOR   = 2
 MAX_FEATURE_VALUE = 24 # Max value of features for normalization
 
 # Training pars
-TRAIN_EPOCHS      = 100
-LEARNING_RATE     = 1e-3
-BETA              = 10
+TRAIN_EPOCHS      = 10
+LEARNING_RATE     = 1e-5
+BETA              = 0
 ELBO_GAIN         = 1 
 
 

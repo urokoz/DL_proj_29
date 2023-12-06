@@ -12,6 +12,6 @@ PREFETCH_FACTOR = 2
 Training pars:
 ==============
 TRAIN_EPOCHS    = 20
-LEARNING_RATE   = 0.001
+LEARNING_RATE   = 1e-05
 BETA            = 0
 ELBO_GAIN       = 1
