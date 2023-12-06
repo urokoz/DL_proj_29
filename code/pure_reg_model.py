@@ -14,11 +14,11 @@ from our_models import Regressor
 from torch.utils.data import WeightedRandomSampler, DataLoader
 
 use_cuda = True
-TRAIN_EPOCHS = 100
-LEARNING_RATE = 1e-4
+TRAIN_EPOCHS = 40 
+LEARNING_RATE = 1e-5
 
 in_features = 18965
-reg_hidden_layers = [512]
+reg_hidden_layers = [512, 32, 512]
 out_features = 156958
 
 # %%
