@@ -85,7 +85,7 @@ def vae_trainer_fcn(BATCH_SIZE, NUM_WORKERS, PREFETCH_FACTOR, TRAIN_EPOCHS, LEAR
 
   latent_representations = []
 
-  for epoch in range(TRAIN_EPOCHS):
+  for epoch in range(TRAIN_EPOCHS):    
     model.train()
     batch_counter     = 0
      
@@ -205,6 +205,11 @@ def vae_trainer_fcn(BATCH_SIZE, NUM_WORKERS, PREFETCH_FACTOR, TRAIN_EPOCHS, LEAR
   val_MSE_vs_all_batches     = log_val_MSE_m.reshape(TRAIN_EPOCHS*len(val_dl),1).squeeze()
   train_KLdiv_vs_all_batches = log_train_KLdiv_m.reshape(TRAIN_EPOCHS*len(train_dl),1).squeeze()
   val_KLdiv_vs_all_batches   = log_val_KLdiv_m.reshape(TRAIN_EPOCHS*len(val_dl),1).squeeze()
+
+  # Poster: For plotting purposes
+  train_ELBO_vs_all_batches = [0 if x > 100 else x for x in train_ELBO_vs_all_batches]
+  train_MSE_vs_all_batches = [0 if x > 100 else x for x in train_MSE_vs_all_batches]
+  train_KLdiv_vs_all_batches = [0 if x > 100 else x for x in train_KLdiv_vs_all_batches]
 
   batch_ratio   = len(train_ELBO_vs_all_batches) / len(val_ELBO_vs_all_batches)
   xaxis_train_v = np.arange(len(train_MSE_vs_all_batches))
@@ -380,9 +385,10 @@ def vae_trainer_fcn(BATCH_SIZE, NUM_WORKERS, PREFETCH_FACTOR, TRAIN_EPOCHS, LEAR
   # Generated data
   plt.scatter(generated_data_transformed[:, 0], generated_data_transformed[:, 1], alpha=0.7, label='Generated Data')
 
-  plt.title('PCA Projection of Original and Generated GTEx-Gene Sequences')
+  plt.title('PCA Proj. of Original and Generated GTEx-Gene Sequences')
   plt.xlabel('PC1')
   plt.ylabel('PC2')
+  plt.grid('both')
   plt.legend()
   plt.close()
   
@@ -413,11 +419,11 @@ def vae_trainer_fcn(BATCH_SIZE, NUM_WORKERS, PREFETCH_FACTOR, TRAIN_EPOCHS, LEAR
   fig_objects.append(fig)
   fig_names.append("PCA_of_latent_representations")
 
-  plt.scatter(latent_pca[:, 0], latent_pca[:, 1], alpha=0.7, label='z')
+  plt.scatter(latent_pca[:, 0], latent_pca[:, 1], alpha=0.7)
   plt.title('PCA of latent representations')
   plt.xlabel('PC1')
-  plt.ylabel('PC2')
-  plt.legend()
+  plt.ylabel('PC2')  
+  plt.grid('both')
   plt.close()
 
   ## SAVE RESULTS
