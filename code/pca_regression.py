@@ -10,7 +10,7 @@ from tqdm import tqdm
 from sklearn.decomposition import IncrementalPCA
 sys.path.append('../code')
 from data_loader import Archs4GeneExpressionDataset, GtexDataset
-from models.regressor_model import Regressor
+from our_models import Regressor
 from torch.utils.data import WeightedRandomSampler, DataLoader
 
 
@@ -45,17 +45,17 @@ else:
 
 # %%
 use_cuda = True
-out_features = 10000
+# out_features = 10000
+reg_hidden_layers = [2048, 2048]
 out_features = 156958
 
-model = Regressor([n_components, 4096, out_features])
-if use_cuda:
-    model = model.cuda()
+model = Regressor([n_components, reg_hidden_layers, out_features])
 
 optimizer = torch.optim.Adam(model.parameters(), lr=1e-4, weight_decay=1e-5)
 criterion = torch.nn.MSELoss(reduction="sum")
 
 if use_cuda:
+    model = model.cuda()
     criterion = criterion.cuda()
 
 def get_numpy(x):

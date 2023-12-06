@@ -175,7 +175,7 @@ for epoch in range(TRAIN_EPOCHS):
         for u in val_dataloader:
             u = u[:,:input_dim] / MAX_FEATURE_VALUE # quick and dirt normalization
 
-            if use_cuda: u = u.cuda(device=0)
+            if use_cuda: u = u.cuda()
 
             # Get latent variables
             z, _, _ = model.encoder.get_latent_vars(u)
