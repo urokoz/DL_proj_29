@@ -13,5 +13,5 @@ Training pars:
 ==============
 TRAIN_EPOCHS    = 20
 LEARNING_RATE   = 0.001
-BETA            = 1.0
+BETA            = 0
 ELBO_GAIN       = 1
