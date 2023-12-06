@@ -38,13 +38,13 @@ regressor_model = Regressor([latent_dim, reg_hidden_layers, out_features])
 model = M1_model(vae_model, regressor_model)
 print(model)
 
-optimizer = torch.optim.Adam(model.parameters(), lr=LEARNING_RATE, weight_decay=1e-5)
 criterion = torch.nn.MSELoss()
 
 if use_cuda:
     model = model.cuda()
     criterion = criterion.cuda()
     
+optimizer = torch.optim.Adam(model.parameters(), lr=LEARNING_RATE, weight_decay=1e-5)
     
 def get_numpy(x):
     """ Get numpy array for both cuda and not. """

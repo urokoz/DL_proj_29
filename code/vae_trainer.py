@@ -50,12 +50,13 @@ print(f"{use_cuda=}")
 model = VariationalAutoencoder([input_dim, latent_dim, hidden_layers])
 print(model)
 
-optimizer = torch.optim.Adam(model.parameters(), lr=LEARNING_RATE)
 criterion = torch.nn.MSELoss(reduction="sum")
 
 if use_cuda:
     criterion = criterion.cuda()
     model = model.cuda()
+
+optimizer = torch.optim.Adam(model.parameters(), lr=LEARNING_RATE)
 
 
 def generate_data_and_plot(epoch = -1, n_samples=128, use_cuda=True):
