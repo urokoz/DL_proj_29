@@ -83,20 +83,18 @@ def vae_trainer_fcn(BATCH_SIZE, NUM_WORKERS, PREFETCH_FACTOR, TRAIN_EPOCHS, LEAR
 
   max_feature = 0
 
-  latent_representations = []
-
   #BETA = 0
   BETA = BETA_target
   for epoch in range(TRAIN_EPOCHS):    
     model.train()
-    batch_counter     = 0
+    batch_counter           = 0
+    latent_representations  = []
 
     # KL_div warm-up period:    
     #BETA = epoch * (BETA_target / 10)
     #if BETA > BETA_target:
     #  BETA = BETA_target
     #print(f'BETA:  {BETA:2.5f}')
-
 
     # TRAINING LOOP
     for u in train_dl:
@@ -159,8 +157,7 @@ def vae_trainer_fcn(BATCH_SIZE, NUM_WORKERS, PREFETCH_FACTOR, TRAIN_EPOCHS, LEAR
 
     # VALIDATION LOOP
     batch_counter = 0
-    model.eval()
-    _, fig_objects, fig_names = generate_data_and_plot(model, LATENT_DIM, fig_objects, fig_names, epoch, 128, use_cuda)                            
+    model.eval()    
 
     with torch.inference_mode():                
       for u in val_dl:
@@ -181,7 +178,10 @@ def vae_trainer_fcn(BATCH_SIZE, NUM_WORKERS, PREFETCH_FACTOR, TRAIN_EPOCHS, LEAR
         log_val_KLdiv_m[epoch, batch_counter] = KLdiv_batch.item()
         log_val_ELBO_m[epoch, batch_counter]  = ELBO_batch.item()
         batch_counter += 1        
-             
+
+    # Generate data and plots to monitor training progress along the epochs.         
+    fig_objects, fig_names = generate_data_and_plot(model, train_dl, BATCH_SIZE, input_dim, LATENT_DIM, latent_representations, fig_objects, fig_names, epoch, 1024, use_cuda)
+
     # PRINT RESULTS per EPOCH            
     val_ELBO_epoch_now  = log_val_ELBO_m[epoch, :].mean(axis=0)            
     val_MSE_epoch_now   = log_val_MSE_m[epoch, :].mean(axis=0)
@@ -359,88 +359,10 @@ def vae_trainer_fcn(BATCH_SIZE, NUM_WORKERS, PREFETCH_FACTOR, TRAIN_EPOCHS, LEAR
   plt.tight_layout() 
   plt.close()
 
-  ## SAMPLE FROM THE MODEL
-  generated_data, fig_objects, fig_names = generate_data_and_plot(model, LATENT_DIM, fig_objects, fig_names, -1, 128, use_cuda)
+  ## SAMPLE FOR THE TRAINED MODEL and MAKE PLOTS
+  fig_objects, fig_names = generate_data_and_plot(model, train_dl, BATCH_SIZE, input_dim, LATENT_DIM, latent_representations, fig_objects, fig_names, -1, 128, use_cuda)
 
-  ## PCA ANALYSIS
-  # Incremental PCA
-  n_components = 2
-  ipca = IncrementalPCA(n_components=n_components, batch_size=BATCH_SIZE)
-
-  # Fit IPCA on training data
-  for data in train_dl:
-    data = data[:,:input_dim] 
-    ipca.partial_fit(data.cpu().numpy())
-
-  # Transform generated data
-  generated_data_transformed = ipca.transform(generated_data)
-
-  # Transform original data (in batches)
-  def transform_in_batches(dataloader, pca_model):
-    transformed_data_list = []
-    for data in dataloader:
-      data = data[:,:input_dim]
-      transformed_batch = pca_model.transform(data.cpu().numpy())
-      transformed_data_list.append(transformed_batch)
-    return np.concatenate(transformed_data_list, axis=0)
-
-  original_data_transformed = transform_in_batches(train_dl, ipca)
-
-  fig = plt.figure(figsize=(5, 5))
-  fig_objects.append(fig)
-  fig_names.append("IPCA_orig_vs_generated_data")
-
-  # Original data
-  plt.scatter(original_data_transformed[:, 0], original_data_transformed[:, 1], alpha=0.7, label='Original Data')
-  # Generated data
-  plt.scatter(generated_data_transformed[:, 0], generated_data_transformed[:, 1], alpha=0.7, label='Generated Data')
-
-  plt.title('PCA Proj. of Original and\n Generated GTEx-Gene Sequences', fontsize=12)
-  plt.xlabel('PC1', fontsize=12)
-  # Create secondary y-axis (to move PC2 to the right side of the plot)
-  ax2 = plt.twinx()  
-  ax2.set_ylabel('PC2', fontsize=12)
-  # Hide the labels and ticks of the secondary y-axis
-  ax2.set_yticks([])
-  ax2.yaxis.set_tick_params(length=0)
-  plt.grid('both')  
-  plt.close()
-  
-  ## OUTPUT DATA
-  pca_output = PCA(n_components=n_components)
-  pca_gen_data = pca_output.fit_transform(generated_data)
-
-  fig = plt.figure(figsize=(5, 5))
-  fig_objects.append(fig)
-  fig_names.append("PCA_generated_data")
-
-  plt.scatter(pca_gen_data[:, 0], pca_gen_data[:, 1], alpha=0.7, label='z')
-  plt.title('PCA of generated data')
-  plt.xlabel('PC1')
-  plt.ylabel('PC2')
-  plt.legend()
-  plt.close()
-  
-
-  ## PCA ANALYSIS on latent representation
-
-  n_components = 2
-
-  pca = PCA(n_components=n_components)
-  latent_pca = pca.fit_transform(latent_representations)
-
-  fig = plt.figure(figsize=(5, 5))
-  fig_objects.append(fig)
-  fig_names.append("PCA_of_latent_representations")
-
-  plt.scatter(latent_pca[:, 0], latent_pca[:, 1], alpha=0.7)
-  plt.title('PCA of latent representations')
-  plt.xlabel('PC1')
-  plt.ylabel('PC2')  
-  plt.grid('both')
-  plt.close()
-
-  ## SAVE RESULTS
+  ## SAVE RESULTS (figures, parameters and model)
   save_results(f'{exp_file}{experiment_number}/parameters_{experiment_number}.txt', fig_objects, fig_names, variable_info, model)
 
 ######################################################################
@@ -471,7 +393,7 @@ def save_results(filename, fig_objects, fig_names, variable_info, model):
   print('Results saved.')
 
 ######################################################################
-def generate_data_and_plot(model, LATENT_DIM, fig_objects, fig_names, epoch = -1, n_samples=128, use_cuda=False):
+def generate_data_and_plot(model, train_dl, BATCH_SIZE, input_dim, LATENT_DIM, latent_representations, fig_objects, fig_names, epoch = -1, n_samples=128, use_cuda=False):
   
   model.eval()
   random_sequence = torch.randn(n_samples, LATENT_DIM)
@@ -495,6 +417,82 @@ def generate_data_and_plot(model, LATENT_DIM, fig_objects, fig_names, epoch = -1
   ax[1].plot(generated_data[sample_idx+4,:], 'c')
   ax[1].set_xlim((0,100))
   ax[1].grid('both')
+  plt.close()
+
+  ## PCA ANALYSIS
+  # Incremental PCA
+  n_components = 2
+  ipca = IncrementalPCA(n_components=n_components, batch_size=BATCH_SIZE)
+
+  # Fit IPCA on training data
+  for data in train_dl:
+    data = data[:,:input_dim] 
+    ipca.partial_fit(data.cpu().numpy())
+
+  # Transform generated data
+  generated_data_transformed = ipca.transform(generated_data)
+
+  # Transform original data (in batches)
+  def transform_in_batches(dataloader, pca_model):
+    transformed_data_list = []
+    for data in dataloader:
+      data = data[:,:input_dim]
+      transformed_batch = pca_model.transform(data.cpu().numpy())
+      transformed_data_list.append(transformed_batch)
+    return np.concatenate(transformed_data_list, axis=0)
+
+  original_data_transformed = transform_in_batches(train_dl, ipca)
+
+  fig = plt.figure(figsize=(5, 5))
+  fig_objects.append(fig)
+  fig_names.append(f'IPCA_orig_vs_generated_data: epoch {epoch}')
+
+  # Original data
+  plt.scatter(original_data_transformed[:, 0], original_data_transformed[:, 1], alpha=0.7, label='Original Data')
+  # Generated data
+  plt.scatter(generated_data_transformed[:, 0], generated_data_transformed[:, 1], alpha=0.7, label='Generated Data')
+
+  plt.title('PCA Proj. of Original and\n Generated GTEx-Gene Sequences', fontsize=12)
+  plt.xlabel('PC1', fontsize=12)
+  # Create secondary y-axis (to move PC2 to the right side of the plot)
+  ax2 = plt.twinx()  
+  ax2.set_ylabel('PC2', fontsize=12)
+  # Hide the labels and ticks of the secondary y-axis
+  ax2.set_yticks([])
+  ax2.yaxis.set_tick_params(length=0)
+  plt.grid('both')  
+  plt.close()
+  
+  ## OUTPUT DATA
+  pca_output = PCA(n_components=n_components)
+  pca_gen_data = pca_output.fit_transform(generated_data)
+
+  fig = plt.figure(figsize=(5, 5))
+  fig_objects.append(fig)
+  fig_names.append(f'PCA_generated_data: epoch {epoch}')
+
+  plt.scatter(pca_gen_data[:, 0], pca_gen_data[:, 1], alpha=0.7, label='z')
+  plt.title('PCA of generated data')
+  plt.xlabel('PC1')
+  plt.ylabel('PC2')
+  plt.legend()
+  plt.close()
+  
+  ## PCA ANALYSIS on latent representation
+  n_components = 2
+
+  pca = PCA(n_components=n_components)
+  latent_pca = pca.fit_transform(latent_representations)
+
+  fig = plt.figure(figsize=(5, 5))
+  fig_objects.append(fig)
+  fig_names.append(f'PCA_of_latent_representations: epoch {epoch}')
+
+  plt.scatter(latent_pca[:, 0], latent_pca[:, 1], alpha=0.7)
+  plt.title('PCA of latent representations')
+  plt.xlabel('PC1')
+  plt.ylabel('PC2')  
+  plt.grid('both')
   plt.close()
 
   return generated_data, fig_objects, fig_names

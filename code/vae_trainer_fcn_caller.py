@@ -29,10 +29,10 @@ NUM_WORKERS     = 2
 PREFETCH_FACTOR = 1
 
 # One-shot
-if False:
+if True:
   EXPERIMENTS             = 1                   # one-shot
-  exp_file = 'results/exp_poster'   
-  train_epoch_V           = [10]                # 
+  exp_file = 'results/exp_testing'   
+  train_epoch_V           = [3]                 # 
   hidden_num_layers_V     = [2]                 # 
   latent_dim_V            = [128]               # 
   LR_range                = [0.0005, 0.0005]    # 
@@ -42,7 +42,7 @@ if False:
   hidden_layers_target    = [2048, 4096]        # 
   max_latent_dim_exponent = 11                  # 2^11 = 1024
 
-elif True:
+elif False:
   EXPERIMENTS             = 1                   # one-shot
   exp_file = 'results/exp_poster_109'    
   train_epoch_V           = [10]                # 
