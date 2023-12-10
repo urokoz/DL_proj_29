@@ -19,7 +19,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 RANDOM_SEED=42
-def vae_trainer_fcn(BATCH_SIZE, NUM_WORKERS, PREFETCH_FACTOR, TRAIN_EPOCHS, LEARNING_RATE, BETA, HIDDEN_NUM_LAYERS, LATENT_DIM, HIDDEN_LAYERS, experiment_number, exp_file, train_dl, val_dl):
+def vae_trainer_fcn(BATCH_SIZE, NUM_WORKERS, PREFETCH_FACTOR, TRAIN_EPOCHS, LEARNING_RATE, BETA_target, HIDDEN_NUM_LAYERS, LATENT_DIM, HIDDEN_LAYERS, experiment_number, exp_file, train_dl, val_dl):
  
   torch.manual_seed(RANDOM_SEED)
   np.random.seed(RANDOM_SEED)
@@ -46,7 +46,7 @@ def vae_trainer_fcn(BATCH_SIZE, NUM_WORKERS, PREFETCH_FACTOR, TRAIN_EPOCHS, LEAR
     ("PREFETCH_FACTOR",PREFETCH_FACTOR),
     ("TRAIN_EPOCHS",   TRAIN_EPOCHS),
     ("LEARNING_RATE",  LEARNING_RATE),
-    ("BETA",           BETA),
+    ("BETA",           BETA_target),
     ("ELBO_GAIN",      ELBO_GAIN), 
   ]
 
@@ -85,10 +85,19 @@ def vae_trainer_fcn(BATCH_SIZE, NUM_WORKERS, PREFETCH_FACTOR, TRAIN_EPOCHS, LEAR
 
   latent_representations = []
 
+  #BETA = 0
+  BETA = BETA_target
   for epoch in range(TRAIN_EPOCHS):    
     model.train()
     batch_counter     = 0
-     
+
+    # KL_div warm-up period:    
+    #BETA = epoch * (BETA_target / 10)
+    #if BETA > BETA_target:
+    #  BETA = BETA_target
+    #print(f'BETA:  {BETA:2.5f}')
+
+
     # TRAINING LOOP
     for u in train_dl:
       u = u[:,:input_dim] / MAX_FEATURE_VALUE # quick and dirt normalization
@@ -187,7 +196,7 @@ def vae_trainer_fcn(BATCH_SIZE, NUM_WORKERS, PREFETCH_FACTOR, TRAIN_EPOCHS, LEAR
       if np.min([val_ELBO_epoch_now, val_ELBO_epoch_old1, val_ELBO_epoch_old2]) == val_ELBO_epoch_old1:
         overfit_warning_str = ' <--- Possible overfit'
 
-    print(f'Epoch: {epoch}\ttrain ELBO: {train_ELBO_epoch_now:2.5f}\tMSE: {train_MSE_epoch_now:2.5f}\tKLdiv: {train_KLdiv_epoch_now:2.5f}')
+    print(f'Epoch: {epoch}/{TRAIN_EPOCHS-1}\ttrain ELBO: {train_ELBO_epoch_now:2.5f}\tMSE: {train_MSE_epoch_now:2.5f}\tKLdiv: {train_KLdiv_epoch_now:2.5f}')
     print(f'                val   ELBO: {val_ELBO_epoch_now:2.5f}\tMSE: {val_MSE_epoch_now:2.5f}\tKLdiv: {val_KLdiv_epoch_now:2.5f}\n')
 
 
@@ -206,10 +215,11 @@ def vae_trainer_fcn(BATCH_SIZE, NUM_WORKERS, PREFETCH_FACTOR, TRAIN_EPOCHS, LEAR
   train_KLdiv_vs_all_batches = log_train_KLdiv_m.reshape(TRAIN_EPOCHS*len(train_dl),1).squeeze()
   val_KLdiv_vs_all_batches   = log_val_KLdiv_m.reshape(TRAIN_EPOCHS*len(val_dl),1).squeeze()
 
-  # Poster: For plotting purposes
-  train_ELBO_vs_all_batches = [0 if x > 100 else x for x in train_ELBO_vs_all_batches]
-  train_MSE_vs_all_batches = [0 if x > 100 else x for x in train_MSE_vs_all_batches]
-  train_KLdiv_vs_all_batches = [0 if x > 100 else x for x in train_KLdiv_vs_all_batches]
+  # Poster: For plotting purposes (cap values to 2.5)
+  #cap_value = 2.5
+  #train_ELBO_vs_all_batches  = [cap_value if x > cap_value else x for x in train_ELBO_vs_all_batches]
+  #train_MSE_vs_all_batches   = [cap_value if x > cap_value else x for x in train_MSE_vs_all_batches]
+  #train_KLdiv_vs_all_batches = [cap_value if x > cap_value else x for x in train_KLdiv_vs_all_batches]
 
   batch_ratio   = len(train_ELBO_vs_all_batches) / len(val_ELBO_vs_all_batches)
   xaxis_train_v = np.arange(len(train_MSE_vs_all_batches))
@@ -385,11 +395,15 @@ def vae_trainer_fcn(BATCH_SIZE, NUM_WORKERS, PREFETCH_FACTOR, TRAIN_EPOCHS, LEAR
   # Generated data
   plt.scatter(generated_data_transformed[:, 0], generated_data_transformed[:, 1], alpha=0.7, label='Generated Data')
 
-  plt.title('PCA Proj. of Original and Generated GTEx-Gene Sequences')
-  plt.xlabel('PC1')
-  plt.ylabel('PC2')
-  plt.grid('both')
-  plt.legend()
+  plt.title('PCA Proj. of Original and\n Generated GTEx-Gene Sequences', fontsize=12)
+  plt.xlabel('PC1', fontsize=12)
+  # Create secondary y-axis (to move PC2 to the right side of the plot)
+  ax2 = plt.twinx()  
+  ax2.set_ylabel('PC2', fontsize=12)
+  # Hide the labels and ticks of the secondary y-axis
+  ax2.set_yticks([])
+  ax2.yaxis.set_tick_params(length=0)
+  plt.grid('both')  
   plt.close()
   
   ## OUTPUT DATA
@@ -453,7 +467,7 @@ def save_results(filename, fig_objects, fig_names, variable_info, model):
     fig.savefig(fig_path)    
 
   # Save model  
-  torch.save(model.state_dict(), f'{directory}/vae_model.pt')    
+  torch.save(model, f'{directory}/vae_model.pt')    
   print('Results saved.')
 
 ######################################################################
