@@ -23,22 +23,21 @@ def generate_LR_and_beta(profile_LR, profile_beta, lr_values, beta_values, exper
         return random.uniform(*LR_range), random.uniform(*beta_range)
 
 EXPERIMENTS     = 20  # number of experiments if no variable is profiled
-profile_entries = 12  # number of experiments for each variable to be profiled
+profile_entries = 15  # number of experiments for each variable to be profiled
 BATCH_SIZE      = 32 
 NUM_WORKERS     = 2
 PREFETCH_FACTOR = 1
 
-# One-shot
 if True:
-  EXPERIMENTS             = 1                   # one-shot
+  EXPERIMENTS             = 1                   # 
   exp_file = 'results/exp_testing'   
-  train_epoch_V           = [3]                 # 
+  train_epoch_V           = [10]                # 
   hidden_num_layers_V     = [2]                 # 
   latent_dim_V            = [128]               # 
-  LR_range                = [0.0005, 0.0005]    # 
-  LR_profile              = False               # 
-  beta_range              = [0.015, 0.015]      # 
-  beta_profile            = False               # 
+  LR_range                = [0.00001, 0.001]    # 
+  LR_profile              = True                # 
+  beta_range              = [0.001, 1.0]        # 
+  beta_profile            = True                # 
   hidden_layers_target    = [2048, 4096]        # 
   max_latent_dim_exponent = 11                  # 2^11 = 1024
 

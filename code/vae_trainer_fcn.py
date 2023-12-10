@@ -5,6 +5,7 @@ import matplotlib.pyplot as plt
 import matplotlib.gridspec as gridspec
 from sklearn.decomposition import PCA
 import random
+import time
 import math
 import sys
 sys.path.append('../code')
@@ -97,6 +98,7 @@ def vae_trainer_fcn(BATCH_SIZE, NUM_WORKERS, PREFETCH_FACTOR, TRAIN_EPOCHS, LEAR
     #print(f'BETA:  {BETA:2.5f}')
 
     # TRAINING LOOP
+    timer_start_train = time.perf_counter()
     for u in train_dl:
       u = u[:,:input_dim] / MAX_FEATURE_VALUE # quick and dirt normalization
       if torch.max(u) > max_feature:
@@ -154,11 +156,13 @@ def vae_trainer_fcn(BATCH_SIZE, NUM_WORKERS, PREFETCH_FACTOR, TRAIN_EPOCHS, LEAR
         print('EXPERIMENT ABORTED.')
         save_results(f'{exp_file}{experiment_number}_ABORTED/parameters_{experiment_number}_ABORTED.txt', fig_objects, fig_names, variable_info, model)
         return
+    print(f'Epoch training elapsed time: {time.perf_counter() - timer_start_train:.0f}[s]')
 
     # VALIDATION LOOP
     batch_counter = 0
     model.eval()    
 
+    timer_start_val = time.perf_counter()
     with torch.inference_mode():                
       for u in val_dl:
         u = u[:,:input_dim] / MAX_FEATURE_VALUE # quick and dirt normalization
@@ -179,9 +183,11 @@ def vae_trainer_fcn(BATCH_SIZE, NUM_WORKERS, PREFETCH_FACTOR, TRAIN_EPOCHS, LEAR
         log_val_ELBO_m[epoch, batch_counter]  = ELBO_batch.item()
         batch_counter += 1        
 
-    # Generate data and plots to monitor training progress along the epochs.         
+    print(f'Epoch validation elapsed time: {time.perf_counter() - timer_start_val:.0f}[s]')
+    # Generate data and plots to monitor training progress along the epochs.      
+    print('still training')
     fig_objects, fig_names = generate_data_and_plot(model, train_dl, BATCH_SIZE, input_dim, LATENT_DIM, latent_representations, fig_objects, fig_names, epoch, 1024, use_cuda)
-
+    
     # PRINT RESULTS per EPOCH            
     val_ELBO_epoch_now  = log_val_ELBO_m[epoch, :].mean(axis=0)            
     val_MSE_epoch_now   = log_val_MSE_m[epoch, :].mean(axis=0)
@@ -199,9 +205,6 @@ def vae_trainer_fcn(BATCH_SIZE, NUM_WORKERS, PREFETCH_FACTOR, TRAIN_EPOCHS, LEAR
     print(f'Epoch: {epoch}/{TRAIN_EPOCHS-1}\ttrain ELBO: {train_ELBO_epoch_now:2.5f}\tMSE: {train_MSE_epoch_now:2.5f}\tKLdiv: {train_KLdiv_epoch_now:2.5f}')
     print(f'                val   ELBO: {val_ELBO_epoch_now:2.5f}\tMSE: {val_MSE_epoch_now:2.5f}\tKLdiv: {val_KLdiv_epoch_now:2.5f}\n')
 
-
-  # List of arrays -> single numpy array
-  latent_representations = np.concatenate(latent_representations, axis=0)
   if MAX_FEATURE_VALUE != 1:
     print(f'Max value after normalization: {max_feature:2.2f}')
     if max_feature > 0: print(f'WARNING: Max value after normalization exceeds 1')
@@ -360,6 +363,7 @@ def vae_trainer_fcn(BATCH_SIZE, NUM_WORKERS, PREFETCH_FACTOR, TRAIN_EPOCHS, LEAR
   plt.close()
 
   ## SAMPLE FOR THE TRAINED MODEL and MAKE PLOTS
+  print('FINISHED training')
   fig_objects, fig_names = generate_data_and_plot(model, train_dl, BATCH_SIZE, input_dim, LATENT_DIM, latent_representations, fig_objects, fig_names, -1, 128, use_cuda)
 
   ## SAVE RESULTS (figures, parameters and model)
@@ -389,12 +393,15 @@ def save_results(filename, fig_objects, fig_names, variable_info, model):
     fig.savefig(fig_path)    
 
   # Save model  
-  torch.save(model, f'{directory}/vae_model.pt')    
+  #torch.save(model, f'{directory}/vae_model.pt')    
   print('Results saved.')
 
 ######################################################################
 def generate_data_and_plot(model, train_dl, BATCH_SIZE, input_dim, LATENT_DIM, latent_representations, fig_objects, fig_names, epoch = -1, n_samples=128, use_cuda=False):
-  
+  print('<generate_data_and_plot>')
+
+  timer_start = time.perf_counter()  
+
   model.eval()
   random_sequence = torch.randn(n_samples, LATENT_DIM)
   random_sequence = random_sequence.cuda() if use_cuda else random_sequence
@@ -419,18 +426,32 @@ def generate_data_and_plot(model, train_dl, BATCH_SIZE, input_dim, LATENT_DIM, l
   ax[1].grid('both')
   plt.close()
 
+  print(f'Epoch plot generated data elapsed time: {time.perf_counter() - timer_start:.0f}[s]')
+  timer_start = time.perf_counter()  
+
   ## PCA ANALYSIS
   # Incremental PCA
   n_components = 2
   ipca = IncrementalPCA(n_components=n_components, batch_size=BATCH_SIZE)
 
+  print(f'Epoch IPCA partial_fit gen-data elapsed time: {time.perf_counter() - timer_start:.0f}[s]')
+  timer_start = time.perf_counter()  
+
   # Fit IPCA on training data
-  for data in train_dl:
-    data = data[:,:input_dim] 
-    ipca.partial_fit(data.cpu().numpy())
+  num_samples = 1000
+  processed_samples = 0
+  for orig_data in train_dl:
+    orig_data = orig_data[:, :input_dim].cpu().numpy()     
+    ipca.partial_fit(orig_data)
+
+    processed_samples += len(orig_data)
+    if processed_samples >= num_samples:
+      break
 
   # Transform generated data
   generated_data_transformed = ipca.transform(generated_data)
+  print(f'Epoch IPCA gen-data elapsed time: {time.perf_counter() - timer_start:.0f}[s]')
+  timer_start = time.perf_counter()  
 
   # Transform original data (in batches)
   def transform_in_batches(dataloader, pca_model):
@@ -441,7 +462,13 @@ def generate_data_and_plot(model, train_dl, BATCH_SIZE, input_dim, LATENT_DIM, l
       transformed_data_list.append(transformed_batch)
     return np.concatenate(transformed_data_list, axis=0)
 
+  #original_data_transformed = ipca.transform(orig_data)
   original_data_transformed = transform_in_batches(train_dl, ipca)
+  print(f'Epoch IPCA orig-data elapsed time: {time.perf_counter() - timer_start:.0f}[s]')
+  timer_start = time.perf_counter()  
+
+
+  #original_data_transformed = transform_in_batches(train_dl, ipca)
 
   fig = plt.figure(figsize=(5, 5))
   fig_objects.append(fig)
@@ -478,10 +505,17 @@ def generate_data_and_plot(model, train_dl, BATCH_SIZE, input_dim, LATENT_DIM, l
   plt.legend()
   plt.close()
   
+  print(f'Epoch PCA gen-data elapsed time: {time.perf_counter() - timer_start:.0f}[s]')
+  timer_start = time.perf_counter()
+
   ## PCA ANALYSIS on latent representation
   n_components = 2
 
   pca = PCA(n_components=n_components)
+  
+  latent_representations = np.concatenate(latent_representations, axis=0)
+  print(f'latent_representations shape: {latent_representations.shape}')
+
   latent_pca = pca.fit_transform(latent_representations)
 
   fig = plt.figure(figsize=(5, 5))
@@ -495,6 +529,8 @@ def generate_data_and_plot(model, train_dl, BATCH_SIZE, input_dim, LATENT_DIM, l
   plt.grid('both')
   plt.close()
 
-  return generated_data, fig_objects, fig_names
+  print(f'Epoch PCA z-rep elapsed time: {time.perf_counter() - timer_start:.0f}[s]')
+
+  return fig_objects, fig_names
 
 
