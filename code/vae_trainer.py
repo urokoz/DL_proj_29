@@ -215,7 +215,7 @@ if __name__ == '__main__':
     use_cuda = True and torch.cuda.is_available()
     pass_through_data = torch.tensor(pass_through_data, dtype=torch.float32, device='cuda' if use_cuda else 'cpu')
     
-    betas = [1e-1, 1e-2, 1e-3, 1e-4, 1e-5, 1e-6, 1e-7]
+    betas = [1, 0.5, 1e-1, 1.5e-2, 1e-2, 1e-3, 1e-4]
     for beta in betas:
         result_path = f"results/beta_{beta}"
         os.makedirs(result_path, exist_ok=True)
@@ -231,6 +231,7 @@ if __name__ == '__main__':
         
         # Transform generated data
         generated_data_transformed = ipca.transform(generated_data)
+        pass_through_data_transformed = ipca.transform(pass_through_data.detach().cpu().numpy())
         reconstructed_data_transformed = ipca.transform(reconstructed_data.detach().cpu().numpy())
         fig = plt.figure(figsize=(5, 5))
 
@@ -238,6 +239,7 @@ if __name__ == '__main__':
         plt.scatter(original_data_transformed[:, 0], original_data_transformed[:, 1], alpha=0.7, label='Original Data')
         # Generated data
         plt.scatter(generated_data_transformed[:, 0], generated_data_transformed[:, 1], alpha=0.7, label='Generated Data')
+        plt.scatter(pass_through_data_transformed[:, 0], pass_through_data_transformed[:, 1], alpha=0.7, label='Pass Through Data')
         plt.scatter(reconstructed_data_transformed[:, 0], reconstructed_data_transformed[:, 1], alpha=0.7, label='Reconstructed Data')
         
 
