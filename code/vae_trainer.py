@@ -220,7 +220,7 @@ if __name__ == '__main__':
         result_path = f"results/beta_{beta}"
         os.makedirs(result_path, exist_ok=True)
         model = trainer(BETA=beta, train_dataloader=train_dataloader, val_dataloader=val_dataloader, lr=1e-5, TRAIN_EPOCHS=100, elbo_gain=1, use_cuda=True)
-        
+        torch.save(model, f"{result_path}/vae_model.pt")
         generated_data, fig = generate_data_and_plot(model)
         fig.savefig(f"{result_path}/generated_data.png")
         plt.clf()
