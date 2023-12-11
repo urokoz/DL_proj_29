@@ -109,18 +109,18 @@ def trainer(BETA, train_dataloader, val_dataloader, lr=1e-5, TRAIN_EPOCHS=20, el
             MSE_batch = elbo_gain * criterion(reconstruction, u)
             KLdiv_batch = elbo_gain * torch.mean(model.kl_divergence)
 
-            # MANUAL calculation of KL_div:        
-            z, z_mu, z_log_var = model.encoder(u)            
-            # pz: log prob. of "z" under PRIOR N(0,1). The higher (closer to zero) the more likely "z" is the prior.
-            pz = log_standard_gaussian(z)
-            # qz: log prob. of "z" under the Gaussian given "x". The higher (closer to zero)) the more likely "z" is to encode "x" according to the model.
-            qz = log_gaussian(z, z_mu, z_log_var) 
-            kl = qz - pz            
-            log_manual_z_mu_m[epoch, batch_counter]      = z_mu.mean().item()
-            log_manual_z_log_var_m[epoch, batch_counter] = z_log_var.mean().item()
-            log_manual_qz_m[epoch, batch_counter]        = qz.mean().item()
-            log_manual_pz_m[epoch, batch_counter]        = pz.mean().item()
-            log_manual_KLdiv_m[epoch, batch_counter]     = BETA * kl.mean().item()        
+            # # MANUAL calculation of KL_div:        
+            # z, z_mu, z_log_var = model.encoder(u)            
+            # # pz: log prob. of "z" under PRIOR N(0,1). The higher (closer to zero) the more likely "z" is the prior.
+            # pz = log_standard_gaussian(z)
+            # # qz: log prob. of "z" under the Gaussian given "x". The higher (closer to zero)) the more likely "z" is to encode "x" according to the model.
+            # qz = log_gaussian(z, z_mu, z_log_var) 
+            # kl = qz - pz            
+            # log_manual_z_mu_m[epoch, batch_counter]      = z_mu.mean().item()
+            # log_manual_z_log_var_m[epoch, batch_counter] = z_log_var.mean().item()
+            # log_manual_qz_m[epoch, batch_counter]        = qz.mean().item()
+            # log_manual_pz_m[epoch, batch_counter]        = pz.mean().item()
+            # log_manual_KLdiv_m[epoch, batch_counter]     = BETA * kl.mean().item()        
 
             # ELBO is maximized in a VAE.
             # By inverting ELBO, the terms inside are in practice minimized:
@@ -152,9 +152,9 @@ def trainer(BETA, train_dataloader, val_dataloader, lr=1e-5, TRAIN_EPOCHS=20, el
 
                 if use_cuda: u = u.cuda()
 
-                # Get latent variables
-                z, _, _ = model.encoder.get_latent_vars(u)
-                latent_representations.append(z.detach().cpu().numpy())
+                # # Get latent variables
+                # z, _, _ = model.encoder.get_latent_vars(u)
+                # latent_representations.append(z.detach().cpu().numpy())
 
                 reconstruction = model(u)
                 MSE_batch = elbo_gain * criterion(reconstruction, u)
@@ -211,30 +211,42 @@ if __name__ == '__main__':
     
     original_data_transformed = transform_in_batches(train_dataloader, ipca)
     
+    pass_through_data = np.array([archsDset_val[i] for i in np.random.choice(range(len(archsDset_val)), size=128, replace=False)])
+    use_cuda = True and torch.cuda.is_available()
+    pass_through_data = torch.tensor(pass_through_data, dtype=torch.float32, device='cuda' if use_cuda else 'cpu')
     
     betas = [1e-1, 1e-2, 1e-3, 1e-4, 1e-5, 1e-6, 1e-7]
     for beta in betas:
         result_path = f"results/beta_{beta}"
         os.makedirs(result_path, exist_ok=True)
-        model = trainer(BETA=beta, train_dataloader=train_dataloader, val_dataloader=val_dataloader)
+        model = trainer(BETA=beta, train_dataloader=train_dataloader, val_dataloader=val_dataloader, lr=1e-5, TRAIN_EPOCHS=100, elbo_gain=1, use_cuda=True)
         
         generated_data, fig = generate_data_and_plot(model)
         fig.savefig(f"{result_path}/generated_data.png")
+        plt.clf()
+        
+        model.eval()
+        with torch.inference_mode():
+            reconstructed_data = model(pass_through_data)
         
         # Transform generated data
         generated_data_transformed = ipca.transform(generated_data)
+        reconstructed_data_transformed = ipca.transform(reconstructed_data.detach().cpu().numpy())
         fig = plt.figure(figsize=(5, 5))
 
         # Original data
         plt.scatter(original_data_transformed[:, 0], original_data_transformed[:, 1], alpha=0.7, label='Original Data')
         # Generated data
         plt.scatter(generated_data_transformed[:, 0], generated_data_transformed[:, 1], alpha=0.7, label='Generated Data')
+        plt.scatter(reconstructed_data_transformed[:, 0], reconstructed_data_transformed[:, 1], alpha=0.7, label='Reconstructed Data')
+        
 
         plt.title('PCA Projection of Original and Generated Arch4 Sequences')
         plt.xlabel('PC1')
         plt.ylabel('PC2')
         plt.legend()
         fig.savefig(f"{result_path}/IPCA_orig_vs_generated_data.png")
+        plt.clf()
 
         ## OUTPUT DATA
         pca_output = PCA(n_components=n_components)
@@ -248,5 +260,7 @@ if __name__ == '__main__':
         plt.ylabel('PC2')
         plt.legend()
         fig.savefig(f"{result_path}/PCA_generated_data.png")
+        plt.clf()
+        
         
         
