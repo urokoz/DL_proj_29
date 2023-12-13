@@ -10,11 +10,11 @@ from wohlert.models import VariationalAutoencoder
 from torch.utils.data import WeightedRandomSampler, DataLoader
 
 
-TRAIN_EPOCHS = 40
-LEARNING_RATE = 1e-4
+TRAIN_EPOCHS = 100
+LEARNING_RATE = 1e-5
 MAX_FEATURE_VALUE = 1
 
-latent_dim = 16
+latent_dim = 256
 reg_hidden_layers = [2048, 2048]
 out_features = 156958
 
@@ -30,7 +30,7 @@ validation_dataloader = DataLoader(gtexDset_val, batch_size=64, num_workers=2, p
 use_cuda = True and torch.cuda.is_available()
 
 print(f"{use_cuda=}")
-vae_path = "trained_models/vae_model_109.pt"
+vae_path = "results/beta_0.001/vae_model.pt"
 vae_model = torch.load(vae_path)
 
 regressor_model = Regressor([latent_dim, reg_hidden_layers, out_features])

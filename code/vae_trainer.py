@@ -48,7 +48,7 @@ def trainer(BETA, train_dataloader, val_dataloader, lr=1e-5, TRAIN_EPOCHS=20, el
     # NN structure
     input_dim         = 18965 # gtex-gene features (can be reduced/capped for quicker tests if needed)
     latent_dim        = 256
-    hidden_layers     = [1024, 512]
+    hidden_layers     = [512, 512]
 
     #### Model setup ####
     from wohlert.models import VariationalAutoencoder
@@ -215,11 +215,11 @@ if __name__ == '__main__':
     use_cuda = True and torch.cuda.is_available()
     pass_through_data = torch.tensor(pass_through_data, dtype=torch.float32, device='cuda' if use_cuda else 'cpu')
     
-    betas = [1, 0.5, 1e-1, 1.5e-2, 1e-2, 1e-3, 1e-4]
+    betas = [5e-2, 1e-2, 1e-3, 1e-4]
     for beta in betas:
         result_path = f"results/beta_{beta}"
         os.makedirs(result_path, exist_ok=True)
-        model = trainer(BETA=beta, train_dataloader=train_dataloader, val_dataloader=val_dataloader, lr=1e-5, TRAIN_EPOCHS=100, elbo_gain=1, use_cuda=True)
+        model = trainer(BETA=beta, train_dataloader=train_dataloader, val_dataloader=val_dataloader, lr=1e-5, TRAIN_EPOCHS=200, elbo_gain=1, use_cuda=True)
         torch.save(model, f"{result_path}/vae_model.pt")
         generated_data, fig = generate_data_and_plot(model)
         fig.savefig(f"{result_path}/generated_data.png")
