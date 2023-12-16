@@ -39,6 +39,7 @@ class Archs4GeneExpressionDataset(torch.utils.data.Dataset):
         
         self.data_mean = self.mean()
         self.data_std = self.std()
+        self.norm_mean = self.normalized_mean()
 
     def __len__(self):
         if self.idxs is None:
@@ -60,6 +61,9 @@ class Archs4GeneExpressionDataset(torch.utils.data.Dataset):
     
     def std(self):
         return np.std(self.dset, axis=0)
+    
+    def normalized_mean(self):
+        return np.mean((self.dset - self.data_mean) / self.data_std, axis=0)
 
 
 class GtexDataset(torch.utils.data.Dataset):
@@ -107,8 +111,10 @@ class GtexDataset(torch.utils.data.Dataset):
             self.idxs = np.sort(self.idxs)
         
         self.sampleweights(f_gtex_gene['tissue'])
-        self.gene_mean = self.mean()
-        self.gene_std = self.std()
+        self.gene_mean = self.gene_mean()
+        self.gene_std = self.gene_std()
+        self.iso_mean = self.isoform_mean()
+        
 
     def sampleweights(self, labels_gene):
         #adding stuff here 
@@ -120,11 +126,14 @@ class GtexDataset(torch.utils.data.Dataset):
             tissue_counts = Counter(labels_gene[self.idxs])
             self.sample_weights = [1/tissue_counts[i] for i in labels_gene[self.idxs]]
         
-    def mean(self):
+    def gene_mean(self):
         return np.mean(self.dset_gene, axis=0)
     
-    def std(self):
+    def gene_std(self):
         return np.std(self.dset_gene, axis=0)
+    
+    def isoform_mean(self):
+        return np.mean(self.dset_isoform, axis=0)
 
     def __len__(self):
         if self.idxs is None:
