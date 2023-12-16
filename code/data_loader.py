@@ -12,10 +12,11 @@ from sklearn.model_selection import train_test_split
 
 
 class Archs4GeneExpressionDataset(torch.utils.data.Dataset):
-    def __init__(self, data_dir: str, split: str="", val_prop: float=0.1, load_in_mem: bool=False):
+    def __init__(self, data_dir: str, split: str="", val_prop: float=0.1, normalize=False, load_in_mem: bool=False):
         print("# Loading ARCHS4 data...")
         f_archs4 = h5py.File(data_dir + '/archs4_gene_expression_norm_transposed.hdf5', mode='r')
         self.dset = f_archs4['expressions']
+        self.normalize = normalize
 
         if load_in_mem:
             self.dset = np.array(self.dset)
@@ -35,6 +36,9 @@ class Archs4GeneExpressionDataset(torch.utils.data.Dataset):
             
             _, self.idxs = train_test_split(self.idxs, test_size=val_prop, random_state=42)
             self.idxs = np.sort(self.idxs)
+        
+        self.data_mean = self.mean()
+        self.data_std = self.std()
 
     def __len__(self):
         if self.idxs is None:
@@ -44,19 +48,30 @@ class Archs4GeneExpressionDataset(torch.utils.data.Dataset):
 
     def __getitem__(self, idx):
         if self.idxs is None:
-            return self.dset[idx]
+            data = self.dset[idx]
         else:
-            return self.dset[self.idxs[idx]]
+            data = self.dset[self.idxs[idx]]
+        if self.normalize:
+            data = (data - self.data_mean) / self.data_std
+        return data
+        
+    def mean(self):
+        return np.mean(self.dset, axis=0)
+    
+    def std(self):
+        return np.std(self.dset, axis=0)
 
 
 class GtexDataset(torch.utils.data.Dataset):
-    def __init__(self, data_dir: str, split: str="", val_prop: float=0.1, include: str="", exclude: str="", load_in_mem: bool=False):
+    def __init__(self, data_dir: str, split: str="", val_prop: float=0.1, include: str="", exclude: str="", normalize=False, load_in_mem: bool=False):
         print("# Loading GTEx data...")
         f_gtex_gene = h5py.File(data_dir + '/gtex_gene_expression_norm_transposed.hdf5', mode='r')
         f_gtex_isoform = h5py.File(data_dir + '/gtex_isoform_expression_norm_transposed.hdf5', mode='r')
 
         self.dset_gene = f_gtex_gene['expressions']
         self.dset_isoform = f_gtex_isoform['expressions']
+        
+        self.normalize = normalize
 
         assert(self.dset_gene.shape[0] == self.dset_isoform.shape[0])
 
@@ -92,6 +107,8 @@ class GtexDataset(torch.utils.data.Dataset):
             self.idxs = np.sort(self.idxs)
         
         self.sampleweights(f_gtex_gene['tissue'])
+        self.gene_mean = self.mean()
+        self.gene_std = self.std()
 
     def sampleweights(self, labels_gene):
         #adding stuff here 
@@ -102,6 +119,12 @@ class GtexDataset(torch.utils.data.Dataset):
         else:
             tissue_counts = Counter(labels_gene[self.idxs])
             self.sample_weights = [1/tissue_counts[i] for i in labels_gene[self.idxs]]
+        
+    def mean(self):
+        return np.mean(self.dset_gene, axis=0)
+    
+    def std(self):
+        return np.std(self.dset_gene, axis=0)
 
     def __len__(self):
         if self.idxs is None:
@@ -111,9 +134,12 @@ class GtexDataset(torch.utils.data.Dataset):
 
     def __getitem__(self, idx):
         if self.idxs is None:
-            return self.dset_gene[idx], self.dset_isoform[idx]
+            gene_data, isoform_data = self.dset_gene[idx], self.dset_isoform[idx]
         else:
-            return self.dset_gene[self.idxs[idx]], self.dset_isoform[self.idxs[idx]]
+            gene_data, isoform_data = self.dset_gene[self.idxs[idx]], self.dset_isoform[self.idxs[idx]]
+        if self.normalize:
+            gene_data = (gene_data - self.gene_mean) / self.gene_std
+        return gene_data, isoform_data
 
 
 if __name__ == '__main__':
