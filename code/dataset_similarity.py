@@ -10,10 +10,10 @@ from data_loader import Archs4GeneExpressionDataset, GtexDataset
 from torch.utils.data import DataLoader
 
 dat_dir = "data/hdf5"
-archsDset = Archs4GeneExpressionDataset(data_dir = dat_dir, normalize=True, load_in_mem=False)
+archsDset = Archs4GeneExpressionDataset(data_dir = dat_dir, normalize=False, load_in_mem=False)
 archs4_dataloader = DataLoader(archsDset, batch_size=100, num_workers=2, prefetch_factor=1)
 
-gtexDset = GtexDataset(data_dir=dat_dir, normalize=True, load_in_mem=False)
+gtexDset = GtexDataset(data_dir=dat_dir, normalize=False, load_in_mem=False)
 gtex_dataloader = DataLoader(gtexDset, batch_size=100, num_workers=2, prefetch_factor=1)    
 
 pca_model_path = f"archs_gtex_combined_pca.pkl"
@@ -55,5 +55,5 @@ plt.title('PCA Projection of Archs4 and GTEx Gene Expressions')
 plt.xlabel('PC1')
 plt.ylabel('PC2')
 plt.legend()
-fig.savefig("IPCA_archs_vs_gtex_normalized.png")
+fig.savefig("IPCA_archs_vs_gtex_non_normalized.png")
 
