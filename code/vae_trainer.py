@@ -187,10 +187,10 @@ if __name__ == '__main__':
     
     #### Data loader setup ####
     dat_dir = "data/hdf5"
-    archsDset_train = Archs4GeneExpressionDataset(data_dir = dat_dir, split="train", load_in_mem=False)
+    archsDset_train = Archs4GeneExpressionDataset(data_dir = dat_dir, split="train", normalize=True, load_in_mem=False)
     train_dataloader = DataLoader(archsDset_train, batch_size=80, num_workers=2, prefetch_factor=1)
 
-    archsDset_val = Archs4GeneExpressionDataset(data_dir = dat_dir, split="val", load_in_mem=False)
+    archsDset_val = Archs4GeneExpressionDataset(data_dir = dat_dir, split="val", normalize=True, load_in_mem=False)
     val_dataloader = DataLoader(archsDset_val, batch_size=80, num_workers=2, prefetch_factor=1)
     
     # Incremental PCA

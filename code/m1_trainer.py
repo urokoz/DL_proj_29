@@ -19,11 +19,11 @@ reg_hidden_layers = [2048, 2048]
 out_features = 156958
 
 dat_dir = "data/hdf5"
-gtexDset_train = GtexDataset(data_dir=dat_dir, split="train", load_in_mem=False)
+gtexDset_train = GtexDataset(data_dir=dat_dir, split="train", normalize=True, load_in_mem=False)
 sampler_train = WeightedRandomSampler(weights=gtexDset_train.sample_weights, num_samples=2*len(gtexDset_train), replacement=True)
 training_dataloader = DataLoader(gtexDset_train, sampler=sampler_train, batch_size=128, num_workers=2, prefetch_factor=1)
 
-gtexDset_val = GtexDataset(data_dir=dat_dir, split="val", load_in_mem=False)
+gtexDset_val = GtexDataset(data_dir=dat_dir, split="val", normalize=True, load_in_mem=False)
 sampler_val = WeightedRandomSampler(weights=gtexDset_val.sample_weights, num_samples=2*len(gtexDset_val), replacement=True)
 validation_dataloader = DataLoader(gtexDset_val, batch_size=128, num_workers=2, prefetch_factor=1)
 
