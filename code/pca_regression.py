@@ -46,8 +46,8 @@ else:
     # create PCA incrementally
     for sample in tqdm(unlabeled_dataloader, desc="Fitting PCA"):
         ipca.partial_fit(sample)
-    with open(pca_model_path, "wb") as f:
-        pickle.dump(ipca, f)
+    # with open(pca_model_path, "wb") as f:
+    #     pickle.dump(ipca, f)
 
 # %%
 model = Regressor([n_components, reg_hidden_layers, out_features])

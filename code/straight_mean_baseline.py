@@ -42,8 +42,6 @@ gtex_dataloader = DataLoader(gtexDset, batch_size=100, num_workers=2, prefetch_f
 losses = []
 for L, I in tqdm(gtex_dataloader):
     mean_BL = torch.tensor(np.array([gtexDset.iso_mean for _ in range(len(I))]))
-    print(I)
-    print(mean_BL)
     loss = criterion(I, mean_BL)
     losses.append(loss)
 
