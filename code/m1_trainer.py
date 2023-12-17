@@ -10,23 +10,15 @@ from wohlert.models import VariationalAutoencoder
 from torch.utils.data import WeightedRandomSampler, DataLoader
 
 
-TRAIN_EPOCHS = 100
-LEARNING_RATE = 5e-5
+TRAIN_EPOCHS = 200
+LEARNING_RATE = 1e-5
 MAX_FEATURE_VALUE = 1
 
-<<<<<<< HEAD
 latent_dim = 256
 reg_hidden_layers = [2048, 2048]
 out_features = 156958
 
-=======
-latent_dim = 32
-reg_hidden_layers = [2048, 2048]
-out_features = 156958
 
-LEARNING_RATE = 1e-5
-
->>>>>>> bdc0362 (ran the newer vae notebook on the hpc)
 dat_dir = "data/hdf5"
 gtexDset_train = GtexDataset(data_dir=dat_dir, split="train", normalize=True, load_in_mem=False)
 sampler_train = WeightedRandomSampler(weights=gtexDset_train.sample_weights, num_samples=2*len(gtexDset_train), replacement=True)
@@ -39,7 +31,7 @@ validation_dataloader = DataLoader(gtexDset_val, batch_size=128, num_workers=2, 
 use_cuda = True and torch.cuda.is_available()
 
 print(f"{use_cuda=}")
-vae_path = "results/beta_0.001/vae_model.pt"
+vae_path = "results/beta_1e-05_norm/vae_model.pt"
 vae_model = torch.load(vae_path)
 
 regressor_model = Regressor([latent_dim, reg_hidden_layers, out_features])
@@ -47,10 +39,6 @@ regressor_model = Regressor([latent_dim, reg_hidden_layers, out_features])
 model = M1_model(vae_model, regressor_model)
 print(model)
 
-<<<<<<< HEAD
-=======
-optimizer = torch.optim.Adam(model.parameters(), lr=LEARNING_RATE)
->>>>>>> bdc0362 (ran the newer vae notebook on the hpc)
 criterion = torch.nn.MSELoss()
 
 if use_cuda:

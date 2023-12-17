@@ -215,7 +215,7 @@ if __name__ == '__main__':
     use_cuda = True and torch.cuda.is_available()
     pass_through_data = torch.tensor(pass_through_data, dtype=torch.float32, device='cuda' if use_cuda else 'cpu')
     
-    betas = [5e-2, 1e-2, 1e-3, 1e-4]
+    betas = [1e-6, 1e-7, 1e-8]
     for beta in betas:
         result_path = f"results/beta_{beta}"
         os.makedirs(result_path, exist_ok=True)
