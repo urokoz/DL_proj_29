@@ -42,7 +42,7 @@ def generate_data_and_plot(model, latent_dim =256, n_samples=128, use_cuda=True)
     return generated_data, fig
 
 
-def trainer(BETA, train_dataloader, val_dataloader, lr=1e-5, TRAIN_EPOCHS=20, elbo_gain=1, use_cuda=True):
+def trainer(BETA, train_dataloader, val_dataloader, results_path, lr=1e-5, TRAIN_EPOCHS=20, elbo_gain=1, use_cuda=True):
     use_cuda = use_cuda and torch.cuda.is_available()
     
     # NN structure
@@ -92,8 +92,10 @@ def trainer(BETA, train_dataloader, val_dataloader, lr=1e-5, TRAIN_EPOCHS=20, el
     max_feature = 0
 
     latent_representations = []
-
-    for epoch in range(TRAIN_EPOCHS):
+    
+    outfile = open(f"{results_path}/loss_over_time.txt", "w")
+    print("BETA", "epoch", "train_ELBO", "train_MSE", "train_KLdiv", "val_ELBO", "val_MSE", "val_KLdiv", sep="\t", file=outfile)
+    for epoch in tqdm(range(TRAIN_EPOCHS), leave=True, desc=f"Training VAE with beta={BETA}"):
         model.train() 
         batch_counter = 0
         
@@ -170,6 +172,8 @@ def trainer(BETA, train_dataloader, val_dataloader, lr=1e-5, TRAIN_EPOCHS=20, el
         val_ELBO_epoch_now  = log_val_ELBO_m[epoch, :].mean(axis=0)            
         val_MSE_epoch_now   = log_val_MSE_m[epoch, :].mean(axis=0)
         val_KLdiv_epoch_now = log_val_KLdiv_m[epoch, :].mean(axis=0)
+        
+        print(BETA, epoch, train_ELBO_epoch_now, train_MSE_epoch_now, train_KLdiv_epoch_now, val_ELBO_epoch_now, val_MSE_epoch_now, val_KLdiv_epoch_now, sep="\t", file=outfile)
 
         print(f"Beta: {BETA}\tEpoch: {epoch}")
         print(f'train ELBO: {train_ELBO_epoch_now:2.2f}\tMSE: {train_MSE_epoch_now:2.2f}\tKLdiv: {train_KLdiv_epoch_now:2.2f}')
@@ -187,10 +191,11 @@ if __name__ == '__main__':
     
     #### Data loader setup ####
     dat_dir = "data/hdf5"
-    archsDset_train = Archs4GeneExpressionDataset(data_dir = dat_dir, split="train", normalize=True, load_in_mem=False)
+    normalize = True
+    archsDset_train = Archs4GeneExpressionDataset(data_dir = dat_dir, split="train", normalize=normalize, load_in_mem=False)
     train_dataloader = DataLoader(archsDset_train, batch_size=80, num_workers=2, prefetch_factor=1)
 
-    archsDset_val = Archs4GeneExpressionDataset(data_dir = dat_dir, split="val", normalize=True, load_in_mem=False)
+    archsDset_val = Archs4GeneExpressionDataset(data_dir = dat_dir, split="val", normalize=normalize, load_in_mem=False)
     val_dataloader = DataLoader(archsDset_val, batch_size=80, num_workers=2, prefetch_factor=1)
     
     # Incremental PCA
@@ -215,11 +220,11 @@ if __name__ == '__main__':
     use_cuda = True and torch.cuda.is_available()
     pass_through_data = torch.tensor(pass_through_data, dtype=torch.float32, device='cuda' if use_cuda else 'cpu')
     
-    betas = [1e-6, 1e-7, 1e-8]
+    betas = [1e-5, 1e-4, 1e-6, 1e-2, 1e-3, 1, 1e-1]
     for beta in betas:
-        result_path = f"results/beta_{beta}"
+        result_path = f"results/beta_{beta}{'_normalized' if normalize else ''}"
         os.makedirs(result_path, exist_ok=True)
-        model = trainer(BETA=beta, train_dataloader=train_dataloader, val_dataloader=val_dataloader, lr=1e-5, TRAIN_EPOCHS=200, elbo_gain=1, use_cuda=True)
+        model = trainer(BETA=beta, train_dataloader=train_dataloader, val_dataloader=val_dataloader, results_path=result_path, lr=1e-5, TRAIN_EPOCHS=200, elbo_gain=1, use_cuda=True)
         torch.save(model, f"{result_path}/vae_model.pt")
         generated_data, fig = generate_data_and_plot(model)
         fig.savefig(f"{result_path}/generated_data.png")

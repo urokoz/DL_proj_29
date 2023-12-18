@@ -92,8 +92,7 @@ for epoch in range(TRAIN_EPOCHS):
 
     val_iter.append(batches)
     
-    print(f"# Epoch {epoch+1}/{TRAIN_EPOCHS}")
-    print(f"Training loss:\t{np.mean(train_losses[-1]):4.4f}\tValidation loss:\t{np.mean(val_losses[-1]):4.4f}\n")
+    print(f"Epoch {epoch+1}/{TRAIN_EPOCHS}\tTraining loss:\t{np.mean(train_losses[-1]):4.4f}\tValidation loss:\t{np.mean(val_losses[-1]):4.4f}\n")
 
 # Save model
 torch.save(model, 'trained_models/M1_model.pt')
