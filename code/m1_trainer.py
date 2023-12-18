@@ -11,7 +11,7 @@ from torch.utils.data import WeightedRandomSampler, DataLoader
 
 
 TRAIN_EPOCHS = 200
-LEARNING_RATE = 1e-5
+LEARNING_RATE = 5e-5
 MAX_FEATURE_VALUE = 1
 
 latent_dim = 256
@@ -31,7 +31,7 @@ validation_dataloader = DataLoader(gtexDset_val, batch_size=128, num_workers=2, 
 use_cuda = True and torch.cuda.is_available()
 
 print(f"{use_cuda=}")
-vae_path = "results/beta_1e-05_norm/vae_model.pt"
+vae_path = "results/beta_1e-06/vae_model.pt"
 vae_model = torch.load(vae_path)
 
 regressor_model = Regressor([latent_dim, reg_hidden_layers, out_features])
