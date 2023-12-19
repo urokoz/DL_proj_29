@@ -1,0 +1,803 @@
+Training VAE with beta=1:   0%|                                                                                                                      | 0/200 [00:00<?, ?it/s]Beta: 1	Epoch: 0
+train ELBO: 29.42	MSE: 1.00	KLdiv: 28.42
+val   ELBO: 9.00	MSE: 1.01	KLdiv: 7.99
+
+Training VAE with beta=1:   0%|▌                                                                                                             | 1/200 [00:16<56:06, 16.91s/it]Beta: 1	Epoch: 1
+train ELBO: 6.30	MSE: 1.00	KLdiv: 5.30
+val   ELBO: 4.80	MSE: 1.01	KLdiv: 3.79
+
+Training VAE with beta=1:   1%|█                                                                                                             | 2/200 [00:33<55:23, 16.79s/it]Beta: 1	Epoch: 2
+train ELBO: 4.07	MSE: 1.00	KLdiv: 3.07
+val   ELBO: 3.65	MSE: 1.01	KLdiv: 2.64
+
+Training VAE with beta=1:   2%|█▋                                                                                                            | 3/200 [00:50<54:38, 16.64s/it]Beta: 1	Epoch: 3
+train ELBO: 3.22	MSE: 1.00	KLdiv: 2.22
+val   ELBO: 3.03	MSE: 1.01	KLdiv: 2.02
+
+Training VAE with beta=1:   2%|██▏                                                                                                           | 4/200 [01:06<53:46, 16.46s/it]Beta: 1	Epoch: 4
+train ELBO: 2.73	MSE: 1.00	KLdiv: 1.73
+val   ELBO: 2.61	MSE: 1.01	KLdiv: 1.60
+
+Training VAE with beta=1:   2%|██▊                                                                                                           | 5/200 [01:23<54:29, 16.77s/it]Beta: 1	Epoch: 5
+train ELBO: 2.42	MSE: 1.00	KLdiv: 1.42
+val   ELBO: 2.39	MSE: 1.01	KLdiv: 1.38
+
+Training VAE with beta=1:   3%|███▎                                                                                                          | 6/200 [01:40<54:13, 16.77s/it]Beta: 1	Epoch: 6
+train ELBO: 2.26	MSE: 1.00	KLdiv: 1.26
+val   ELBO: 2.28	MSE: 1.01	KLdiv: 1.27
+
+Training VAE with beta=1:   4%|███▊                                                                                                          | 7/200 [01:56<53:11, 16.54s/it]Beta: 1	Epoch: 7
+train ELBO: 2.15	MSE: 1.00	KLdiv: 1.15
+val   ELBO: 2.18	MSE: 1.01	KLdiv: 1.17
+
+Training VAE with beta=1:   4%|████▍                                                                                                         | 8/200 [02:12<52:38, 16.45s/it]Beta: 1	Epoch: 8
+train ELBO: 2.06	MSE: 1.00	KLdiv: 1.06
+val   ELBO: 2.13	MSE: 1.01	KLdiv: 1.12
+
+Training VAE with beta=1:   4%|████▉                                                                                                         | 9/200 [02:28<51:39, 16.23s/it]Beta: 1	Epoch: 9
+train ELBO: 1.99	MSE: 1.00	KLdiv: 0.99
+val   ELBO: 2.06	MSE: 1.01	KLdiv: 1.05
+
+Training VAE with beta=1:   5%|█████▍                                                                                                       | 10/200 [02:44<51:25, 16.24s/it]Beta: 1	Epoch: 10
+train ELBO: 1.93	MSE: 1.00	KLdiv: 0.93
+val   ELBO: 2.01	MSE: 1.01	KLdiv: 1.00
+
+Training VAE with beta=1:   6%|█████▉                                                                                                       | 11/200 [03:01<51:27, 16.33s/it]Beta: 1	Epoch: 11
+train ELBO: 1.88	MSE: 1.00	KLdiv: 0.88
+val   ELBO: 1.96	MSE: 1.01	KLdiv: 0.95
+
+Training VAE with beta=1:   6%|██████▌                                                                                                      | 12/200 [03:17<51:28, 16.43s/it]Beta: 1	Epoch: 12
+train ELBO: 1.84	MSE: 1.00	KLdiv: 0.84
+val   ELBO: 1.91	MSE: 1.01	KLdiv: 0.90
+
+Training VAE with beta=1:   6%|███████                                                                                                      | 13/200 [03:33<50:12, 16.11s/it]Beta: 1	Epoch: 13
+train ELBO: 1.80	MSE: 1.00	KLdiv: 0.80
+val   ELBO: 1.90	MSE: 1.01	KLdiv: 0.89
+
+Training VAE with beta=1:   7%|███████▋                                                                                                     | 14/200 [03:49<50:14, 16.20s/it]Beta: 1	Epoch: 14
+train ELBO: 1.76	MSE: 1.00	KLdiv: 0.76
+val   ELBO: 1.81	MSE: 1.01	KLdiv: 0.80
+
+Training VAE with beta=1:   8%|████████▏                                                                                                    | 15/200 [04:06<50:16, 16.30s/it]Beta: 1	Epoch: 15
+train ELBO: 1.72	MSE: 1.00	KLdiv: 0.73
+val   ELBO: 1.80	MSE: 1.01	KLdiv: 0.79
+
+Training VAE with beta=1:   8%|████████▋                                                                                                    | 16/200 [04:22<50:20, 16.41s/it]Beta: 1	Epoch: 16
+train ELBO: 1.70	MSE: 1.00	KLdiv: 0.70
+val   ELBO: 1.77	MSE: 1.01	KLdiv: 0.76
+
+Training VAE with beta=1:   8%|█████████▎                                                                                                   | 17/200 [04:39<49:55, 16.37s/it]Beta: 1	Epoch: 17
+train ELBO: 1.68	MSE: 1.00	KLdiv: 0.68
+val   ELBO: 1.72	MSE: 1.01	KLdiv: 0.71
+
+Training VAE with beta=1:   9%|█████████▊                                                                                                   | 18/200 [04:55<49:52, 16.44s/it]Beta: 1	Epoch: 18
+train ELBO: 1.66	MSE: 1.00	KLdiv: 0.66
+val   ELBO: 1.74	MSE: 1.01	KLdiv: 0.73
+
+Training VAE with beta=1:  10%|██████████▎                                                                                                  | 19/200 [05:12<50:01, 16.58s/it]Beta: 1	Epoch: 19
+train ELBO: 1.63	MSE: 1.00	KLdiv: 0.64
+val   ELBO: 1.72	MSE: 1.01	KLdiv: 0.71
+
+Training VAE with beta=1:  10%|██████████▉                                                                                                  | 20/200 [05:29<50:10, 16.72s/it]Beta: 1	Epoch: 20
+train ELBO: 1.61	MSE: 1.00	KLdiv: 0.61
+val   ELBO: 1.72	MSE: 1.01	KLdiv: 0.71
+
+Training VAE with beta=1:  10%|███████████▍                                                                                                 | 21/200 [05:46<49:50, 16.71s/it]Beta: 1	Epoch: 21
+train ELBO: 1.60	MSE: 1.00	KLdiv: 0.60
+val   ELBO: 1.68	MSE: 1.01	KLdiv: 0.67
+
+Training VAE with beta=1:  11%|███████████▉                                                                                                 | 22/200 [06:03<49:40, 16.74s/it]Beta: 1	Epoch: 22
+train ELBO: 1.58	MSE: 1.00	KLdiv: 0.58
+val   ELBO: 1.65	MSE: 1.01	KLdiv: 0.64
+
+Training VAE with beta=1:  12%|████████████▌                                                                                                | 23/200 [06:20<49:41, 16.84s/it]Beta: 1	Epoch: 23
+train ELBO: 1.57	MSE: 1.00	KLdiv: 0.57
+val   ELBO: 1.63	MSE: 1.01	KLdiv: 0.62
+
+Training VAE with beta=1:  12%|█████████████                                                                                                | 24/200 [06:36<49:07, 16.75s/it]Beta: 1	Epoch: 24
+train ELBO: 1.55	MSE: 1.00	KLdiv: 0.55
+val   ELBO: 1.67	MSE: 1.01	KLdiv: 0.65
+
+Training VAE with beta=1:  12%|█████████████▋                                                                                               | 25/200 [06:53<48:26, 16.61s/it]Beta: 1	Epoch: 25
+train ELBO: 1.55	MSE: 1.00	KLdiv: 0.55
+val   ELBO: 1.63	MSE: 1.01	KLdiv: 0.62
+
+Training VAE with beta=1:  13%|██████████████▏                                                                                              | 26/200 [07:09<47:48, 16.49s/it]Beta: 1	Epoch: 26
+train ELBO: 1.53	MSE: 1.00	KLdiv: 0.53
+val   ELBO: 1.61	MSE: 1.01	KLdiv: 0.60
+
+Training VAE with beta=1:  14%|██████████████▋                                                                                              | 27/200 [07:25<47:24, 16.44s/it]Beta: 1	Epoch: 27
+train ELBO: 1.52	MSE: 1.00	KLdiv: 0.52
+val   ELBO: 1.59	MSE: 1.01	KLdiv: 0.58
+
+Training VAE with beta=1:  14%|███████████████▎                                                                                             | 28/200 [07:42<47:18, 16.51s/it]Beta: 1	Epoch: 28
+train ELBO: 1.51	MSE: 1.00	KLdiv: 0.51
+val   ELBO: 1.59	MSE: 1.01	KLdiv: 0.58
+
+Training VAE with beta=1:  14%|███████████████▊                                                                                             | 29/200 [07:58<46:56, 16.47s/it]Beta: 1	Epoch: 29
+train ELBO: 1.50	MSE: 1.00	KLdiv: 0.50
+val   ELBO: 1.59	MSE: 1.01	KLdiv: 0.58
+
+Training VAE with beta=1:  15%|████████████████▎                                                                                            | 30/200 [08:14<46:03, 16.26s/it]Beta: 1	Epoch: 30
+train ELBO: 1.49	MSE: 1.00	KLdiv: 0.49
+val   ELBO: 1.56	MSE: 1.01	KLdiv: 0.55
+
+Training VAE with beta=1:  16%|████████████████▉                                                                                            | 31/200 [08:31<46:27, 16.49s/it]Beta: 1	Epoch: 31
+train ELBO: 1.48	MSE: 1.00	KLdiv: 0.48
+val   ELBO: 1.57	MSE: 1.01	KLdiv: 0.56
+
+Training VAE with beta=1:  16%|█████████████████▍                                                                                           | 32/200 [08:47<45:50, 16.37s/it]Beta: 1	Epoch: 32
+train ELBO: 1.47	MSE: 1.00	KLdiv: 0.47
+val   ELBO: 1.53	MSE: 1.01	KLdiv: 0.52
+
+Training VAE with beta=1:  16%|█████████████████▉                                                                                           | 33/200 [09:03<45:15, 16.26s/it]Beta: 1	Epoch: 33
+train ELBO: 1.46	MSE: 1.00	KLdiv: 0.46
+val   ELBO: 1.57	MSE: 1.01	KLdiv: 0.56
+
+Training VAE with beta=1:  17%|██████████████████▌                                                                                          | 34/200 [09:20<45:23, 16.41s/it]Beta: 1	Epoch: 34
+train ELBO: 1.45	MSE: 1.00	KLdiv: 0.46
+val   ELBO: 1.57	MSE: 1.01	KLdiv: 0.56
+
+Training VAE with beta=1:  18%|███████████████████                                                                                          | 35/200 [09:36<45:09, 16.42s/it]Beta: 1	Epoch: 35
+train ELBO: 1.45	MSE: 1.00	KLdiv: 0.45
+val   ELBO: 1.54	MSE: 1.01	KLdiv: 0.53
+
+Training VAE with beta=1:  18%|███████████████████▌                                                                                         | 36/200 [09:53<45:24, 16.61s/it]Beta: 1	Epoch: 36
+train ELBO: 1.44	MSE: 1.00	KLdiv: 0.44
+val   ELBO: 1.49	MSE: 1.01	KLdiv: 0.48
+
+Training VAE with beta=1:  18%|████████████████████▏                                                                                        | 37/200 [10:10<45:13, 16.65s/it]Beta: 1	Epoch: 37
+train ELBO: 1.44	MSE: 1.00	KLdiv: 0.44
+val   ELBO: 1.52	MSE: 1.01	KLdiv: 0.51
+
+Training VAE with beta=1:  19%|████████████████████▋                                                                                        | 38/200 [10:26<44:07, 16.34s/it]Beta: 1	Epoch: 38
+train ELBO: 1.43	MSE: 1.00	KLdiv: 0.43
+val   ELBO: 1.56	MSE: 1.01	KLdiv: 0.55
+
+Training VAE with beta=1:  20%|█████████████████████▎                                                                                       | 39/200 [10:42<43:57, 16.38s/it]Beta: 1	Epoch: 39
+train ELBO: 1.42	MSE: 1.00	KLdiv: 0.42
+val   ELBO: 1.50	MSE: 1.01	KLdiv: 0.49
+
+Training VAE with beta=1:  20%|█████████████████████▊                                                                                       | 40/200 [10:59<44:25, 16.66s/it]Beta: 1	Epoch: 40
+train ELBO: 1.42	MSE: 1.00	KLdiv: 0.42
+val   ELBO: 1.48	MSE: 1.01	KLdiv: 0.47
+
+Training VAE with beta=1:  20%|██████████████████████▎                                                                                      | 41/200 [11:16<43:44, 16.51s/it]Beta: 1	Epoch: 41
+train ELBO: 1.41	MSE: 1.00	KLdiv: 0.41
+val   ELBO: 1.50	MSE: 1.01	KLdiv: 0.49
+
+Training VAE with beta=1:  21%|██████████████████████▉                                                                                      | 42/200 [11:32<43:38, 16.57s/it]Beta: 1	Epoch: 42
+train ELBO: 1.40	MSE: 1.00	KLdiv: 0.41
+val   ELBO: 1.52	MSE: 1.01	KLdiv: 0.51
+
+Training VAE with beta=1:  22%|███████████████████████▍                                                                                     | 43/200 [11:48<42:28, 16.23s/it]Beta: 1	Epoch: 43
+train ELBO: 1.40	MSE: 1.00	KLdiv: 0.40
+val   ELBO: 1.49	MSE: 1.01	KLdiv: 0.48
+
+Training VAE with beta=1:  22%|███████████████████████▉                                                                                     | 44/200 [12:05<43:21, 16.68s/it]Beta: 1	Epoch: 44
+train ELBO: 1.40	MSE: 1.00	KLdiv: 0.40
+val   ELBO: 1.47	MSE: 1.01	KLdiv: 0.46
+
+Training VAE with beta=1:  22%|████████████████████████▌                                                                                    | 45/200 [12:22<42:54, 16.61s/it]Beta: 1	Epoch: 45
+train ELBO: 1.39	MSE: 1.00	KLdiv: 0.39
+val   ELBO: 1.47	MSE: 1.01	KLdiv: 0.46
+
+Training VAE with beta=1:  23%|█████████████████████████                                                                                    | 46/200 [12:39<42:35, 16.59s/it]Beta: 1	Epoch: 46
+train ELBO: 1.38	MSE: 1.00	KLdiv: 0.39
+val   ELBO: 1.43	MSE: 1.01	KLdiv: 0.42
+
+Training VAE with beta=1:  24%|█████████████████████████▌                                                                                   | 47/200 [12:56<42:38, 16.73s/it]Beta: 1	Epoch: 47
+train ELBO: 1.38	MSE: 1.00	KLdiv: 0.38
+val   ELBO: 1.44	MSE: 1.01	KLdiv: 0.43
+
+Training VAE with beta=1:  24%|██████████████████████████▏                                                                                  | 48/200 [13:12<42:05, 16.61s/it]Beta: 1	Epoch: 48
+train ELBO: 1.37	MSE: 1.00	KLdiv: 0.37
+val   ELBO: 1.43	MSE: 1.01	KLdiv: 0.42
+
+Training VAE with beta=1:  24%|██████████████████████████▋                                                                                  | 49/200 [13:28<41:33, 16.51s/it]Beta: 1	Epoch: 49
+train ELBO: 1.37	MSE: 1.00	KLdiv: 0.37
+val   ELBO: 1.44	MSE: 1.01	KLdiv: 0.43
+
+Training VAE with beta=1:  25%|███████████████████████████▎                                                                                 | 50/200 [13:44<41:07, 16.45s/it]Beta: 1	Epoch: 50
+train ELBO: 1.37	MSE: 1.00	KLdiv: 0.37
+val   ELBO: 1.45	MSE: 1.01	KLdiv: 0.44
+
+Training VAE with beta=1:  26%|███████████████████████████▊                                                                                 | 51/200 [14:01<40:59, 16.51s/it]Beta: 1	Epoch: 51
+train ELBO: 1.36	MSE: 1.00	KLdiv: 0.36
+val   ELBO: 1.45	MSE: 1.01	KLdiv: 0.44
+
+Training VAE with beta=1:  26%|████████████████████████████▎                                                                                | 52/200 [14:17<40:01, 16.23s/it]Beta: 1	Epoch: 52
+train ELBO: 1.36	MSE: 1.00	KLdiv: 0.36
+val   ELBO: 1.41	MSE: 1.01	KLdiv: 0.40
+
+Training VAE with beta=1:  26%|████████████████████████████▉                                                                                | 53/200 [14:34<40:25, 16.50s/it]Beta: 1	Epoch: 53
+train ELBO: 1.35	MSE: 1.00	KLdiv: 0.35
+val   ELBO: 1.43	MSE: 1.01	KLdiv: 0.42
+
+Training VAE with beta=1:  27%|█████████████████████████████▍                                                                               | 54/200 [14:50<39:45, 16.34s/it]Beta: 1	Epoch: 54
+train ELBO: 1.35	MSE: 1.00	KLdiv: 0.35
+val   ELBO: 1.38	MSE: 1.01	KLdiv: 0.37
+
+Training VAE with beta=1:  28%|█████████████████████████████▉                                                                               | 55/200 [15:07<39:48, 16.47s/it]Beta: 1	Epoch: 55
+train ELBO: 1.34	MSE: 1.00	KLdiv: 0.34
+val   ELBO: 1.41	MSE: 1.01	KLdiv: 0.40
+
+Training VAE with beta=1:  28%|██████████████████████████████▌                                                                              | 56/200 [15:23<39:30, 16.46s/it]Beta: 1	Epoch: 56
+train ELBO: 1.34	MSE: 1.00	KLdiv: 0.34
+val   ELBO: 1.44	MSE: 1.01	KLdiv: 0.43
+
+Training VAE with beta=1:  28%|███████████████████████████████                                                                              | 57/200 [15:39<38:57, 16.35s/it]Beta: 1	Epoch: 57
+train ELBO: 1.33	MSE: 1.00	KLdiv: 0.33
+val   ELBO: 1.40	MSE: 1.01	KLdiv: 0.39
+
+Training VAE with beta=1:  29%|███████████████████████████████▌                                                                             | 58/200 [15:55<38:29, 16.26s/it]Beta: 1	Epoch: 58
+train ELBO: 1.33	MSE: 1.00	KLdiv: 0.33
+val   ELBO: 1.42	MSE: 1.01	KLdiv: 0.41
+
+Training VAE with beta=1:  30%|████████████████████████████████▏                                                                            | 59/200 [16:13<39:13, 16.69s/it]Beta: 1	Epoch: 59
+train ELBO: 1.33	MSE: 1.00	KLdiv: 0.33
+val   ELBO: 1.41	MSE: 1.01	KLdiv: 0.40
+
+Training VAE with beta=1:  30%|████████████████████████████████▋                                                                            | 60/200 [16:29<38:54, 16.67s/it]Beta: 1	Epoch: 60
+train ELBO: 1.32	MSE: 1.00	KLdiv: 0.33
+val   ELBO: 1.39	MSE: 1.01	KLdiv: 0.38
+
+Training VAE with beta=1:  30%|█████████████████████████████████▏                                                                           | 61/200 [16:46<38:42, 16.71s/it]Beta: 1	Epoch: 61
+train ELBO: 1.32	MSE: 1.00	KLdiv: 0.32
+val   ELBO: 1.39	MSE: 1.01	KLdiv: 0.38
+
+Training VAE with beta=1:  31%|█████████████████████████████████▊                                                                           | 62/200 [17:02<37:48, 16.44s/it]Beta: 1	Epoch: 62
+train ELBO: 1.32	MSE: 1.00	KLdiv: 0.32
+val   ELBO: 1.39	MSE: 1.01	KLdiv: 0.38
+
+Training VAE with beta=1:  32%|██████████████████████████████████▎                                                                          | 63/200 [17:18<37:05, 16.25s/it]Beta: 1	Epoch: 63
+train ELBO: 1.32	MSE: 1.00	KLdiv: 0.32
+val   ELBO: 1.37	MSE: 1.01	KLdiv: 0.36
+
+Training VAE with beta=1:  32%|██████████████████████████████████▉                                                                          | 64/200 [17:34<36:50, 16.26s/it]Beta: 1	Epoch: 64
+train ELBO: 1.31	MSE: 1.00	KLdiv: 0.32
+val   ELBO: 1.39	MSE: 1.01	KLdiv: 0.38
+
+Training VAE with beta=1:  32%|███████████████████████████████████▍                                                                         | 65/200 [17:50<36:12, 16.09s/it]Beta: 1	Epoch: 65
+train ELBO: 1.31	MSE: 1.00	KLdiv: 0.31
+val   ELBO: 1.42	MSE: 1.01	KLdiv: 0.41
+
+Training VAE with beta=1:  33%|███████████████████████████████████▉                                                                         | 66/200 [18:06<35:52, 16.07s/it]Beta: 1	Epoch: 66
+train ELBO: 1.31	MSE: 1.00	KLdiv: 0.31
+val   ELBO: 1.35	MSE: 1.01	KLdiv: 0.34
+
+Training VAE with beta=1:  34%|████████████████████████████████████▌                                                                        | 67/200 [18:22<35:23, 15.97s/it]Beta: 1	Epoch: 67
+train ELBO: 1.30	MSE: 1.00	KLdiv: 0.31
+val   ELBO: 1.36	MSE: 1.01	KLdiv: 0.35
+
+Training VAE with beta=1:  34%|█████████████████████████████████████                                                                        | 68/200 [18:39<35:57, 16.34s/it]Beta: 1	Epoch: 68
+train ELBO: 1.30	MSE: 1.00	KLdiv: 0.30
+val   ELBO: 1.34	MSE: 1.01	KLdiv: 0.33
+
+Training VAE with beta=1:  34%|█████████████████████████████████████▌                                                                       | 69/200 [18:55<35:50, 16.41s/it]Beta: 1	Epoch: 69
+train ELBO: 1.30	MSE: 1.00	KLdiv: 0.30
+val   ELBO: 1.36	MSE: 1.01	KLdiv: 0.35
+
+Training VAE with beta=1:  35%|██████████████████████████████████████▏                                                                      | 70/200 [19:12<35:37, 16.44s/it]Beta: 1	Epoch: 70
+train ELBO: 1.29	MSE: 1.00	KLdiv: 0.29
+val   ELBO: 1.36	MSE: 1.01	KLdiv: 0.35
+
+Training VAE with beta=1:  36%|██████████████████████████████████████▋                                                                      | 71/200 [19:28<35:22, 16.45s/it]Beta: 1	Epoch: 71
+train ELBO: 1.29	MSE: 1.00	KLdiv: 0.29
+val   ELBO: 1.36	MSE: 1.01	KLdiv: 0.35
+
+Training VAE with beta=1:  36%|███████████████████████████████████████▏                                                                     | 72/200 [19:44<34:39, 16.25s/it]Beta: 1	Epoch: 72
+train ELBO: 1.29	MSE: 1.00	KLdiv: 0.29
+val   ELBO: 1.34	MSE: 1.01	KLdiv: 0.33
+
+Training VAE with beta=1:  36%|███████████████████████████████████████▊                                                                     | 73/200 [20:01<34:57, 16.51s/it]Beta: 1	Epoch: 73
+train ELBO: 1.29	MSE: 1.00	KLdiv: 0.29
+val   ELBO: 1.35	MSE: 1.01	KLdiv: 0.34
+
+Training VAE with beta=1:  37%|████████████████████████████████████████▎                                                                    | 74/200 [20:18<34:39, 16.50s/it]Beta: 1	Epoch: 74
+train ELBO: 1.28	MSE: 1.00	KLdiv: 0.28
+val   ELBO: 1.31	MSE: 1.01	KLdiv: 0.30
+
+Training VAE with beta=1:  38%|████████████████████████████████████████▉                                                                    | 75/200 [20:34<34:19, 16.48s/it]Beta: 1	Epoch: 75
+train ELBO: 1.28	MSE: 1.00	KLdiv: 0.28
+val   ELBO: 1.32	MSE: 1.01	KLdiv: 0.31
+
+Training VAE with beta=1:  38%|█████████████████████████████████████████▍                                                                   | 76/200 [20:51<34:10, 16.53s/it]Beta: 1	Epoch: 76
+train ELBO: 1.28	MSE: 1.00	KLdiv: 0.28
+val   ELBO: 1.31	MSE: 1.01	KLdiv: 0.30
+
+Training VAE with beta=1:  38%|█████████████████████████████████████████▉                                                                   | 77/200 [21:08<34:11, 16.68s/it]Beta: 1	Epoch: 77
+train ELBO: 1.28	MSE: 1.00	KLdiv: 0.28
+val   ELBO: 1.31	MSE: 1.01	KLdiv: 0.30
+
+Training VAE with beta=1:  39%|██████████████████████████████████████████▌                                                                  | 78/200 [21:25<33:57, 16.70s/it]Beta: 1	Epoch: 78
+train ELBO: 1.27	MSE: 1.00	KLdiv: 0.27
+val   ELBO: 1.34	MSE: 1.01	KLdiv: 0.33
+
+Training VAE with beta=1:  40%|███████████████████████████████████████████                                                                  | 79/200 [21:41<33:42, 16.71s/it]Beta: 1	Epoch: 79
+train ELBO: 1.27	MSE: 1.00	KLdiv: 0.27
+val   ELBO: 1.31	MSE: 1.01	KLdiv: 0.30
+
+Training VAE with beta=1:  40%|███████████████████████████████████████████▌                                                                 | 80/200 [21:57<32:58, 16.49s/it]Beta: 1	Epoch: 80
+train ELBO: 1.26	MSE: 1.00	KLdiv: 0.27
+val   ELBO: 1.33	MSE: 1.01	KLdiv: 0.32
+
+Training VAE with beta=1:  40%|████████████████████████████████████████████▏                                                                | 81/200 [22:14<32:35, 16.44s/it]Beta: 1	Epoch: 81
+train ELBO: 1.26	MSE: 1.00	KLdiv: 0.26
+val   ELBO: 1.31	MSE: 1.01	KLdiv: 0.30
+
+Training VAE with beta=1:  41%|████████████████████████████████████████████▋                                                                | 82/200 [22:30<32:03, 16.30s/it]Beta: 1	Epoch: 82
+train ELBO: 1.26	MSE: 1.00	KLdiv: 0.26
+val   ELBO: 1.31	MSE: 1.01	KLdiv: 0.30
+
+Training VAE with beta=1:  42%|█████████████████████████████████████████████▏                                                               | 83/200 [22:47<32:11, 16.51s/it]Beta: 1	Epoch: 83
+train ELBO: 1.26	MSE: 1.00	KLdiv: 0.26
+val   ELBO: 1.32	MSE: 1.01	KLdiv: 0.31
+
+Training VAE with beta=1:  42%|█████████████████████████████████████████████▊                                                               | 84/200 [23:03<31:49, 16.46s/it]Beta: 1	Epoch: 84
+train ELBO: 1.26	MSE: 1.00	KLdiv: 0.26
+val   ELBO: 1.31	MSE: 1.01	KLdiv: 0.30
+
+Training VAE with beta=1:  42%|██████████████████████████████████████████████▎                                                              | 85/200 [23:19<31:22, 16.37s/it]Beta: 1	Epoch: 85
+train ELBO: 1.25	MSE: 1.00	KLdiv: 0.26
+val   ELBO: 1.28	MSE: 1.01	KLdiv: 0.27
+
+Training VAE with beta=1:  43%|██████████████████████████████████████████████▊                                                              | 86/200 [23:35<31:05, 16.36s/it]Beta: 1	Epoch: 86
+train ELBO: 1.25	MSE: 1.00	KLdiv: 0.25
+val   ELBO: 1.30	MSE: 1.01	KLdiv: 0.29
+
+Training VAE with beta=1:  44%|███████████████████████████████████████████████▍                                                             | 87/200 [23:51<30:24, 16.15s/it]Beta: 1	Epoch: 87
+train ELBO: 1.25	MSE: 1.00	KLdiv: 0.25
+val   ELBO: 1.30	MSE: 1.01	KLdiv: 0.29
+
+Training VAE with beta=1:  44%|███████████████████████████████████████████████▉                                                             | 88/200 [24:08<30:18, 16.24s/it]Beta: 1	Epoch: 88
+train ELBO: 1.25	MSE: 1.00	KLdiv: 0.25
+val   ELBO: 1.30	MSE: 1.01	KLdiv: 0.29
+
+Training VAE with beta=1:  44%|████████████████████████████████████████████████▌                                                            | 89/200 [24:24<30:13, 16.34s/it]Beta: 1	Epoch: 89
+train ELBO: 1.24	MSE: 1.00	KLdiv: 0.24
+val   ELBO: 1.30	MSE: 1.01	KLdiv: 0.29
+
+Training VAE with beta=1:  45%|█████████████████████████████████████████████████                                                            | 90/200 [24:41<29:58, 16.35s/it]Beta: 1	Epoch: 90
+train ELBO: 1.24	MSE: 1.00	KLdiv: 0.24
+val   ELBO: 1.27	MSE: 1.01	KLdiv: 0.26
+
+Training VAE with beta=1:  46%|█████████████████████████████████████████████████▌                                                           | 91/200 [24:57<29:43, 16.36s/it]Beta: 1	Epoch: 91
+train ELBO: 1.24	MSE: 1.00	KLdiv: 0.24
+val   ELBO: 1.28	MSE: 1.01	KLdiv: 0.27
+
+Training VAE with beta=1:  46%|██████████████████████████████████████████████████▏                                                          | 92/200 [25:14<29:40, 16.49s/it]Beta: 1	Epoch: 92
+train ELBO: 1.24	MSE: 1.00	KLdiv: 0.24
+val   ELBO: 1.29	MSE: 1.01	KLdiv: 0.28
+
+Training VAE with beta=1:  46%|██████████████████████████████████████████████████▋                                                          | 93/200 [25:30<29:28, 16.53s/it]Beta: 1	Epoch: 93
+train ELBO: 1.23	MSE: 1.00	KLdiv: 0.23
+val   ELBO: 1.28	MSE: 1.01	KLdiv: 0.27
+
+Training VAE with beta=1:  47%|███████████████████████████████████████████████████▏                                                         | 94/200 [25:47<29:13, 16.55s/it]Beta: 1	Epoch: 94
+train ELBO: 1.23	MSE: 1.00	KLdiv: 0.23
+val   ELBO: 1.27	MSE: 1.01	KLdiv: 0.26
+
+Training VAE with beta=1:  48%|███████████████████████████████████████████████████▊                                                         | 95/200 [26:04<29:06, 16.63s/it]Beta: 1	Epoch: 95
+train ELBO: 1.23	MSE: 1.00	KLdiv: 0.23
+val   ELBO: 1.28	MSE: 1.01	KLdiv: 0.27
+
+Training VAE with beta=1:  48%|████████████████████████████████████████████████████▎                                                        | 96/200 [26:21<29:01, 16.75s/it]Beta: 1	Epoch: 96
+train ELBO: 1.22	MSE: 1.00	KLdiv: 0.22
+val   ELBO: 1.25	MSE: 1.01	KLdiv: 0.24
+
+Training VAE with beta=1:  48%|████████████████████████████████████████████████████▊                                                        | 97/200 [26:37<28:42, 16.72s/it]Beta: 1	Epoch: 97
+train ELBO: 1.22	MSE: 1.00	KLdiv: 0.22
+val   ELBO: 1.24	MSE: 1.01	KLdiv: 0.23
+
+Training VAE with beta=1:  49%|█████████████████████████████████████████████████████▍                                                       | 98/200 [26:54<28:06, 16.54s/it]Beta: 1	Epoch: 98
+train ELBO: 1.21	MSE: 1.00	KLdiv: 0.21
+val   ELBO: 1.26	MSE: 1.01	KLdiv: 0.25
+
+Training VAE with beta=1:  50%|█████████████████████████████████████████████████████▉                                                       | 99/200 [27:09<27:31, 16.35s/it]Beta: 1	Epoch: 99
+train ELBO: 1.21	MSE: 1.00	KLdiv: 0.21
+val   ELBO: 1.26	MSE: 1.01	KLdiv: 0.25
+
+Training VAE with beta=1:  50%|██████████████████████████████████████████████████████                                                      | 100/200 [27:26<27:25, 16.46s/it]Beta: 1	Epoch: 100
+train ELBO: 1.20	MSE: 1.00	KLdiv: 0.21
+val   ELBO: 1.26	MSE: 1.01	KLdiv: 0.25
+
+Training VAE with beta=1:  50%|██████████████████████████████████████████████████████▌                                                     | 101/200 [27:43<27:12, 16.49s/it]Beta: 1	Epoch: 101
+train ELBO: 1.20	MSE: 1.00	KLdiv: 0.20
+val   ELBO: 1.24	MSE: 1.01	KLdiv: 0.23
+
+Training VAE with beta=1:  51%|███████████████████████████████████████████████████████                                                     | 102/200 [27:59<26:54, 16.47s/it]Beta: 1	Epoch: 102
+train ELBO: 1.20	MSE: 1.00	KLdiv: 0.20
+val   ELBO: 1.22	MSE: 1.01	KLdiv: 0.21
+
+Training VAE with beta=1:  52%|███████████████████████████████████████████████████████▌                                                    | 103/200 [28:15<26:31, 16.41s/it]Beta: 1	Epoch: 103
+train ELBO: 1.20	MSE: 1.00	KLdiv: 0.20
+val   ELBO: 1.19	MSE: 1.01	KLdiv: 0.18
+
+Training VAE with beta=1:  52%|████████████████████████████████████████████████████████▏                                                   | 104/200 [28:31<26:02, 16.28s/it]Beta: 1	Epoch: 104
+train ELBO: 1.20	MSE: 1.00	KLdiv: 0.20
+val   ELBO: 1.22	MSE: 1.01	KLdiv: 0.21
+
+Training VAE with beta=1:  52%|████████████████████████████████████████████████████████▋                                                   | 105/200 [28:48<25:46, 16.28s/it]Beta: 1	Epoch: 105
+train ELBO: 1.19	MSE: 1.00	KLdiv: 0.20
+val   ELBO: 1.22	MSE: 1.01	KLdiv: 0.21
+
+Training VAE with beta=1:  53%|█████████████████████████████████████████████████████████▏                                                  | 106/200 [29:04<25:40, 16.39s/it]Beta: 1	Epoch: 106
+train ELBO: 1.19	MSE: 1.00	KLdiv: 0.19
+val   ELBO: 1.24	MSE: 1.01	KLdiv: 0.23
+
+Training VAE with beta=1:  54%|█████████████████████████████████████████████████████████▊                                                  | 107/200 [29:21<25:26, 16.42s/it]Beta: 1	Epoch: 107
+train ELBO: 1.19	MSE: 1.00	KLdiv: 0.19
+val   ELBO: 1.21	MSE: 1.01	KLdiv: 0.20
+
+Training VAE with beta=1:  54%|██████████████████████████████████████████████████████████▎                                                 | 108/200 [29:37<25:15, 16.48s/it]Beta: 1	Epoch: 108
+train ELBO: 1.19	MSE: 1.00	KLdiv: 0.19
+val   ELBO: 1.22	MSE: 1.01	KLdiv: 0.21
+
+Training VAE with beta=1:  55%|██████████████████████████████████████████████████████████▊                                                 | 109/200 [29:53<24:41, 16.29s/it]Beta: 1	Epoch: 109
+train ELBO: 1.19	MSE: 1.00	KLdiv: 0.19
+val   ELBO: 1.22	MSE: 1.01	KLdiv: 0.21
+
+Training VAE with beta=1:  55%|███████████████████████████████████████████████████████████▍                                                | 110/200 [30:10<24:36, 16.41s/it]Beta: 1	Epoch: 110
+train ELBO: 1.19	MSE: 1.00	KLdiv: 0.19
+val   ELBO: 1.21	MSE: 1.01	KLdiv: 0.20
+
+Training VAE with beta=1:  56%|███████████████████████████████████████████████████████████▉                                                | 111/200 [30:27<24:35, 16.58s/it]Beta: 1	Epoch: 111
+train ELBO: 1.19	MSE: 1.00	KLdiv: 0.19
+val   ELBO: 1.23	MSE: 1.01	KLdiv: 0.21
+
+Training VAE with beta=1:  56%|████████████████████████████████████████████████████████████▍                                               | 112/200 [30:43<23:54, 16.31s/it]Beta: 1	Epoch: 112
+train ELBO: 1.19	MSE: 1.00	KLdiv: 0.19
+val   ELBO: 1.20	MSE: 1.01	KLdiv: 0.19
+
+Training VAE with beta=1:  56%|█████████████████████████████████████████████████████████████                                               | 113/200 [30:59<23:38, 16.30s/it]Beta: 1	Epoch: 113
+train ELBO: 1.18	MSE: 1.00	KLdiv: 0.18
+val   ELBO: 1.20	MSE: 1.01	KLdiv: 0.19
+
+Training VAE with beta=1:  57%|█████████████████████████████████████████████████████████████▌                                              | 114/200 [31:15<23:19, 16.27s/it]Beta: 1	Epoch: 114
+train ELBO: 1.18	MSE: 1.00	KLdiv: 0.18
+val   ELBO: 1.21	MSE: 1.01	KLdiv: 0.20
+
+Training VAE with beta=1:  57%|██████████████████████████████████████████████████████████████                                              | 115/200 [31:32<23:16, 16.43s/it]Beta: 1	Epoch: 115
+train ELBO: 1.18	MSE: 1.00	KLdiv: 0.18
+val   ELBO: 1.21	MSE: 1.01	KLdiv: 0.20
+
+Training VAE with beta=1:  58%|██████████████████████████████████████████████████████████████▋                                             | 116/200 [31:47<22:39, 16.19s/it]Beta: 1	Epoch: 116
+train ELBO: 1.17	MSE: 1.00	KLdiv: 0.17
+val   ELBO: 1.20	MSE: 1.01	KLdiv: 0.19
+
+Training VAE with beta=1:  58%|███████████████████████████████████████████████████████████████▏                                            | 117/200 [32:04<22:34, 16.32s/it]Beta: 1	Epoch: 117
+train ELBO: 1.17	MSE: 1.00	KLdiv: 0.17
+val   ELBO: 1.20	MSE: 1.01	KLdiv: 0.19
+
+Training VAE with beta=1:  59%|███████████████████████████████████████████████████████████████▋                                            | 118/200 [32:21<22:34, 16.52s/it]Beta: 1	Epoch: 118
+train ELBO: 1.17	MSE: 1.00	KLdiv: 0.17
+val   ELBO: 1.17	MSE: 1.01	KLdiv: 0.16
+
+Training VAE with beta=1:  60%|████████████████████████████████████████████████████████████████▎                                           | 119/200 [32:37<22:13, 16.46s/it]Beta: 1	Epoch: 119
+train ELBO: 1.16	MSE: 1.00	KLdiv: 0.16
+val   ELBO: 1.19	MSE: 1.01	KLdiv: 0.18
+
+Training VAE with beta=1:  60%|████████████████████████████████████████████████████████████████▊                                           | 120/200 [32:54<22:01, 16.52s/it]Beta: 1	Epoch: 120
+train ELBO: 1.16	MSE: 1.00	KLdiv: 0.16
+val   ELBO: 1.19	MSE: 1.01	KLdiv: 0.18
+
+Training VAE with beta=1:  60%|█████████████████████████████████████████████████████████████████▎                                          | 121/200 [33:11<21:48, 16.56s/it]Beta: 1	Epoch: 121
+train ELBO: 1.16	MSE: 1.00	KLdiv: 0.16
+val   ELBO: 1.20	MSE: 1.01	KLdiv: 0.19
+
+Training VAE with beta=1:  61%|█████████████████████████████████████████████████████████████████▉                                          | 122/200 [33:26<21:09, 16.27s/it]Beta: 1	Epoch: 122
+train ELBO: 1.16	MSE: 1.00	KLdiv: 0.16
+val   ELBO: 1.17	MSE: 1.01	KLdiv: 0.16
+
+Training VAE with beta=1:  62%|██████████████████████████████████████████████████████████████████▍                                         | 123/200 [33:44<21:14, 16.55s/it]Beta: 1	Epoch: 123
+train ELBO: 1.15	MSE: 1.00	KLdiv: 0.15
+val   ELBO: 1.21	MSE: 1.01	KLdiv: 0.20
+
+Training VAE with beta=1:  62%|██████████████████████████████████████████████████████████████████▉                                         | 124/200 [34:00<20:50, 16.46s/it]Beta: 1	Epoch: 124
+train ELBO: 1.15	MSE: 1.00	KLdiv: 0.15
+val   ELBO: 1.20	MSE: 1.01	KLdiv: 0.18
+
+Training VAE with beta=1:  62%|███████████████████████████████████████████████████████████████████▌                                        | 125/200 [34:17<20:41, 16.55s/it]Beta: 1	Epoch: 125
+train ELBO: 1.15	MSE: 1.00	KLdiv: 0.15
+val   ELBO: 1.18	MSE: 1.01	KLdiv: 0.17
+
+Training VAE with beta=1:  63%|████████████████████████████████████████████████████████████████████                                        | 126/200 [34:33<20:31, 16.64s/it]Beta: 1	Epoch: 126
+train ELBO: 1.15	MSE: 1.00	KLdiv: 0.15
+val   ELBO: 1.17	MSE: 1.01	KLdiv: 0.16
+
+Training VAE with beta=1:  64%|████████████████████████████████████████████████████████████████████▌                                       | 127/200 [34:50<20:24, 16.77s/it]Beta: 1	Epoch: 127
+train ELBO: 1.15	MSE: 1.00	KLdiv: 0.15
+val   ELBO: 1.18	MSE: 1.01	KLdiv: 0.17
+
+Training VAE with beta=1:  64%|█████████████████████████████████████████████████████████████████████                                       | 128/200 [35:08<20:17, 16.90s/it]Beta: 1	Epoch: 128
+train ELBO: 1.15	MSE: 1.00	KLdiv: 0.15
+val   ELBO: 1.17	MSE: 1.01	KLdiv: 0.16
+
+Training VAE with beta=1:  64%|█████████████████████████████████████████████████████████████████████▋                                      | 129/200 [35:24<19:58, 16.87s/it]Beta: 1	Epoch: 129
+train ELBO: 1.15	MSE: 1.00	KLdiv: 0.15
+val   ELBO: 1.17	MSE: 1.01	KLdiv: 0.16
+
+Training VAE with beta=1:  65%|██████████████████████████████████████████████████████████████████████▏                                     | 130/200 [35:40<19:16, 16.53s/it]Beta: 1	Epoch: 130
+train ELBO: 1.15	MSE: 1.00	KLdiv: 0.15
+val   ELBO: 1.16	MSE: 1.01	KLdiv: 0.15
+
+Training VAE with beta=1:  66%|██████████████████████████████████████████████████████████████████████▋                                     | 131/200 [35:57<19:00, 16.53s/it]Beta: 1	Epoch: 131
+train ELBO: 1.14	MSE: 1.00	KLdiv: 0.15
+val   ELBO: 1.17	MSE: 1.01	KLdiv: 0.16
+
+Training VAE with beta=1:  66%|███████████████████████████████████████████████████████████████████████▎                                    | 132/200 [36:13<18:43, 16.53s/it]Beta: 1	Epoch: 132
+train ELBO: 1.14	MSE: 1.00	KLdiv: 0.14
+val   ELBO: 1.16	MSE: 1.01	KLdiv: 0.15
+
+Training VAE with beta=1:  66%|███████████████████████████████████████████████████████████████████████▊                                    | 133/200 [36:30<18:22, 16.45s/it]Beta: 1	Epoch: 133
+train ELBO: 1.14	MSE: 1.00	KLdiv: 0.14
+val   ELBO: 1.17	MSE: 1.01	KLdiv: 0.16
+
+Training VAE with beta=1:  67%|████████████████████████████████████████████████████████████████████████▎                                   | 134/200 [36:45<17:54, 16.29s/it]Beta: 1	Epoch: 134
+train ELBO: 1.14	MSE: 1.00	KLdiv: 0.14
+val   ELBO: 1.15	MSE: 1.01	KLdiv: 0.14
+
+Training VAE with beta=1:  68%|████████████████████████████████████████████████████████████████████████▉                                   | 135/200 [37:02<17:38, 16.28s/it]Beta: 1	Epoch: 135
+train ELBO: 1.14	MSE: 1.00	KLdiv: 0.14
+val   ELBO: 1.17	MSE: 1.01	KLdiv: 0.16
+
+Training VAE with beta=1:  68%|█████████████████████████████████████████████████████████████████████████▍                                  | 136/200 [37:18<17:23, 16.31s/it]Beta: 1	Epoch: 136
+train ELBO: 1.14	MSE: 1.00	KLdiv: 0.14
+val   ELBO: 1.15	MSE: 1.01	KLdiv: 0.14
+
+Training VAE with beta=1:  68%|█████████████████████████████████████████████████████████████████████████▉                                  | 137/200 [37:34<16:59, 16.18s/it]Beta: 1	Epoch: 137
+train ELBO: 1.14	MSE: 1.00	KLdiv: 0.14
+val   ELBO: 1.15	MSE: 1.01	KLdiv: 0.14
+
+Training VAE with beta=1:  69%|██████████████████████████████████████████████████████████████████████████▌                                 | 138/200 [37:50<16:45, 16.22s/it]Beta: 1	Epoch: 138
+train ELBO: 1.14	MSE: 1.00	KLdiv: 0.14
+val   ELBO: 1.16	MSE: 1.01	KLdiv: 0.15
+
+Training VAE with beta=1:  70%|███████████████████████████████████████████████████████████████████████████                                 | 139/200 [38:07<16:35, 16.31s/it]Beta: 1	Epoch: 139
+train ELBO: 1.14	MSE: 1.00	KLdiv: 0.14
+val   ELBO: 1.16	MSE: 1.01	KLdiv: 0.15
+
+Training VAE with beta=1:  70%|███████████████████████████████████████████████████████████████████████████▌                                | 140/200 [38:23<16:16, 16.27s/it]Beta: 1	Epoch: 140
+train ELBO: 1.14	MSE: 1.00	KLdiv: 0.14
+val   ELBO: 1.14	MSE: 1.01	KLdiv: 0.13
+
+Training VAE with beta=1:  70%|████████████████████████████████████████████████████████████████████████████▏                               | 141/200 [38:39<15:49, 16.09s/it]Beta: 1	Epoch: 141
+train ELBO: 1.14	MSE: 1.00	KLdiv: 0.14
+val   ELBO: 1.14	MSE: 1.01	KLdiv: 0.13
+
+Training VAE with beta=1:  71%|████████████████████████████████████████████████████████████████████████████▋                               | 142/200 [38:55<15:34, 16.11s/it]Beta: 1	Epoch: 142
+train ELBO: 1.14	MSE: 1.00	KLdiv: 0.14
+val   ELBO: 1.15	MSE: 1.01	KLdiv: 0.14
+
+Training VAE with beta=1:  72%|█████████████████████████████████████████████████████████████████████████████▏                              | 143/200 [39:11<15:24, 16.23s/it]Beta: 1	Epoch: 143
+train ELBO: 1.14	MSE: 1.00	KLdiv: 0.14
+val   ELBO: 1.15	MSE: 1.01	KLdiv: 0.14
+
+Training VAE with beta=1:  72%|█████████████████████████████████████████████████████████████████████████████▊                              | 144/200 [39:27<15:06, 16.18s/it]Beta: 1	Epoch: 144
+train ELBO: 1.14	MSE: 1.00	KLdiv: 0.14
+val   ELBO: 1.16	MSE: 1.01	KLdiv: 0.15
+
+Training VAE with beta=1:  72%|██████████████████████████████████████████████████████████████████████████████▎                             | 145/200 [39:45<15:12, 16.59s/it]Beta: 1	Epoch: 145
+train ELBO: 1.13	MSE: 1.00	KLdiv: 0.14
+val   ELBO: 1.16	MSE: 1.01	KLdiv: 0.15
+
+Training VAE with beta=1:  73%|██████████████████████████████████████████████████████████████████████████████▊                             | 146/200 [40:01<14:55, 16.59s/it]Beta: 1	Epoch: 146
+train ELBO: 1.13	MSE: 1.00	KLdiv: 0.14
+val   ELBO: 1.16	MSE: 1.01	KLdiv: 0.14
+
+Training VAE with beta=1:  74%|███████████████████████████████████████████████████████████████████████████████▍                            | 147/200 [40:18<14:35, 16.52s/it]Beta: 1	Epoch: 147
+train ELBO: 1.13	MSE: 1.00	KLdiv: 0.13
+val   ELBO: 1.16	MSE: 1.01	KLdiv: 0.15
+
+Training VAE with beta=1:  74%|███████████████████████████████████████████████████████████████████████████████▉                            | 148/200 [40:35<14:22, 16.60s/it]Beta: 1	Epoch: 148
+train ELBO: 1.13	MSE: 1.00	KLdiv: 0.13
+val   ELBO: 1.14	MSE: 1.01	KLdiv: 0.13
+
+Training VAE with beta=1:  74%|████████████████████████████████████████████████████████████████████████████████▍                           | 149/200 [40:52<14:16, 16.79s/it]Beta: 1	Epoch: 149
+train ELBO: 1.13	MSE: 1.00	KLdiv: 0.13
+val   ELBO: 1.16	MSE: 1.01	KLdiv: 0.15
+
+Training VAE with beta=1:  75%|█████████████████████████████████████████████████████████████████████████████████                           | 150/200 [41:08<13:47, 16.54s/it]Beta: 1	Epoch: 150
+train ELBO: 1.12	MSE: 1.00	KLdiv: 0.13
+val   ELBO: 1.16	MSE: 1.01	KLdiv: 0.15
+
+Training VAE with beta=1:  76%|█████████████████████████████████████████████████████████████████████████████████▌                          | 151/200 [41:24<13:31, 16.57s/it]Beta: 1	Epoch: 151
+train ELBO: 1.13	MSE: 1.00	KLdiv: 0.13
+val   ELBO: 1.16	MSE: 1.01	KLdiv: 0.15
+
+Training VAE with beta=1:  76%|██████████████████████████████████████████████████████████████████████████████████                          | 152/200 [41:41<13:14, 16.56s/it]Beta: 1	Epoch: 152
+train ELBO: 1.12	MSE: 1.00	KLdiv: 0.12
+val   ELBO: 1.15	MSE: 1.01	KLdiv: 0.14
+
+Training VAE with beta=1:  76%|██████████████████████████████████████████████████████████████████████████████████▌                         | 153/200 [41:57<12:46, 16.30s/it]Beta: 1	Epoch: 153
+train ELBO: 1.12	MSE: 1.00	KLdiv: 0.12
+val   ELBO: 1.13	MSE: 1.01	KLdiv: 0.12
+
+Training VAE with beta=1:  77%|███████████████████████████████████████████████████████████████████████████████████▏                        | 154/200 [42:13<12:30, 16.32s/it]Beta: 1	Epoch: 154
+train ELBO: 1.12	MSE: 1.00	KLdiv: 0.12
+val   ELBO: 1.17	MSE: 1.01	KLdiv: 0.16
+
+Training VAE with beta=1:  78%|███████████████████████████████████████████████████████████████████████████████████▋                        | 155/200 [42:29<12:11, 16.26s/it]Beta: 1	Epoch: 155
+train ELBO: 1.12	MSE: 1.00	KLdiv: 0.12
+val   ELBO: 1.14	MSE: 1.01	KLdiv: 0.13
+
+Training VAE with beta=1:  78%|████████████████████████████████████████████████████████████████████████████████████▏                       | 156/200 [42:45<11:47, 16.09s/it]Beta: 1	Epoch: 156
+train ELBO: 1.11	MSE: 1.00	KLdiv: 0.12
+val   ELBO: 1.14	MSE: 1.01	KLdiv: 0.13
+
+Training VAE with beta=1:  78%|████████████████████████████████████████████████████████████████████████████████████▊                       | 157/200 [43:01<11:30, 16.06s/it]Beta: 1	Epoch: 157
+train ELBO: 1.12	MSE: 1.00	KLdiv: 0.12
+val   ELBO: 1.15	MSE: 1.01	KLdiv: 0.14
+
+Training VAE with beta=1:  79%|█████████████████████████████████████████████████████████████████████████████████████▎                      | 158/200 [43:18<11:23, 16.27s/it]Beta: 1	Epoch: 158
+train ELBO: 1.12	MSE: 1.00	KLdiv: 0.12
+val   ELBO: 1.13	MSE: 1.01	KLdiv: 0.12
+
+Training VAE with beta=1:  80%|█████████████████████████████████████████████████████████████████████████████████████▊                      | 159/200 [43:34<11:03, 16.17s/it]Beta: 1	Epoch: 159
+train ELBO: 1.11	MSE: 1.00	KLdiv: 0.11
+val   ELBO: 1.13	MSE: 1.01	KLdiv: 0.12
+
+Training VAE with beta=1:  80%|██████████████████████████████████████████████████████████████████████████████████████▍                     | 160/200 [43:50<10:47, 16.18s/it]Beta: 1	Epoch: 160
+train ELBO: 1.11	MSE: 1.00	KLdiv: 0.11
+val   ELBO: 1.11	MSE: 1.01	KLdiv: 0.10
+
+Training VAE with beta=1:  80%|██████████████████████████████████████████████████████████████████████████████████████▉                     | 161/200 [44:06<10:26, 16.08s/it]Beta: 1	Epoch: 161
+train ELBO: 1.11	MSE: 1.00	KLdiv: 0.11
+val   ELBO: 1.12	MSE: 1.01	KLdiv: 0.11
+
+Training VAE with beta=1:  81%|███████████████████████████████████████████████████████████████████████████████████████▍                    | 162/200 [44:22<10:12, 16.11s/it]Beta: 1	Epoch: 162
+train ELBO: 1.11	MSE: 1.00	KLdiv: 0.11
+val   ELBO: 1.10	MSE: 1.01	KLdiv: 0.09
+
+Training VAE with beta=1:  82%|████████████████████████████████████████████████████████████████████████████████████████                    | 163/200 [44:38<09:53, 16.05s/it]Beta: 1	Epoch: 163
+train ELBO: 1.11	MSE: 1.00	KLdiv: 0.11
+val   ELBO: 1.13	MSE: 1.01	KLdiv: 0.12
+
+Training VAE with beta=1:  82%|████████████████████████████████████████████████████████████████████████████████████████▌                   | 164/200 [44:54<09:42, 16.19s/it]Beta: 1	Epoch: 164
+train ELBO: 1.11	MSE: 1.00	KLdiv: 0.11
+val   ELBO: 1.12	MSE: 1.01	KLdiv: 0.11
+
+Training VAE with beta=1:  82%|█████████████████████████████████████████████████████████████████████████████████████████                   | 165/200 [45:11<09:28, 16.25s/it]Beta: 1	Epoch: 165
+train ELBO: 1.11	MSE: 1.00	KLdiv: 0.11
+val   ELBO: 1.13	MSE: 1.01	KLdiv: 0.12
+
+Training VAE with beta=1:  83%|█████████████████████████████████████████████████████████████████████████████████████████▋                  | 166/200 [45:27<09:15, 16.35s/it]Beta: 1	Epoch: 166
+train ELBO: 1.10	MSE: 1.00	KLdiv: 0.11
+val   ELBO: 1.13	MSE: 1.01	KLdiv: 0.12
+
+Training VAE with beta=1:  84%|██████████████████████████████████████████████████████████████████████████████████████████▏                 | 167/200 [45:44<09:05, 16.52s/it]Beta: 1	Epoch: 167
+train ELBO: 1.10	MSE: 1.00	KLdiv: 0.11
+val   ELBO: 1.11	MSE: 1.01	KLdiv: 0.10
+
+Training VAE with beta=1:  84%|██████████████████████████████████████████████████████████████████████████████████████████▋                 | 168/200 [46:00<08:44, 16.39s/it]Beta: 1	Epoch: 168
+train ELBO: 1.10	MSE: 1.00	KLdiv: 0.10
+val   ELBO: 1.12	MSE: 1.01	KLdiv: 0.11
+
+Training VAE with beta=1:  84%|███████████████████████████████████████████████████████████████████████████████████████████▎                | 169/200 [46:16<08:25, 16.31s/it]Beta: 1	Epoch: 169
+train ELBO: 1.10	MSE: 1.00	KLdiv: 0.10
+val   ELBO: 1.13	MSE: 1.01	KLdiv: 0.12
+
+Training VAE with beta=1:  85%|███████████████████████████████████████████████████████████████████████████████████████████▊                | 170/200 [46:32<08:04, 16.15s/it]Beta: 1	Epoch: 170
+train ELBO: 1.10	MSE: 1.00	KLdiv: 0.10
+val   ELBO: 1.12	MSE: 1.01	KLdiv: 0.11
+
+Training VAE with beta=1:  86%|████████████████████████████████████████████████████████████████████████████████████████████▎               | 171/200 [46:48<07:48, 16.17s/it]Beta: 1	Epoch: 171
+train ELBO: 1.10	MSE: 1.00	KLdiv: 0.10
+val   ELBO: 1.11	MSE: 1.01	KLdiv: 0.10
+
+Training VAE with beta=1:  86%|████████████████████████████████████████████████████████████████████████████████████████████▉               | 172/200 [47:05<07:36, 16.29s/it]Beta: 1	Epoch: 172
+train ELBO: 1.10	MSE: 1.00	KLdiv: 0.10
+val   ELBO: 1.12	MSE: 1.01	KLdiv: 0.11
+
+Training VAE with beta=1:  86%|█████████████████████████████████████████████████████████████████████████████████████████████▍              | 173/200 [47:21<07:22, 16.37s/it]Beta: 1	Epoch: 173
+train ELBO: 1.10	MSE: 1.00	KLdiv: 0.10
+val   ELBO: 1.12	MSE: 1.01	KLdiv: 0.11
+
+Training VAE with beta=1:  87%|█████████████████████████████████████████████████████████████████████████████████████████████▉              | 174/200 [47:38<07:04, 16.33s/it]Beta: 1	Epoch: 174
+train ELBO: 1.10	MSE: 1.00	KLdiv: 0.10
+val   ELBO: 1.13	MSE: 1.01	KLdiv: 0.12
+
+Training VAE with beta=1:  88%|██████████████████████████████████████████████████████████████████████████████████████████████▌             | 175/200 [47:54<06:50, 16.42s/it]Beta: 1	Epoch: 175
+train ELBO: 1.10	MSE: 1.00	KLdiv: 0.10
+val   ELBO: 1.12	MSE: 1.01	KLdiv: 0.10
+
+Training VAE with beta=1:  88%|███████████████████████████████████████████████████████████████████████████████████████████████             | 176/200 [48:10<06:29, 16.22s/it]Beta: 1	Epoch: 176
+train ELBO: 1.10	MSE: 1.00	KLdiv: 0.10
+val   ELBO: 1.15	MSE: 1.01	KLdiv: 0.14
+
+Training VAE with beta=1:  88%|███████████████████████████████████████████████████████████████████████████████████████████████▌            | 177/200 [48:27<06:17, 16.40s/it]Beta: 1	Epoch: 177
+train ELBO: 1.10	MSE: 1.00	KLdiv: 0.10
+val   ELBO: 1.10	MSE: 1.01	KLdiv: 0.09
+
+Training VAE with beta=1:  89%|████████████████████████████████████████████████████████████████████████████████████████████████            | 178/200 [48:42<05:55, 16.16s/it]Beta: 1	Epoch: 178
+train ELBO: 1.10	MSE: 1.00	KLdiv: 0.10
+val   ELBO: 1.10	MSE: 1.01	KLdiv: 0.09
+
+Training VAE with beta=1:  90%|████████████████████████████████████████████████████████████████████████████████████████████████▋           | 179/200 [48:59<05:40, 16.21s/it]Beta: 1	Epoch: 179
+train ELBO: 1.10	MSE: 1.00	KLdiv: 0.10
+val   ELBO: 1.12	MSE: 1.01	KLdiv: 0.11
+
+Training VAE with beta=1:  90%|█████████████████████████████████████████████████████████████████████████████████████████████████▏          | 180/200 [49:16<05:29, 16.48s/it]Beta: 1	Epoch: 180
+train ELBO: 1.10	MSE: 1.00	KLdiv: 0.10
+val   ELBO: 1.11	MSE: 1.01	KLdiv: 0.10
+
+Training VAE with beta=1:  90%|█████████████████████████████████████████████████████████████████████████████████████████████████▋          | 181/200 [49:32<05:13, 16.50s/it]Beta: 1	Epoch: 181
+train ELBO: 1.09	MSE: 1.00	KLdiv: 0.09
+val   ELBO: 1.12	MSE: 1.01	KLdiv: 0.11
+
+Training VAE with beta=1:  91%|██████████████████████████████████████████████████████████████████████████████████████████████████▎         | 182/200 [49:49<04:55, 16.39s/it]Beta: 1	Epoch: 182
+train ELBO: 1.10	MSE: 1.00	KLdiv: 0.10
+val   ELBO: 1.10	MSE: 1.01	KLdiv: 0.09
+
+Training VAE with beta=1:  92%|██████████████████████████████████████████████████████████████████████████████████████████████████▊         | 183/200 [50:06<04:43, 16.68s/it]Beta: 1	Epoch: 183
+train ELBO: 1.09	MSE: 1.00	KLdiv: 0.09
+val   ELBO: 1.12	MSE: 1.01	KLdiv: 0.11
+
+Training VAE with beta=1:  92%|███████████████████████████████████████████████████████████████████████████████████████████████████▎        | 184/200 [50:22<04:24, 16.55s/it]Beta: 1	Epoch: 184
+train ELBO: 1.09	MSE: 1.00	KLdiv: 0.10
+val   ELBO: 1.10	MSE: 1.01	KLdiv: 0.09
+
+Training VAE with beta=1:  92%|███████████████████████████████████████████████████████████████████████████████████████████████████▉        | 185/200 [50:39<04:10, 16.73s/it]Beta: 1	Epoch: 185
+train ELBO: 1.09	MSE: 1.00	KLdiv: 0.09
+val   ELBO: 1.13	MSE: 1.01	KLdiv: 0.12
+
+Training VAE with beta=1:  93%|████████████████████████████████████████████████████████████████████████████████████████████████████▍       | 186/200 [50:55<03:51, 16.52s/it]Beta: 1	Epoch: 186
+train ELBO: 1.09	MSE: 1.00	KLdiv: 0.09
+val   ELBO: 1.11	MSE: 1.01	KLdiv: 0.10
+
+Training VAE with beta=1:  94%|████████████████████████████████████████████████████████████████████████████████████████████████████▉       | 187/200 [51:12<03:35, 16.55s/it]Beta: 1	Epoch: 187
+train ELBO: 1.09	MSE: 1.00	KLdiv: 0.09
+val   ELBO: 1.10	MSE: 1.01	KLdiv: 0.09
+
+Training VAE with beta=1:  94%|█████████████████████████████████████████████████████████████████████████████████████████████████████▌      | 188/200 [51:27<03:14, 16.21s/it]Beta: 1	Epoch: 188
+train ELBO: 1.09	MSE: 1.00	KLdiv: 0.09
+val   ELBO: 1.12	MSE: 1.01	KLdiv: 0.11
+
+Training VAE with beta=1:  94%|██████████████████████████████████████████████████████████████████████████████████████████████████████      | 189/200 [51:44<02:58, 16.20s/it]Beta: 1	Epoch: 189
+train ELBO: 1.09	MSE: 1.00	KLdiv: 0.09
+val   ELBO: 1.10	MSE: 1.01	KLdiv: 0.09
+
+Training VAE with beta=1:  95%|██████████████████████████████████████████████████████████████████████████████████████████████████████▌     | 190/200 [52:00<02:43, 16.31s/it]Beta: 1	Epoch: 190
+train ELBO: 1.09	MSE: 1.00	KLdiv: 0.09
+val   ELBO: 1.11	MSE: 1.01	KLdiv: 0.10
+
+Training VAE with beta=1:  96%|███████████████████████████████████████████████████████████████████████████████████████████████████████▏    | 191/200 [52:16<02:25, 16.20s/it]Beta: 1	Epoch: 191
+train ELBO: 1.09	MSE: 1.00	KLdiv: 0.09
+val   ELBO: 1.10	MSE: 1.01	KLdiv: 0.08
+
+Training VAE with beta=1:  96%|███████████████████████████████████████████████████████████████████████████████████████████████████████▋    | 192/200 [52:33<02:10, 16.36s/it]Beta: 1	Epoch: 192
+train ELBO: 1.09	MSE: 1.00	KLdiv: 0.09
+val   ELBO: 1.11	MSE: 1.01	KLdiv: 0.10
+
+Training VAE with beta=1:  96%|████████████████████████████████████████████████████████████████████████████████████████████████████████▏   | 193/200 [52:49<01:54, 16.32s/it]Beta: 1	Epoch: 193
+train ELBO: 1.09	MSE: 1.00	KLdiv: 0.09
+val   ELBO: 1.12	MSE: 1.01	KLdiv: 0.11
+
+Training VAE with beta=1:  97%|████████████████████████████████████████████████████████████████████████████████████████████████████████▊   | 194/200 [53:06<01:39, 16.59s/it]Beta: 1	Epoch: 194
+train ELBO: 1.09	MSE: 1.00	KLdiv: 0.09
+val   ELBO: 1.11	MSE: 1.01	KLdiv: 0.10
+
+Training VAE with beta=1:  98%|█████████████████████████████████████████████████████████████████████████████████████████████████████████▎  | 195/200 [53:23<01:23, 16.65s/it]Beta: 1	Epoch: 195
+train ELBO: 1.09	MSE: 1.00	KLdiv: 0.09
+val   ELBO: 1.10	MSE: 1.01	KLdiv: 0.09
+
+Training VAE with beta=1:  98%|█████████████████████████████████████████████████████████████████████████████████████████████████████████▊  | 196/200 [53:39<01:06, 16.52s/it]Beta: 1	Epoch: 196
+train ELBO: 1.09	MSE: 1.00	KLdiv: 0.09
+val   ELBO: 1.10	MSE: 1.01	KLdiv: 0.09
+
+Training VAE with beta=1:  98%|██████████████████████████████████████████████████████████████████████████████████████████████████████████▍ | 197/200 [53:56<00:49, 16.56s/it]Beta: 1	Epoch: 197
+train ELBO: 1.09	MSE: 1.00	KLdiv: 0.09
+val   ELBO: 1.10	MSE: 1.01	KLdiv: 0.09
+
+Training VAE with beta=1:  99%|██████████████████████████████████████████████████████████████████████████████████████████████████████████▉ | 198/200 [54:13<00:33, 16.65s/it]Beta: 1	Epoch: 198
+train ELBO: 1.09	MSE: 1.00	KLdiv: 0.09
+val   ELBO: 1.10	MSE: 1.01	KLdiv: 0.09
+
+Training VAE with beta=1: 100%|███████████████████████████████████████████████████████████████████████████████████████████████████████████▍| 199/200 [54:30<00:16, 16.68s/it]Beta: 1	Epoch: 199
+train ELBO: 1.09	MSE: 1.00	KLdiv: 0.09
+val   ELBO: 1.11	MSE: 1.01	KLdiv: 0.10
+
+Training VAE with beta=1: 100%|████████████████████████████████████████████████████████████████████████████████████████████████████████████| 200/200 [54:46<00:00, 16.43s/it]
+Max value after normalization: 96.54
+WARNING: Max value after normalization exceeds 1
