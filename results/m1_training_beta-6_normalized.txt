@@ -1,3 +1,43 @@
+n-62-12-19(s151988) $ python code/m1_trainer.py 
+# Loading GTEx data...
+# Loading GTEx data...
+use_cuda=True
+M1_model(
+  (regressor): Regressor(
+    (h_layers): Sequential(
+      (0): Linear(in_features=256, out_features=2048, bias=True)
+      (1): ReLU()
+      (2): BatchNorm1d(2048, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (3): Dropout(p=0.2, inplace=False)
+      (4): Linear(in_features=2048, out_features=2048, bias=True)
+      (5): ReLU()
+      (6): BatchNorm1d(2048, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (7): Dropout(p=0.2, inplace=False)
+    )
+    (out_layer): Linear(in_features=2048, out_features=156958, bias=True)
+    (out_activation): ReLU()
+  )
+  (VAE): VariationalAutoencoder(
+    (encoder): Encoder(
+      (hidden): ModuleList(
+        (0): Linear(in_features=18965, out_features=512, bias=True)
+        (1): Linear(in_features=512, out_features=512, bias=True)
+      )
+      (sample): GaussianSample(
+        (mu): Linear(in_features=512, out_features=256, bias=True)
+        (log_var): Linear(in_features=512, out_features=256, bias=True)
+      )
+    )
+    (decoder): Decoder(
+      (hidden): ModuleList(
+        (0): Linear(in_features=256, out_features=512, bias=True)
+        (1): Linear(in_features=512, out_features=512, bias=True)
+      )
+      (reconstruction): Linear(in_features=512, out_features=18965, bias=True)
+      (output_activation): ReLU()
+    )
+  )
+)
 Epoch 1/200	Training loss:	0.9817	Validation loss:	0.8040
 
 Epoch 2/200	Training loss:	0.8571	Validation loss:	0.6054
