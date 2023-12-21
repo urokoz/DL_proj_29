@@ -1,7 +1,10 @@
 data/*
 test*
+*.pkl
 __pycache__/
-*pkl
+*.py[cod]
+*.log
+*.pt
 
 !data/archs_gene_very_small.tsv
 !data/data.json
