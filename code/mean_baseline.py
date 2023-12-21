@@ -1,11 +1,7 @@
 import sys
 import torch
-import pickle
 import numpy as np
-import matplotlib.pyplot as plt
-from os import path
 from tqdm import tqdm
-from sklearn.decomposition import IncrementalPCA
 sys.path.append('../code')
 from data_loader import Archs4GeneExpressionDataset, GtexDataset
 from torch.utils.data import DataLoader

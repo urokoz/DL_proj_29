@@ -1,10 +1,8 @@
 # %%
-import json
 import sys
 import torch
 import pickle
 import numpy as np
-import matplotlib.pyplot as plt
 from os import path
 from tqdm import tqdm
 from sklearn.decomposition import IncrementalPCA
@@ -13,7 +11,7 @@ from data_loader import Archs4GeneExpressionDataset, GtexDataset
 from our_models import Regressor
 from torch.utils.data import WeightedRandomSampler, DataLoader
 
-use_cuda = True
+use_cuda = True if torch.cuda.is_available() else False
 TRAIN_EPOCHS = 100 
 LEARNING_RATE = 1e-5
 
