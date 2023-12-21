@@ -6,7 +6,7 @@ This repository contains baselines and models to predict protein isoform express
 ## Contents
 The repository has a folder for data and a folder for code and models.
 
-In ouder to use the repository a folder (./data/hdf5) needs to be created containing three files with geneexpressions and isoform expressions:
+In order to use the repository a folder (./data/hdf5) needs to be created containing three files with geneexpressions and isoform expressions:
 - archs4_gene_expression_norm_transposed.hdf5
 - gtex_gene_expression_norm_transposed.hdf5
 - gtex_isoform_expression_norm_transposed.hdf5

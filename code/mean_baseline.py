@@ -23,7 +23,7 @@ for U in tqdm(archs4_dataloader):
     loss = criterion(U, mean_BL)
     losses.append(loss)
     
-print("Straight mean loss:", np.mean(losses))
+print("Straight Archs4 mean loss:", np.mean(losses))
 
 archsDset = Archs4GeneExpressionDataset(data_dir = dat_dir, normalize=True, load_in_mem=False)
 archs4_dataloader = DataLoader(archsDset, batch_size=100, num_workers=2, prefetch_factor=1)
@@ -34,7 +34,7 @@ for U in tqdm(archs4_dataloader):
     loss = criterion(U, mean_BL)
     losses.append(loss)
     
-print("Normalized mean loss:", np.mean(losses))
+print("Normalized Archs4 mean loss:", np.mean(losses))
 
 gtexDset = GtexDataset(data_dir=dat_dir, normalize=False, load_in_mem=True)
 gtex_dataloader = DataLoader(gtexDset, batch_size=100, num_workers=2, prefetch_factor=1)  
@@ -46,4 +46,4 @@ for L, I in tqdm(gtex_dataloader):
     losses.append(loss)
 
 print(losses)
-print("Isoform mean loss:", np.mean(losses))
+print("GTEx isoform mean loss:", np.mean(losses))

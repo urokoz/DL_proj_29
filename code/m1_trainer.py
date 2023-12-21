@@ -1,14 +1,13 @@
 import torch
-import torch.nn as nn
 import sys
 import numpy as np
 sys.path.append('code')
 from data_loader import GtexDataset
 from our_models import Regressor, M1_model
 sys.path.append("code/wohlert")
-from wohlert.models import VariationalAutoencoder
 from torch.utils.data import WeightedRandomSampler, DataLoader
 
+vae_path = "results/beta_1e-06/vae_model.pt"
 
 TRAIN_EPOCHS = 200
 LEARNING_RATE = 5e-5
@@ -31,7 +30,6 @@ validation_dataloader = DataLoader(gtexDset_val, batch_size=128, num_workers=2, 
 use_cuda = True and torch.cuda.is_available()
 
 print(f"{use_cuda=}")
-vae_path = "results/beta_1e-06/vae_model.pt"
 vae_model = torch.load(vae_path)
 
 regressor_model = Regressor([latent_dim, reg_hidden_layers, out_features])

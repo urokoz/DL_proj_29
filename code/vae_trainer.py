@@ -2,10 +2,8 @@
 import os
 import sys
 import torch
-import pickle
 import numpy as np
 import matplotlib.pyplot as plt
-from os import path
 from tqdm import tqdm
 from sklearn.decomposition import IncrementalPCA, PCA
 sys.path.append('../code')
@@ -52,8 +50,6 @@ def trainer(BETA, train_dataloader, val_dataloader, results_path, lr=1e-5, TRAIN
 
     #### Model setup ####
     from wohlert.models import VariationalAutoencoder
-    from wohlert.layers import GaussianSample
-    from wohlert.inference import log_gaussian, log_standard_gaussian
 
 
     print(f"{use_cuda=}")
@@ -76,11 +72,11 @@ def trainer(BETA, train_dataloader, val_dataloader, results_path, lr=1e-5, TRAIN
     log_val_MSE_m          = np.zeros([TRAIN_EPOCHS, len(val_dataloader)])
     log_val_KLdiv_m        = np.zeros([TRAIN_EPOCHS, len(val_dataloader)])
 
-    log_manual_KLdiv_m     = np.zeros([TRAIN_EPOCHS, len(train_dataloader)])
-    log_manual_qz_m        = np.zeros([TRAIN_EPOCHS, len(train_dataloader)])
-    log_manual_pz_m        = np.zeros([TRAIN_EPOCHS, len(train_dataloader)])
-    log_manual_z_mu_m      = np.zeros([TRAIN_EPOCHS, len(train_dataloader)])
-    log_manual_z_log_var_m = np.zeros([TRAIN_EPOCHS, len(train_dataloader)])
+    # log_manual_KLdiv_m     = np.zeros([TRAIN_EPOCHS, len(train_dataloader)])
+    # log_manual_qz_m        = np.zeros([TRAIN_EPOCHS, len(train_dataloader)])
+    # log_manual_pz_m        = np.zeros([TRAIN_EPOCHS, len(train_dataloader)])
+    # log_manual_z_mu_m      = np.zeros([TRAIN_EPOCHS, len(train_dataloader)])
+    # log_manual_z_log_var_m = np.zeros([TRAIN_EPOCHS, len(train_dataloader)])
 
     # Matrix structure:
     #    ----- batches -----> 
@@ -91,7 +87,7 @@ def trainer(BETA, train_dataloader, val_dataloader, results_path, lr=1e-5, TRAIN
 
     max_feature = 0
 
-    latent_representations = []
+    # latent_representations = []
     
     outfile = open(f"{results_path}/loss_over_time.txt", "w")
     print("BETA", "epoch", "train_ELBO", "train_MSE", "train_KLdiv", "val_ELBO", "val_MSE", "val_KLdiv", sep="\t", file=outfile)
