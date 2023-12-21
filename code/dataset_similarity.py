@@ -14,9 +14,17 @@ archsDset = Archs4GeneExpressionDataset(data_dir = dat_dir, normalize=False, loa
 archs4_dataloader = DataLoader(archsDset, batch_size=100, num_workers=2, prefetch_factor=1)
 
 gtexDset = GtexDataset(data_dir=dat_dir, normalize=False, load_in_mem=False)
-gtex_dataloader = DataLoader(gtexDset, batch_size=100, num_workers=2, prefetch_factor=1)    
+gtex_dataloader = DataLoader(gtexDset, batch_size=100, num_workers=2, prefetch_factor=1)
+
+print("archs rows:", len(archsDset))
+print("gtex rows:", len(gtexDset))
+print("archs cols:", len(archsDset[0]))
+print("gtex cols:", len(gtexDset[0][1]))
 
 pca_model_path = f"archs_gtex_combined_pca.pkl"
+
+print(next(iter(gtex_dataloader))[1])
+print(gtexDset.iso_mean)
 
 if path.exists(pca_model_path):
     with open(pca_model_path, "rb") as f:
@@ -40,8 +48,6 @@ def transform_in_batches(dataloader, pca_model):
         transformed_batch = pca_model.transform(data.cpu().numpy())
         transformed_data_list.append(transformed_batch)
     return np.concatenate(transformed_data_list, axis=0)
-
-ipca.transform(archsDset[:2])
 
 archs4_data_transformed = transform_in_batches(archs4_dataloader, ipca)
 gtex_data_transformed = transform_in_batches(gtex_dataloader, ipca)
