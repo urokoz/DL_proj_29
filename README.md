@@ -27,3 +27,4 @@ Once the hdf5 folder is in place, the vae_trainer.py should be run. This trains 
 After the VAE models have been trained and inspected, m1_trainer.py should be modified with the path to the VAE model that is desired to move forward with. Then run the file to train the model. The model is then saved in a folder for trained models.
 
 
+NB: This repo does not contain a single file to generate our results as all the code has to be run on the HPC in order to work with the large datasets, large networks and long training passes.
